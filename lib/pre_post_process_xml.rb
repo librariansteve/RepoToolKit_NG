@@ -1,7 +1,11 @@
 # Create and remove directories for each ingest method
 module CleanUpXML
   def postprocess_excel_xml
+    Dir.chdir('excel')
+    @f = Dir.glob('*.xlsx').to_s.gsub(/\[\"|\"\]|\.|excel_Template_|xlsx/, '')
+    Dir.chdir('..')
     Dir.chdir('xml')
+    File.rename('ingestThis.xml',@f+'_Ingest.xml')
     FileUtils.rm('firstTransform.xml')
     FileUtils.rm('workWithThis.xml')
     FileUtils.rm('collection.xml')

@@ -13,7 +13,7 @@ module QA
         puts 'Launching applications.'
         puts
         Dir.chdir(@user_directory + '/xml')
-        file_to_open = 'ingestThis.xml'
+        file_to_open = @f+'_ingestThis.xml'
         system %(open '#{file_to_open}')
         file_to_open = 'subjects.txt'
         system %(open '#{file_to_open}')

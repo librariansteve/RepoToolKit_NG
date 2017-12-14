@@ -32,6 +32,7 @@
                         <metadata>
                             <mira_import>
                                 <xsl:call-template name="file"/>
+                                <model:hasModel>PDF</model:hasModel>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="abstract"/>

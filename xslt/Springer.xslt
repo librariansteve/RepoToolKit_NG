@@ -36,13 +36,14 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                         <metadata>
                             <mira_import>
                                 <xsl:call-template name="file"/>
+                                <model:hasModel>PDF</model:hasModel>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="abstract"/>
                                 <xsl:call-template name="keywords"/>
                                 <dc11:description>Springer Open.</dc11:description>
-                                <tufts:tuftsIsPartOf>Tufts University faculty
-                                    scholarship.</tufts:tuftsIsPartOf>
+                                <dc:isPartOf>Tufts University faculty
+                                    scholarship.</dc:isPartOf>
                                 <xsl:call-template name="rights"/>
                                 <xsl:call-template name="date"/>
                                 <dc:date.created>
@@ -50,12 +51,12 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                                 </dc:date.created>
                                 <dc:type>Text</dc:type>
                                 <dc:format>application/pdf</dc:format>
-                                <terms:steward>tisch</terms:steward>
+                                <tufts:steward>tisch</tufts:steward>
                                 <tufts:qr_note>amay02</tufts:qr_note>
                                 <tufts:internal_note>SpringerBatchTransform: <xsl:value-of
                                     select="current-dateTime()"/>; Tisch manages metadata and
                                     binary.</tufts:internal_note>
-                                <terms:displays_in>dl</terms:displays_in>
+                                <tufts:displays_in>dl</tufts:displays_in>
                             </mira_import>
                         </metadata>
                     </record>
@@ -89,15 +90,15 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
     <xsl:template name="abstract">
         <xsl:choose>
             <xsl:when test="//AbstractSection[@ID]/Heading">
-                <dc11:description>
+                <dc11:abstract>
                     <xsl:value-of select=".//AbstractSection[@ID][1]/Heading"/>: <xsl:value-of
                         select=".//AbstractSection[@ID][1]/Para[1]"/>
-                </dc11:description>
+                </dc11:abstract>
             </xsl:when>
             <xsl:when test="//Abstract/Heading">
-                <dc11:description>
+                <dc11:abstract>
                     <xsl:value-of select=".//Abstract/Heading"/>: <xsl:value-of
-                        select="normalize-space(.//Abstract[1]/Para[1])"/></dc11:description>
+                        select="normalize-space(.//Abstract[1]/Para[1])"/></dc11:abstract>
             </xsl:when>
             <xsl:otherwise/>
         </xsl:choose>
