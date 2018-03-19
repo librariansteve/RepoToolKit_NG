@@ -36,7 +36,9 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                         <metadata>
                             <mira_import>
                                 <xsl:call-template name="file"/>
-                                <model:hasModel>PDF</model:hasModel>
+                                <model:hasModel>Pdf</model:hasModel>
+                                <tufts:visibility>open</tufts:visibility>
+                                <tufts:memberOf>zp38wc62h</tufts:memberOf>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="abstract"/>
@@ -44,6 +46,7 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                                 <dc11:description>Springer Open.</dc11:description>
                                 <dc:isPartOf>Tufts University faculty
                                     scholarship.</dc:isPartOf>
+                                <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
                                 <xsl:call-template name="rights"/>
                                 <xsl:call-template name="date"/>
                                 <dc:date.created>
@@ -65,9 +68,9 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
         </OAI-PMH>
     </xsl:template>
     <xsl:template match="//JournalInfo" name="file">
-        <terms:filename><xsl:value-of select="//JournalInfo/JournalID"/>_<xsl:value-of
+        <tufts:filename type="representative"><xsl:value-of select="//JournalInfo/JournalID"/>_<xsl:value-of
                 select="//RegistrationDate/Year"/>_Article_<xsl:value-of select="//ArticleID"
-            />.pdf</terms:filename>
+            />.pdf</tufts:filename>
     </xsl:template>
     <xsl:template match="//ArticleTitle" name="title">
         <dc:title>

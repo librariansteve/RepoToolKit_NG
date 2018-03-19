@@ -66,7 +66,7 @@ class InHouseIngest < TuftsScholarship
   end
 
   def finish
-    package.close_directories.qa_it
+    package.postprocess_alma_xml.close_directories.qa_it
   end
 end
 # Create a list of subjects used by catalogers

@@ -56,9 +56,9 @@
             </xsl:for-each>
         </xsl:variable>
         <xsl:variable name="subject">
-            <xsl:for-each select="//dc:subject">
-                <xsl:sort select="self::dc:subject"/>
-                <xsl:for-each select="self::dc:subject[not(.=following::dc:subject)]">
+            <xsl:for-each select="//dc11:subject">
+                <xsl:sort select="self::dc11:subject"/>
+                <xsl:for-each select="self::dc11:subject[not(.=following::dc11:subject)]">
                     <xsl:value-of select="replace(.,'(\w$|\W$)','$1&#xD;')"/>
                 </xsl:for-each>
             </xsl:for-each>

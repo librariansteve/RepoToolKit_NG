@@ -33,4 +33,8 @@ This stylesheet creates a template which is called in another stylsheet, and cre
             <xsl:otherwise>.pdf</xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+    <xsl:template match="datafield[@tag = '955']"/>
+    <xsl:template name="archive_name">
+        <xsl:param name="file"/>
+        <xsl:value-of select="datafield[@tag = '955']/subfield[@code = 'q']"/>.pdf</xsl:template>
 </xsl:stylesheet>

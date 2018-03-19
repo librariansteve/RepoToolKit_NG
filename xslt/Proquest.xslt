@@ -21,18 +21,21 @@
         <xsl:output-character character="’" string="'"/>
         <xsl:output-character character="‘" string="'"/>
         <xsl:output-character character="&#x2013;" string="-"/>
+        <xsl:output-character character="{" string="("/>
+        <xsl:output-character character="}" string=")"/>
     </xsl:character-map>
     <!-- this starts the crosswalk-->
     <xsl:template match="/">
         <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
             <ListRecords>
-                <xsl:for-each
-                    select="collection('../../RepoToolKit_NG/TempRepo/collection.xml')">
+                <xsl:for-each select="collection('../../RepoToolKit_NG/TempRepo/collection.xml')">
                     <record>
                         <metadata>
                             <mira_import>
                                 <xsl:call-template name="file"/>
-                                <model:hasModel>PDF</model:hasModel>
+                                <model:hasModel>Pdf</model:hasModel>
+                                <tufts:visibility>open</tufts:visibility>
+                                <tufts:memberOf>mc87pq395</tufts:memberOf>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="abstract"/>
@@ -42,8 +45,9 @@
                                 <xsl:call-template name="committee"/>
                                 <xsl:call-template name="keywords"/>
                                 <xsl:call-template name="institution"/>
-                                <tufts:tuftsIsPartOf>Tufts University electronic theses and
-                                    dissertations.</tufts:tuftsIsPartOf>
+                                <dc:isPartOf>Tufts University electronic theses and
+                                    dissertations.</dc:isPartOf>
+                                <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
                                 <xsl:call-template name="date"/>
                                 <dc:date.created>
                                     <xsl:value-of select="current-dateTime()"/>
@@ -66,9 +70,9 @@
         </OAI-PMH>
     </xsl:template>
     <xsl:template match="//DISS_binary" name="file">
-        <terms:filename>
+        <tufts:filename type="representative">
             <xsl:value-of select="//DISS_binary"/>
-        </terms:filename>
+        </tufts:filename>
     </xsl:template>
     <xsl:template match="//DISS_title" name="title">
         <dc:title>
@@ -87,7 +91,6 @@
     </xsl:template>
     <xsl:template match="//DISS_abstract" name="abstract">
         <dc:abstract>
-            <xsl:text>Abstract: </xsl:text>
             <xsl:value-of select="normalize-space(/DISS_submission/DISS_content/DISS_abstract)"/>
         </dc:abstract>
     </xsl:template>
@@ -219,36 +222,36 @@
         <xsl:choose>
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0930')]">
-                <tufts:tuftsIsPartOf>Tufts University. Fletcher School of Law and Diplomacy. Theses
-                    and Dissertations.</tufts:tuftsIsPartOf>
+                <dc:isPartOf>Tufts University. Fletcher School of Law and Diplomacy. Theses and
+                    Dissertations.</dc:isPartOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0234')] and //DISS_inst_contact[contains(text(), 'Engineering')]">
-                <tufts:tuftsIsPartOf>Tufts University. School of Engineering. Theses and
-                    Dissertations.</tufts:tuftsIsPartOf>
+                <dc:isPartOf>Tufts University. School of Engineering. Theses and
+                    Dissertations.</dc:isPartOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0234')] and //DISS_inst_contact[not(contains(text(), 'Engineering'))]">
-                <tufts:tuftsIsPartOf>Tufts University. Graduate School of Arts and Sciences. Theses
-                    and Dissertations.</tufts:tuftsIsPartOf>
+                <dc:isPartOf>Tufts University. Graduate School of Arts and Sciences. Theses and
+                    Dissertations.</dc:isPartOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0845')]">
-                <tufts:tuftsIsPartOf>Tufts University. Sackler School of Graduate Biomedical
-                    Sciences. Theses and Dissertations.</tufts:tuftsIsPartOf>
+                <dc:isPartOf>Tufts University. Sackler School of Graduate Biomedical Sciences.
+                    Theses and Dissertations.</dc:isPartOf>
             </xsl:when>
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '1546')]">
-                <tufts:tuftsIsPartOf>Tufts University. Gerald J. &amp; Dorothy R. Friedman School of
-                    Nutrition Science and Policy. Theses and Dissertations.</tufts:tuftsIsPartOf>
+                <dc:isPartOf>Tufts University. Gerald J. &amp; Dorothy R. Friedman School of
+                    Nutrition Science and Policy. Theses and Dissertations.</dc:isPartOf>
             </xsl:when>
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '1547')]">
-                <tufts:tuftsIsPartOf>Tufts University. School of Dental Medicine. Theses and
-                    Dissertations.</tufts:tuftsIsPartOf>
+                <dc:isPartOf>Tufts University. School of Dental Medicine. Theses and
+                    Dissertations.</dc:isPartOf>
             </xsl:when>
         </xsl:choose>
     </xsl:template>

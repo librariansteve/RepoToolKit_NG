@@ -2,7 +2,7 @@
 <!--    
 CREATED BY: Alex May, Tisch Library
 CREATED ON: 2017-03-31
-UPDATED ON: 2017-11-21
+UPDATED ON: 2017-12-14
 This stylesheet converts Excel metadata to qualified Dublin Core based on the mappings found in the MIRA data dictionary.-->
 <!--Name space declarations and XSLT version -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -49,7 +49,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="contributor"/>
                                 <xsl:call-template name="abstract"/>
-                             
+                                <xsl:call-template name="description"/>
                                 <xsl:call-template name="source_bibliographicCitation"/>
                                 <xsl:call-template name="bibliographicCitation"/>
                                 <xsl:call-template name="is_part_of"/>
@@ -145,10 +145,16 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="Description[1]" name="abstract">
-        <dc:abstract><xsl:value-of select="normalize-space(Description[1])"/></dc:abstract>
+    <xsl:template match="Description" name="abstract">
+        <dc:abstract><xsl:value-of select="normalize-space(replace(substring-before(Description,'|'),'Description: ',''))"/></dc:abstract>
     </xsl:template>
-    
+    <xsl:template match="Description" name="description">
+        <xsl:call-template name="DescriptionSplit">
+            <xsl:with-param name="descriptionText">
+                <xsl:value-of select="normalize-space(substring-after(Description,'|'))"/>
+            </xsl:with-param>
+        </xsl:call-template>
+    </xsl:template>
     <xsl:template match="Source" name="source_bibliographicCitation">
         <xsl:choose>
             <xsl:when test="Process[contains(text(), 'Trove')]">

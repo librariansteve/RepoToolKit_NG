@@ -1,16 +1,21 @@
 # Create and remove directories for each ingest method
 module CleanUpXML
   def postprocess_excel_xml
-    Dir.chdir('excel')
-    @f = Dir.glob('*.xlsx').to_s.gsub(/\[\"|\"\]|\.|excel_Template_|xlsx/, '')
-    Dir.chdir('..')
     Dir.chdir('xml')
-    File.rename('ingestThis.xml',@f+'_Ingest.xml')
+    @f = Time.now.strftime('%F-%H%M%S') + '_ExcelBased'
+    File.rename('ingestThis.xml', @f + '_Ingest.xml')
     FileUtils.rm('firstTransform.xml')
     FileUtils.rm('workWithThis.xml')
     FileUtils.rm('collection.xml')
     self
   end
+  
+    def postprocess_alma_xml
+      Dir.chdir('xml')
+      @f = Time.now.strftime('%F-%H%M%S') + '_Alma'
+      File.rename('ingestThis.xml', @f + '_Ingest.xml')
+      self
+    end
 
   def preprocess_springer_xml
     FileUtils.mv Dir.glob('**/*.Meta'), 'xml'
@@ -40,11 +45,16 @@ module CleanUpXML
     Dir.entries('.').each do |entry|
       puts entry
     end
+    Dir.chdir('..')
+    @f = Time.now.strftime('%F-%H%M%S') + '_Springer'
+    File.rename('ingestThis.xml', @f + '_Ingest.xml')
     self
   end
 
   def postprocess_proquest_xml
     Dir.chdir('xml')
+    @f = Time.now.strftime('%F-%H%M%S') + '_Proquest'
+    File.rename('ingestThis.xml', @f + '_Ingest.xml')
     FileUtils.rm('collection.xml')
     FileUtils.mv Dir.glob('*_DATA.xml'), 'proquest_original_xml'
     Dir.chdir('proquest_original_xml')
