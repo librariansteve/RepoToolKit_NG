@@ -152,7 +152,7 @@ while input = gets.chomp
     a_new_analysis = SubjectAnalysis.new
     a_new_analysis.subject_only.close_directories.re_qa_subject
     break
-    
+
   when '9', '9.', 'SMFA'
     puts
     puts 'Launching the SMFA artist books script.'

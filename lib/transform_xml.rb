@@ -30,7 +30,7 @@ module Transforms
   end
 
   def subject_only
-    `java -cp //Applications/SaxonHE9-7-0-15J/saxon9he.jar net.sf.saxon.Transform -t -s:xml/ingestThis.xml -xsl:../../RepoToolKit_NG/xslt/subject.xslt -o:xml/subject_update.txt`
+    `java -cp //Applications/SaxonHE9-7-0-15J/saxon9he.jar net.sf.saxon.Transform xml/*.xml -t -xsl:../../RepoToolKit_NG/xslt/subject.xslt -o:xml/subject_update.txt`
     self
   end
 end

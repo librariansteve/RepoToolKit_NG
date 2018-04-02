@@ -9,13 +9,13 @@ module CleanUpXML
     FileUtils.rm('collection.xml')
     self
   end
-  
-    def postprocess_alma_xml
-      Dir.chdir('xml')
-      @f = Time.now.strftime('%F-%H%M%S') + '_Alma'
-      File.rename('ingestThis.xml', @f + '_Ingest.xml')
-      self
-    end
+
+  def postprocess_alma_xml
+    Dir.chdir('xml')
+    @f = Time.now.strftime('%F-%H%M%S') + '_Alma'
+    File.rename('ingestThis.xml', @f + '_Ingest.xml')
+    self
+  end
 
   def preprocess_springer_xml
     FileUtils.mv Dir.glob('**/*.Meta'), 'xml'

@@ -92,7 +92,8 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
     <xsl:template match="Process" name="visibility">
         <xsl:choose>
             <xsl:when test="Process[contains(text(), 'Trove')]">               
-                <tufts:visibility>restricted</tufts:visibility>
+                <tufts:visibility>authenticated</tufts:visibility>
+                <tufts:memberOf>9k41zd50j</tufts:memberOf>
             </xsl:when>
             <xsl:otherwise>
                 <tufts:visibility>open</tufts:visibility>

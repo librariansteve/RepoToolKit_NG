@@ -49,9 +49,9 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                                 <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
                                 <xsl:call-template name="rights"/>
                                 <xsl:call-template name="date"/>
-                                <dc:date.created>
+                                <dc:created>
                                     <xsl:value-of select="current-dateTime()"/>
-                                </dc:date.created>
+                                </dc:created>
                                 <dc:type>Text</dc:type>
                                 <dc:format>application/pdf</dc:format>
                                 <tufts:steward>tisch</tufts:steward>
@@ -93,10 +93,10 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
     <xsl:template name="abstract">
         <xsl:choose>
             <xsl:when test="//AbstractSection[@ID]/Heading">
-                <dc11:abstract>
+                <dc:abstract>
                     <xsl:value-of select=".//AbstractSection[@ID][1]/Heading"/>: <xsl:value-of
                         select=".//AbstractSection[@ID][1]/Para[1]"/>
-                </dc11:abstract>
+                </dc:abstract>
             </xsl:when>
             <xsl:when test="//Abstract/Heading">
                 <dc11:abstract>

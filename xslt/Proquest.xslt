@@ -49,9 +49,9 @@
                                     dissertations.</dc:isPartOf>
                                 <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
                                 <xsl:call-template name="date"/>
-                                <dc:date.created>
+                                <dc:created>
                                     <xsl:value-of select="current-dateTime()"/>
-                                </dc:date.created>
+                                </dc:created>
                                 <xsl:call-template name="dcaterms_department"/>
                                 <dc:type>Text</dc:type>
                                 <dc:format>application/pdf</dc:format>
