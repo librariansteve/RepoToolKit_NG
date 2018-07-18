@@ -160,7 +160,7 @@ while input = gets.chomp
     a_new_smfa_ingest.extract.smfa.excel.collection.transform.finish
     break
 
-  when '10', '10.', '10. Exit', 'Exit'
+  when '10', '10.', '10. Exit', 'Exit', 'exit'
     puts
     puts 'Goodbye.'
     break

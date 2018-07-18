@@ -39,6 +39,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                             <mira_import>
                                 <xsl:call-template name="file"/>
                                 <xsl:call-template name="visibility"/>
+                                <xsl:call-template name="member"/>
                                 <xsl:call-template name="has_model"/>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="alternative"/>
@@ -90,10 +91,31 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
         <xsl:choose>
             <xsl:when test="Process[contains(text(), 'Trove')]">
                 <tufts:visibility>authenticated</tufts:visibility>
-                <tufts:memberOf>9k41zd50j</tufts:memberOf>
             </xsl:when>
             <xsl:otherwise>
                 <tufts:visibility>open</tufts:visibility>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template match="Process" name="member">
+        <xsl:choose>
+            <xsl:when test="Process[contains(text(), 'Trove')]">
+                <tufts:memberOf>9k41zd50j</tufts:memberOf>
+            </xsl:when>
+            <xsl:when test="Process[contains(text(), 'Faculty')]">
+                <tufts:memberOf>hm50tr73g</tufts:memberOf>
+            </xsl:when>
+            <xsl:when test="Process[contains(text(), 'Student')]">
+                <tufts:memberOf>9880vq98q</tufts:memberOf>
+            </xsl:when>
+            <xsl:when test="Process[contains(text(), 'Nutrition')]">
+                <tufts:memberOf>zg64tm085</tufts:memberOf>
+            </xsl:when>
+            <xsl:when test="Process[contains(text(), 'SMFA')]">
+                <tufts:memberOf>k643b1186</tufts:memberOf>
+            </xsl:when>
+            <xsl:otherwise>
+                <tufts:internal_note>NEW_CREATE_PROCESS_NEEDED</tufts:internal_note>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -308,6 +330,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                 <tufts:internal_note>StudentScholarshipIngest: <xsl:value-of
                         select="current-dateTime()"/>; Tisch manages metadata and
                     binary.</tufts:internal_note>
+                <tufts:memberOf>9880vq98q</tufts:memberOf>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Nutrition')]">
                 <tufts:internal_note>NutritionBatchTransform: <xsl:value-of
