@@ -100,7 +100,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
     <xsl:template match="Process" name="member">
         <xsl:choose>
             <xsl:when test="Process[contains(text(), 'Trove')]">
-                <tufts:memberOf>9k41zd50j</tufts:memberOf>
+                <tufts:memberOf>0p0966881</tufts:memberOf>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Faculty')]">
                 <tufts:memberOf>hm50tr73g</tufts:memberOf>

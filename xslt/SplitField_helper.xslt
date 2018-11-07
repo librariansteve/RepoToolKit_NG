@@ -79,7 +79,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             <xsl:if test="not($dateText = .)"> </xsl:if>
             <dc11:date>
                 <xsl:value-of
-                    select="normalize-space(replace(substring-before(concat($dateText, '|'), '|'), '(\w)$', '$1.'))"
+                    select="normalize-space(replace(substring-before(concat($dateText, '|'), '|'), '\.$', ''))"
                 />
             </dc11:date>
             <xsl:call-template name="dateSplit">

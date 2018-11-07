@@ -93,10 +93,12 @@ else
   system ("clear")
 end
 
+require 'colorized_string'
+
 puts `clear`
 puts '***************************************************'
 puts
-puts 'Welcome to the Repository Toolkit for MIRA 2.0!'
+puts ColorizedString['Welcome to the Repository Toolkit for MIRA 2.0!'].colorize(:cyan).underline
 puts
 puts 'What would you like to process?'
 puts
