@@ -31,6 +31,7 @@
                             <mira_import>
                                 <xsl:call-template name="file"/>
                                 <model:hasModel>Pdf</model:hasModel>
+                                <tufts:memberOf>vq27zn406</tufts:memberOf>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="alternative"/>
                                 <xsl:call-template name="creator"/>
@@ -48,6 +49,7 @@
                                 <xsl:call-template name="internet_archive"/>
                                 <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
                                 <xsl:call-template name="phys_source"/>
+                                <dc:isPartOf>Digitized books &amp; manuscripts.</dc:isPartOf>
                                 <xsl:call-template name="date"/>
                                 <dc:created>
                                     <xsl:value-of select="current-dateTime()"/>
@@ -206,7 +208,7 @@
     <xsl:template match="@tag" name="language">
         <dc11:language>
             <xsl:value-of
-                select="normalize-space(controlfield[@tag = '008']/replace(., '.*?\s\d\s|.{2}$', ''))"
+                select="normalize-space(controlfield[@tag = '008']/replace(., '(.*)(\w{3})(\s.${2}|\s${1})', '$2'))"
             />
         </dc11:language>
     </xsl:template>
@@ -249,11 +251,11 @@
                 </dc11:date>
             </xsl:when>
             <xsl:when test=".//datafield[@tag = '260']/subfield[@code='c']">
-                <dc:date>
+                <dc11:date>
                     <xsl:for-each select=".//datafield[@tag = '260']/subfield[@code='c']">
                         <xsl:value-of select="normalize-space(replace(.,'\?|\[|\]|\.',''))"/>
                     </xsl:for-each> 
-                </dc:date>
+                </dc11:date>
             </xsl:when>     
         </xsl:choose>
     </xsl:template>
@@ -301,7 +303,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="topic_subject">
         <xsl:choose>
-            <xsl:when test="datafield[@tag = 650][text()]">
+            <xsl:when test="datafield[@tag = 650][. != '']">
                 <xsl:for-each select="datafield[@tag = 650]">
                     <dc11:subject>
                         <xsl:call-template name="subfieldSelect">
@@ -309,7 +311,7 @@
                         </xsl:call-template>
                     </dc11:subject>
                 </xsl:for-each>
-            </xsl:when>
+            </xsl:when>  
         </xsl:choose>
     </xsl:template>
     <xsl:template match="@tag" name="genre">

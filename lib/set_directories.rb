@@ -7,7 +7,7 @@ module SetDirectories
     @prompt = '> '
     puts 'What is the directory you are working with?'
     print @prompt
-    @user_directory = gets.chomp
+    @user_directory = gets.chomp.strip
     @copy_of_directory = File.expand_path('~/Desktop/RepoToolKit_NG/TempRepo')
     FileUtils.copy_entry @user_directory, @copy_of_directory
     Dir.chdir(@copy_of_directory)

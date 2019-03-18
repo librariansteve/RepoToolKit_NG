@@ -37,8 +37,8 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                             <mira_import>
                                 <xsl:call-template name="file"/>
                                 <model:hasModel>Pdf</model:hasModel>
+                                <tufts:memberOf>qz20ss48r</tufts:memberOf> 
                                 <tufts:visibility>open</tufts:visibility>
-                                <tufts:memberOf>hm50tr73g</tufts:memberOf>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="abstract"/>

@@ -7,8 +7,6 @@ module CleanUpXML
     FileUtils.rm('firstTransform.xml')
     FileUtils.rm('workWithThis.xml')
     FileUtils.rm('collection.xml')
-    Dir.chdir('..')
-    FileUtils.rm('_DS.Store')
     self
   end
 

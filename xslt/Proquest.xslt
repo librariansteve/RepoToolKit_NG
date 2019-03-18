@@ -35,7 +35,8 @@
                                 <xsl:call-template name="file"/>
                                 <model:hasModel>Pdf</model:hasModel>
                                 <tufts:visibility>open</tufts:visibility>
-                                <tufts:memberOf>mc87pq395</tufts:memberOf>
+                                <tufts:memberOf>4f16c2806</tufts:memberOf>
+                                <tufts:memberOf>nk322d32h</tufts:memberOf>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="abstract"/>

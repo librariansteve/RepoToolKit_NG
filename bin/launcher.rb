@@ -76,7 +76,7 @@ end
 
 $is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 $prompt = '> '
-$saxon_path = '//Applications/SaxonHE9-7-0-15J/saxon9he.jar'
+$saxon_path = ENV['SAXON_PATH']
 $xslt_path = File.expand_path('../xslt', File.dirname(__FILE__))
 
 if !$saxon_path then
@@ -116,7 +116,7 @@ puts
 
 print $prompt
 # Loop
-while input = gets.chomp
+while input = gets.chomp.strip
   case input
   when '1', '1.', 'Faculty'
     puts

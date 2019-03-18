@@ -100,19 +100,19 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
     <xsl:template match="Process" name="member">
         <xsl:choose>
             <xsl:when test="Process[contains(text(), 'Trove')]">
-                <tufts:memberOf>0p0966881</tufts:memberOf>
+                <tufts:memberOf>nc580m649</tufts:memberOf>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Faculty')]">
-                <tufts:memberOf>hm50tr73g</tufts:memberOf>
+                <tufts:memberOf>qz20ss48r</tufts:memberOf>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Student')]">
-                <tufts:memberOf>9880vq98q</tufts:memberOf>
+                <tufts:memberOf>nk322d32h</tufts:memberOf>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Nutrition')]">
-                <tufts:memberOf>zg64tm085</tufts:memberOf>
+                <tufts:memberOf>p55484009</tufts:memberOf>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'SMFA')]">
-                <tufts:memberOf>k643b1186</tufts:memberOf>
+                <tufts:memberOf>vq27zn406</tufts:memberOf>
             </xsl:when>
             <xsl:otherwise>
                 <tufts:internal_note>NEW_CREATE_PROCESS_NEEDED</tufts:internal_note>
