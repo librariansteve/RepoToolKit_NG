@@ -84,6 +84,7 @@ if !$saxon_path then
   puts 'The environment variable SAXON_PATH is missing or blank.'
   puts 'SAXON_PATH must contain the full pathname to the saxon jar file.'
   puts 'Goodbye.'
+  sleep(3)
   exit
 end
 
@@ -95,7 +96,6 @@ end
 
 require 'colorized_string'
 
-puts `clear`
 puts '***************************************************'
 puts
 puts ColorizedString['Welcome to the Repository Toolkit for MIRA 2.0!'].colorize(:cyan).underline
@@ -191,3 +191,4 @@ while input = gets.chomp.strip
     print $prompt
   end
 end
+sleep(3)
