@@ -6,7 +6,7 @@ module PackageBinaries
   def package
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('*.xml').empty?
-      FileUtils.mv Dir.glob('**/*.xml'), 'xml'
+      FileUtils.mv Dir.glob('*.xml'), 'xml'
       Dir.chdir('xml')
       Dir.entries('.').each do |entry|
         puts entry
@@ -21,7 +21,7 @@ module PackageBinaries
       end
     end
     Dir.chdir(@copy_of_directory)
-    unless Dir.glob('*.xlsx').empty?
+    unless Dir.glob('**/*.xlsx').empty?
       FileUtils.mv Dir.glob('**/*.xlsx'), 'excel'
       Dir.chdir('excel')
       Dir.entries('.').each do |entry|
@@ -37,7 +37,7 @@ module PackageBinaries
       end
     end
     Dir.chdir(@copy_of_directory)
-    unless Dir.glob('*.tif').empty?
+    unless Dir.glob('**/*.tif').empty?
       FileUtils.mv Dir.glob('**/*.tif'), 'tif'
       Dir.chdir('tif')
       Dir.entries('.').each do |entry|
@@ -45,7 +45,7 @@ module PackageBinaries
       end
     end
     Dir.chdir(@copy_of_directory)
-    unless Dir.glob('*.mrc').empty?
+    unless Dir.glob('**/*.mrc').empty?
       FileUtils.mv Dir.glob('**/*.mrc'), 'mrc'
       Dir.chdir('mrc')
       Dir.entries('.').each do |entry|
@@ -53,7 +53,7 @@ module PackageBinaries
       end
     end
     Dir.chdir(@copy_of_directory)
-    unless Dir.glob('*.Meta').empty?
+    unless Dir.glob('**/*.Meta').empty?
       FileUtils.mv Dir.glob('**/*.Meta'), 'xml'
       Dir.chdir('xml')
       Dir.entries('.').each do |entry|
@@ -65,7 +65,7 @@ module PackageBinaries
       end
     end
     Dir.chdir(@copy_of_directory)
-    unless Dir.glob('*.zip').empty?
+    unless Dir.glob('**/*.zip').empty?
       FileUtils.mv Dir.glob('**/*.zip'), 'zip'
       Dir.chdir('zip')
       Dir.entries('.').each do |entry|

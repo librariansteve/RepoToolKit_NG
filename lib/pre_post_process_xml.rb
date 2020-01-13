@@ -31,7 +31,9 @@ module CleanUpXML
   end
 
   def postprocess_springer_xml
-    FileUtils.mv Dir.glob('JOU*'), 'springer'
+puts "starting postprocess"
+sleep(3)
+    FileUtils.mv Dir.glob('**/JOU*'), 'springer'
     Dir.chdir('springer')
     Dir.entries('.').each do |entry|
       puts entry

@@ -6,7 +6,8 @@ module UnzipIt
 #    bar = ProgressBar.new
 
     if $is_windows then
-      system ("powershell Expand-Archive '*.zip'")
+      files = Dir.glob("*.zip")
+      files.each {|f| system ("powershell Expand-Archive #{f}")}
     else
       system ("unzip '*.zip'")
     end
