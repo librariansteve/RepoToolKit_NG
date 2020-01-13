@@ -57,7 +57,8 @@
                                 <dc:type>Text</dc:type>
                                 <dc:format>application/pdf</dc:format>
                                 <terms:steward>dca</terms:steward>
-                                <tufts:qr_note>amay02</tufts:qr_note>
+                                <tufts:qr_note>Metadata reviewed by: smcdon03 on <xsl:value-of
+                                    select="current-dateTime()"/>.</tufts:qr_note>
                                 <tufts:internal_note>ProquestBatchTransform: <xsl:value-of
                                         select="current-dateTime()"/>; Tisch and DCA allowed to
                                     manage metadata and binary.</tufts:internal_note>

@@ -63,7 +63,8 @@
                                 <xsl:call-template name="genre"/>
                                 <dc:license>https://creativecommons.org/licenses/by-nc-nd/4.0/</dc:license>
                                 <terms:steward>tisch</terms:steward>
-                                <tufts:qr_note>Metadata reviewed by:amay02</tufts:qr_note>
+                                <tufts:qr_note>Metadata reviewed by: smcdon03 on <xsl:value-of
+                                    select="current-dateTime()"/>.</tufts:qr_note>
                                 <tufts:internal_note><xsl:value-of select="datafield[@tag='910'][1]/subfield[@code = 'a']"/>. Original MARC record creator info: <xsl:value-of select="datafield[@tag='910'][2]/subfield[@code = 'a']"/>.</tufts:internal_note>
                                 <!-- this portion inserts the boilerplate batch displays information -->
                                 <terms:displays_in>dl</terms:displays_in>

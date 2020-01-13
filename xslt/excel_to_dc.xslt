@@ -67,7 +67,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                                 <xsl:call-template name="rights"/>
                                 <xsl:call-template name="license"/>
                                 <tufts:steward>tisch</tufts:steward>
-                                <tufts:qr_note>Metadata reviewed by: amay02 on <xsl:value-of
+                                <tufts:qr_note>Metadata reviewed by: smcdon03 on <xsl:value-of
                                         select="current-dateTime()"/>.</tufts:qr_note>
                                 <xsl:call-template name="original_file_name"/>
                                 <xsl:call-template name="admin_comment"/>
