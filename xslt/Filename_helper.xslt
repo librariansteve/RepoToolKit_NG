@@ -8,19 +8,24 @@ UPDATED ON: 2017-04-02
 This stylesheet creates a template which is called in another stylsheet, and creates a unique filename.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
-    xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcadesc="http://nils.lib.tufts.edu/dcadesc/">
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:marc="http://www.loc.gov/MARC21/slim"
+	xmlns:dcadesc="http://nils.lib.tufts.edu/dcadesc/">
     <xsl:template match="pid"/>
     <xsl:template name="pidname">
         <xsl:param name="pid"/>
         <xsl:value-of
             select="substring-after(pid,'tufts:')"/>
         <xsl:choose>
-            <xsl:when test="format='application/mp4'">.mp4</xsl:when>
-            <xsl:when test="format='image/tiff'">.tif</xsl:when>
-            <xsl:when test="format='Image/tiff'">.tif</xsl:when>
+            <xsl:when test="Format|format='application/mp4'">.mp4</xsl:when>
+            <xsl:when test="Format|format='application/mp3'">.mp3</xsl:when>
+            <xsl:when test="Format|format='image/tiff'">.tif</xsl:when>
+            <xsl:when test="Format|format='image/jpg'">.jpg</xsl:when>
+            <xsl:when test="Format|format='video/quicktime'">.mov</xsl:when>
+            <xsl:when test="Format|format='audio/wav'">.wav</xsl:when>
             <xsl:otherwise>.archival.pdf</xsl:otherwise>
         </xsl:choose>
-    </xsl:template>  
+    </xsl:template>
     <xsl:template match="Accession"/>
     <xsl:template name="filename">
         <xsl:param name="file"/>
@@ -28,13 +33,19 @@ This stylesheet creates a template which is called in another stylsheet, and cre
             select="replace(replace(Accession,'.pdf',''),'[^0-9A-Za-z]','_')"/>
             <xsl:choose>
             <xsl:when test="Format|format='application/mp4'">.mp4</xsl:when>
+            <xsl:when test="Format|format='application/mp3'">.mp3</xsl:when>
             <xsl:when test="Format|format='image/tiff'">.tif</xsl:when>
-            <xsl:when test="Format|format='Image/tiff'">.tif</xsl:when>
+            <xsl:when test="Format|format='image/jpg'">.jpg</xsl:when>
+            <xsl:when test="Format|format='video/quicktime'">.mov</xsl:when>
+            <xsl:when test="Format|format='audio/wav'">.wav</xsl:when>
             <xsl:otherwise>.pdf</xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <xsl:template match="datafield[@tag = '955']"/>
+    <xsl:template match="marc:datafield[@tag = '035']"/>
     <xsl:template name="archive_name">
         <xsl:param name="file"/>
-        <xsl:value-of select="datafield[@tag = '955']/subfield[@code = 'q']"/>.pdf</xsl:template>
+        <xsl:value-of select="replace(marc:datafield[@tag = '035']/marc:subfield[@code = 'a'], '\(OCoLC\)', '')"/>.pdf</xsl:template>
+    <xsl:template name="marc_mp4">
+        <xsl:param name="file"/>
+        <xsl:value-of select="replace(marc:datafield[@tag = '035']/marc:subfield[@code = 'a'], '\(OCoLC\)', '')"/>.mp4</xsl:template>
 </xsl:stylesheet>

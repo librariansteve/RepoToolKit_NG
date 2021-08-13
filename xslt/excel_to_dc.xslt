@@ -45,7 +45,6 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                                 <xsl:call-template name="alternative"/>
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="contributor"/>
-                                <xsl:call-template name="abstract"/>
                                 <xsl:call-template name="description"/>
                                 <xsl:call-template name="source_bibliographicCitation"/>
                                 <xsl:call-template name="bibliographicCitation"/>
@@ -130,6 +129,15 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
             <xsl:when test="Format = 'image/tiff'">
                 <model:hasModel>Image</model:hasModel>
             </xsl:when>
+            <xsl:when test="Format = 'image/jpg'">
+                <model:hasModel>Image</model:hasModel>
+            </xsl:when>
+            <xsl:when test="Format = 'video/quicktime'">
+                <model:hasModel>Video</model:hasModel>
+            </xsl:when>
+            <xsl:when test="Format = 'audio/wav'">
+                <model:hasModel>Audio</model:hasModel>
+            </xsl:when>
             <xsl:otherwise>
                 <model:hasModel>Pdf</model:hasModel>
             </xsl:otherwise>
@@ -165,26 +173,10 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
-    <xsl:template match="Description" name="abstract">
-        <xsl:choose>
-            <xsl:when test="Description[contains(text(), '|')]">
-                <dc:abstract>
-                    <xsl:value-of
-                        select="normalize-space(replace(substring-before(Description, '|'), 'Description: ', ''))"
-                    />
-                </dc:abstract>
-            </xsl:when>
-            <xsl:otherwise>
-                <dc:abstract>
-                    <xsl:value-of select="normalize-space(Description)"/>
-                </dc:abstract>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
     <xsl:template match="Description" name="description">
         <xsl:call-template name="DescriptionSplit">
             <xsl:with-param name="descriptionText">
-                <xsl:value-of select="normalize-space(substring-after(Description, '|'))"/>
+                <xsl:value-of select="normalize-space(Description)"/>
             </xsl:with-param>
         </xsl:call-template>
     </xsl:template>
@@ -245,6 +237,21 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
         <xsl:choose>
             <xsl:when test="Process[contains(text(), 'Trove')]">
                 <dc:type>http://purl.org/dc/dcmitype/Image</dc:type>
+            </xsl:when>
+            <xsl:when test="Format = 'application/mp4'">
+                <dc:type>http://purl.org/dc/dcmitype/MovingImage</dc:type>
+            </xsl:when>
+            <xsl:when test="Format = 'image/tiff'">
+                <dc:type>http://purl.org/dc/dcmitype/Image</dc:type>
+            </xsl:when>
+            <xsl:when test="Format = 'image/jpg'">
+                <dc:type>http://purl.org/dc/dcmitype/Image</dc:type>
+            </xsl:when>
+            <xsl:when test="Format = 'video/quicktime'">
+                <dc:type>http://purl.org/dc/dcmitype/MovingImage</dc:type>
+            </xsl:when>
+            <xsl:when test="Format = 'audio/wav'">
+                <dc:type>http://purl.org/dc/dcmitype/Sound</dc:type>
             </xsl:when>
             <xsl:otherwise>
                 <dc:type>http://purl.org/dc/dcmitype/Text</dc:type>
@@ -330,7 +337,6 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                 <tufts:internal_note>StudentScholarshipIngest: <xsl:value-of
                         select="current-dateTime()"/>; Tisch manages metadata and
                     binary.</tufts:internal_note>
-                <tufts:memberOf>9880vq98q</tufts:memberOf>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Nutrition')]">
                 <tufts:internal_note>NutritionBatchTransform: <xsl:value-of
@@ -367,7 +373,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                 <edm:rights>http://sites.tufts.edu/dca/about-us/research-help/reproductions-and-use/</edm:rights>
             </xsl:when>
             <xsl:otherwise>
-                <edm:rights>http://creativecommons.org/licenses/by-nc-sa/3.0/</edm:rights>
+                <edm:rights><xsl:value-of select="normalize-space(License)"/></edm:rights>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
