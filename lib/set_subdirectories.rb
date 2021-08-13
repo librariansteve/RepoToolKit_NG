@@ -32,6 +32,7 @@ module CreateSubdirectories
   def inhouse_subfolders
     Dir.mkdir('xml')
     Dir.mkdir('pdf')
+    Dir.mkdir('mrc')
     self
   end
 end

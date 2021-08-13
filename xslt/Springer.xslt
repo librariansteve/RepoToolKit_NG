@@ -55,8 +55,7 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                                 <dc:type>Text</dc:type>
                                 <dc:format>application/pdf</dc:format>
                                 <tufts:steward>tisch</tufts:steward>
-                                <tufts:qr_note>Metadata reviewed by: smcdon03 on <xsl:value-of
-                                    select="current-dateTime()"/>.</tufts:qr_note>
+                                <tufts:qr_note>smcdon03</tufts:qr_note>
                                 <tufts:internal_note>SpringerBatchTransform: <xsl:value-of
                                     select="current-dateTime()"/>; Tisch manages metadata and
                                     binary.</tufts:internal_note>

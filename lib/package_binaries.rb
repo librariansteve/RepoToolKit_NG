@@ -6,7 +6,7 @@ module PackageBinaries
   def package
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('*.xml').empty?
-      FileUtils.mv Dir.glob('*.xml'), 'xml'
+      FileUtils.mv Dir.glob('**/*.xml'), 'xml'
       Dir.chdir('xml')
       Dir.entries('.').each do |entry|
         puts entry
