@@ -33,4 +33,16 @@ module Transforms
     `java -cp #{$saxon_path} net.sf.saxon.Transform xml/*.xml -t -xsl:#{$xslt_path}/subject.xslt -o:xml/subject_update.txt`
     self
   end
+
+  def transform_it_licensed_video
+    `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:inHouse.xml -xsl:#{$xslt_path}/licensed_video.xslt -o:./ingestThis.xml`
+    `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:ingestThis.xml -xsl:#{$xslt_path}/subject.xslt -o:./subjects.txt`
+    self
+  end
+
+  def transform_it_licensed_pdf
+    `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:inHouse.xml -xsl:#{$xslt_path}/licensed_pdf.xslt -o:./ingestThis.xml`
+    `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:ingestThis.xml -xsl:#{$xslt_path}/subject.xslt -o:./subjects.txt`
+    self
+  end
 end

@@ -73,6 +73,39 @@ end
 class SubjectAnalysis < TuftsScholarship
   include AnalyzeIt
 end
+# Specific ingest issues for MARC xml
+class LicensedVideoIngest < TuftsScholarship
+  include Rename
+
+  def extract
+    inhouse_subfolders
+  end
+
+  def transform
+    rename_mrc_xml.transform_it_licensed_video.rename_xml_to_original
+  end
+
+  def finish
+    package.postprocess_alma_xml.close_directories.qa_it
+  end
+end
+# Specific ingest issues for MARC xml
+class LicensedPDFIngest < TuftsScholarship
+  include Rename
+
+  def extract
+    inhouse_subfolders
+  end
+
+  def transform
+    rename_mrc_xml.transform_it_licensed_pdf.rename_xml_to_original
+  end
+
+  def finish
+    package.postprocess_alma_xml.close_directories.qa_it
+  end
+end
+
 
 $is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 $prompt = '> '
@@ -94,11 +127,12 @@ else
   system ("clear")
 end
 
-require 'colorized_string'
+# require 'colorized_string'
 
 puts '***************************************************'
 puts
-puts ColorizedString['Welcome to the Repository Toolkit for MIRA 2.0!'].colorize(:cyan).underline
+#puts ColorizedString['Welcome to the Repository Toolkit for MIRA 2.0!'].colorize(:cyan).underline
+puts 'Welcome to the Repository Toolkit for MIRA 2.0!'
 puts
 puts 'What would you like to process?'
 puts
@@ -111,7 +145,9 @@ puts '6. Proquest Electronic Disertations and Theses.'
 puts '7. In-House digitized books.'
 puts '8. Subject Analysis.'
 puts '9. SMFA Artist Books.'
-puts '10. Exit.'
+puts '10. Licensed Streaming Video.'
+puts '11. Licensed PDF.'
+puts '12. Exit.'
 puts
 
 print $prompt
@@ -181,7 +217,21 @@ while input = gets.chomp.strip
     a_new_smfa_ingest.extract.smfa.excel.collection.transform.finish
     break
 
-  when '10', '10.', '10. Exit', 'Exit', 'exit'
+  when '10', '10.', 'Video'
+    puts
+    puts 'Launching the Licensed Streaming Video script.'
+    a_new_licensed_video_ingest = LicensedVideoIngest.new
+    a_new_licensed_video_ingest.extract.transform.finish
+    break
+
+  when '11', '11.', 'PDF'
+    puts
+    puts 'Launching the Licensed PDF script.'
+    a_new_licensed_pdf_ingest = LicensedPDFIngest.new
+    a_new_licensed_pdf_ingest.extract.transform.finish
+    break
+
+  when '12', '12.', '12. Exit', 'Exit', 'exit'
     puts
     puts 'Goodbye.'
     break
