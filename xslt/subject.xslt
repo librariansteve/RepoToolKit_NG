@@ -47,6 +47,14 @@
                 </xsl:for-each>
             </xsl:for-each>
         </xsl:variable>
+        <xsl:variable name="deptname">
+            <xsl:for-each select="//tufts:creator_department">
+                <xsl:sort select="self::tufts:creator_department"/>
+                <xsl:for-each select="self::tufts:creator_department[not(.=following::tufts:creator_department)]">
+                    <xsl:value-of select="replace(.,'(\w$|\W$)','$1&#xD;')"/>
+                </xsl:for-each>
+            </xsl:for-each>
+        </xsl:variable>
         <xsl:variable name="geogname">
             <xsl:for-each select="//dc:spatial">
                 <xsl:sort select="self::dc:spatial"/>
@@ -111,6 +119,10 @@ Subjects:
             
 <xsl:value-of select="$corpname"/>
             
+            Department Names 
+            
+            <xsl:value-of select="$deptname"/>
+
             Geographic Terms 
 
 <xsl:value-of select="$geogname"/> 

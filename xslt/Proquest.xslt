@@ -75,7 +75,7 @@
         <tufts:filename type="representative">
             <xsl:value-of select="//DISS_binary"/>
         </tufts:filename>
-    </xsl:template>
+	</xsl:template>
     <xsl:template match="//DISS_title" name="title">
         <dc:title>
             <xsl:value-of select="normalize-space(replace(//DISS_title, '\.+$', '.'))"/>
@@ -242,7 +242,7 @@
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0845')]">
-                <dc:isPartOf>Tufts University. Sackler School of Graduate Biomedical Sciences.
+                <dc:isPartOf>Tufts University. Tufts Graduate School of Biomedical Sciences.
                     Theses and Dissertations.</dc:isPartOf>
             </xsl:when>
             <xsl:when
@@ -266,167 +266,165 @@
         <xsl:choose>
             <xsl:when
                 test="//DISS_inst_contact[1][contains(text(), 'Diplomacy, History, and Politics')]">
-                <mads:CorporateName>Fletcher School of Law and Diplomacy.</mads:CorporateName>
+                <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Chemistry')]">
-                <mads:CorporateName>Tufts University. Department of Chemistry.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Chemistry.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Art')]">
-                <mads:CorporateName>Tufts University. Department of Art and Art
-                    History.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of the History of Art and
+                    Architecture.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Biology')]">
-                <mads:CorporateName>Tufts University. Department of Biology.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Biology.</tufts:creator_department>
             </xsl:when>
-            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Biomedical')]">
-                <mads:CorporateName>Tufts University. Department of Biomedical
-                    Engineering.</mads:CorporateName>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Biomedical Engineering')]">
+                <tufts:creator_department>Tufts University. Department of Biomedical
+                    Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Biological')]">
-                <mads:CorporateName>Tufts University. Department of Chemical and Biological
-                    Engineering.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Chemical and Biological
+                    Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Civil')]">
-                <mads:CorporateName>Tufts University. Department of Civil and Environmental
-                    Engineering.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Civil and Environmental
+                    Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Classics')]">
-                <mads:CorporateName>Tufts University. Department of Classics.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Classical Studies.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Classical')]">
+                <tufts:creator_department>Tufts University. Department of Classical Studies.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Computer')]">
-                <mads:CorporateName>Tufts University. Department of Computer
-                    Science.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Computer
+                    Science.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Drama')]">
-                <mads:CorporateName>Tufts University. Department of Drama and
-                    Dance.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Theatre, Dance and
+                    Performance Studies.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Drama')]">
-                <mads:CorporateName>Tufts University. Department of Drama and
-                    Dance.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Theatre, Dance and
+                    Performance Studies.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Economics')]">
-                <mads:CorporateName>Tufts University. Department of Economics.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Economics.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Education')]">
-                <mads:CorporateName>Tufts University. Department of Education.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Education.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Electrical')]">
-                <mads:CorporateName>Tufts University. Department of Electrical and Computer
-                    Engineering.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Electrical and Computer
+                    Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'English')]">
-                <mads:CorporateName>Tufts University. Department of English.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of English.</tufts:creator_department>
             </xsl:when>
-            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'History')]">
-                <mads:CorporateName>Tufts University. Department of History.</mads:CorporateName>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Department of History')]">
+                <tufts:creator_department>Tufts University. Department of History.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Mathematics')]">
-                <mads:CorporateName>Tufts University. Department of
-                    Mathematics.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of
+                    Mathematics.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Mechanical')]">
-                <mads:CorporateName>Tufts University. Department of Mechanical
-                    Engineering.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Mechanical
+                    Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Music')]">
-                <mads:CorporateName>Tufts University. Department of Music.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Music.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Physics')]">
-                <mads:CorporateName>Tufts University. Department of Physics and
-                    Astronomy.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Physics and
+                    Astronomy.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Psychology')]">
-                <mads:CorporateName>Tufts University. Department of Psychology.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Psychology.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Urban')]">
-                <mads:CorporateName>Tufts University. Department of Urban and Environmental Policy
-                    and Planning.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Department of Urban and Environmental Policy
+                    and Planning.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Child')]">
-                <mads:CorporateName>Tufts University. Eliot-Pearson Department of Child
-                    Development.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Eliot-Pearson Department of Child
+                    Study and Human Development.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Nutrition')]">
-                <mads:CorporateName>Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science
-                    and Policy.</mads:CorporateName>
+                <tufts:creator_department>Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science
+                    and Policy.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Fletcher')]">
-                <mads:CorporateName>Fletcher School of Law and Diplomacy.</mads:CorporateName>
+                <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Dental')]">
-                <mads:CorporateName>Tufts University. School of Dental
-                    Medicine.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. School of Dental
+                    Medicine.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Occupational')]">
-                <mads:CorporateName>Tufts University. Occupational Therapy
-                    Department.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. Occupational Therapy
+                    Department.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Interdisciplinary')]">
-                <mads:CorporateName>Tufts University.Graduate School of Arts and
-                    Sciences.</mads:CorporateName>
-            </xsl:when>
-            <xsl:when
-                test="//DISS_inst_contact[1][contains(text(), 'School of Nutrition')] | //DISS_inst_name[1][contains(text(), 'School of Nutrition')]">
-                <mads:CorporateName>Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science
-                    and Policy.</mads:CorporateName>
+                <tufts:creator_department>Tufts University.Graduate School of Arts and
+                    Sciences.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_name[1][contains(text(), 'Dental')]">
-                <mads:CorporateName>Tufts University. School of Dental
-                    Medicine.</mads:CorporateName>
+                <tufts:creator_department>Tufts University. School of Dental
+                    Medicine.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Biochemistry')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Biochemistry.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Biochemistry')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Biochemistry.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Cell')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences Department of
-                    Cell, Molecular and Developmental Biology.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Cell')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Cell, Molecular and Developmental Biology.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Cellular')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Cellular and Molecular Physiology.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Cellular')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Cellular and Molecular Physiology.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Translational')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Clinical and Translational Science.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Translational')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Clinical and Translational Science.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Clinical Research')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Clinical Research.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Clinical Research')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Clinical Research.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Immunology')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Immunology.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Immunology')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Immunology.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Genetics')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Genetics.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Genetics')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Genetics.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Microbiology')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Molecular Microbiology.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Microbiology')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Molecular Microbiology.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Neuroscience')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Neuroscience.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Neuroscience')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Neuroscience
+                    Program.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Therapeutics')]">
-                <mads:CorporateName>Sackler School of Graduate Biomedical Sciences. Department of
-                    Pharmacology and Experimental Therapeutics.</mads:CorporateName>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Therapeutics')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
+                    Pharmacology and Experimental Therapeutics.</tufts:creator_department>
             </xsl:when>
             <xsl:otherwise>
-                <mads:CorporateName>NONEFOUND</mads:CorporateName>
+                <tufts:creator_department>NONEFOUND</tufts:creator_department>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -443,7 +441,7 @@
     <xsl:template match="//DISS_submission" name="embargo">
         <xsl:choose>
             <xsl:when test="/DISS_submission[@embargo_code = '1']">
-                <terms:embargo>
+                <terms:embargo_release_date>
                     <xsl:value-of
                         select="replace(./DISS_submission/DISS_description/DISS_dates/DISS_accept_date, '(\d{2})/(\d{2})/((\d{4}))', '$3-')"/>
                     <xsl:value-of
@@ -451,39 +449,39 @@
                     <xsl:value-of
                         select="replace(./DISS_submission/DISS_description/DISS_dates/DISS_accept_date, '(\d{2})/(\d{2})/((\d{4}))', '-$2')"
                     />
-                </terms:embargo>
+                </terms:embargo_release_date>
             </xsl:when>
             <xsl:when test="/DISS_submission[@embargo_code = '2']">
-                <terms:embargo>
+                <terms:embargo_release_date>
                     <xsl:value-of
                         select="number(replace(./DISS_submission/DISS_description/DISS_dates/DISS_accept_date, '(\d{2})/(\d{2})/((\d{4}))', '$3')) + 1"/>
                     <xsl:value-of
                         select="replace(./DISS_submission/DISS_description/DISS_dates/DISS_accept_date, '(\d{2})/(\d{2})/((\d{4}))', '-$1-$2')"
                     />
-                </terms:embargo>
+                </terms:embargo_release_date>
             </xsl:when>
             <xsl:when test="/DISS_submission[@embargo_code = '3']">
-                <terms:embargo>
+                <terms:embargo_release_date>
                     <xsl:value-of
                         select="number(replace(./DISS_submission/DISS_description/DISS_dates/DISS_accept_date, '(\d{2})/(\d{2})/((\d{4}))', '$3')) + 2"/>
                     <xsl:value-of
                         select="replace(./DISS_submission/DISS_description/DISS_dates/DISS_accept_date, '(\d{2})/(\d{2})/((\d{4}))', '-$1-$2')"
                     />
-                </terms:embargo>
+                </terms:embargo_release_date>
             </xsl:when>
             <xsl:when
                 test="/DISS_submission[@embargo_code = '4'] and /DISS_submission/DISS_restriction/DISS_sales_restriction[@remove = '']">
-                <terms:embargo> 2999 </terms:embargo>
+                <terms:embargo_release_date> 2999 </terms:embargo_release_date>
             </xsl:when>
             <xsl:when test="/DISS_submission[@embargo_code = '4']">
-                <terms:embargo>
+                <terms:embargo_release_date>
                     <xsl:value-of
                         select="normalize-space(replace(/DISS_submission/DISS_restriction/DISS_sales_restriction/@remove, '(\d{2})/(\d{2})/((\d{4}))', '$3-$1-$2'))"
                     />
-                </terms:embargo>
+                </terms:embargo_release_date>
             </xsl:when>
             <xsl:otherwise>
-                <terms:embargo/>
+                <terms:embargo_release_date/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
