@@ -21,7 +21,7 @@ This stylesheet creates a template which is called in another stylsheet, and par
             <xsl:text> </xsl:text>
         </xsl:param>
         <xsl:variable name="str">
-            <xsl:for-each select="subfield">
+            <xsl:for-each select="marc:subfield">
                 <xsl:if test="contains($codes, @code)">
                     <xsl:value-of select="text()"/>
                     <xsl:value-of select="$delimeter"/>
@@ -37,7 +37,7 @@ This stylesheet creates a template which is called in another stylsheet, and par
             <xsl:text> </xsl:text>
         </xsl:param>
         <xsl:variable name="str">
-            <xsl:for-each select="subfield">
+            <xsl:for-each select="marc:subfield">
                 <xsl:if test="contains($codes, @code)">
                     <xsl:value-of select="text()"/>
                     <xsl:value-of select="$delimeter"/>
