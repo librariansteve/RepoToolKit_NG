@@ -47,6 +47,7 @@
                                 <xsl:call-template name="provenance"/>
                                 <xsl:call-template name="binding"/>
                                 <xsl:call-template name="indexed_in"/>
+                                <xsl:call-template name="summary"/>
                                 <xsl:call-template name="isbn"/>
                                 <xsl:call-template name="oclc_number"/>
                                 <xsl:call-template name="language"/>
@@ -94,7 +95,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="alternative">
         <xsl:for-each
-            select="marc:datafield[@tag = '246']/marc:subfield[@code = 'a'] | marc:datafield[@tag = '240']">
+            select="marc:datafield[@tag = '246'][1]/marc:subfield[@code = 'a'] | marc:datafield[@tag = '240'][1]">
             <dc:alternative>
                 <xsl:value-of select="normalize-space(.)"/>.
             </dc:alternative>
@@ -171,6 +172,16 @@
             <xsl:when test="marc:datafield[@tag = '510'][text()]">
                 <xsl:for-each select="marc:datafield[@tag = '510']">
                     <dc11:description>Indexed in: <xsl:value-of select="normalize-space(.)"/>
+                    </dc11:description>
+                </xsl:for-each>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template match="@tag" name="summary">
+        <xsl:choose>
+            <xsl:when test="marc:datafield[@tag = '520'][text()]">
+                <xsl:for-each select="marc:datafield[@tag = '520']">
+                    <dc11:description>summary: <xsl:value-of select="normalize-space(.)"/>
                     </dc11:description>
                 </xsl:for-each>
             </xsl:when>
@@ -257,14 +268,14 @@
                     <xsl:value-of select="marc:datafield[@tag = '776'][1]"/>
                 </dc:source>
             </xsl:when>
-			<xsl:when test=".//marc:datafield[@tag = '264'][@ind2='1']">
+			<xsl:when test=".//marc:datafield[@tag = '264'][@ind2='1'][1]">
                 <dc:source>Original print publication: <xsl:value-of
                     select="normalize-space(marc:datafield[@tag = '264'][@ind2='1'])"
                 /></dc:source>
             </xsl:when>
             <xsl:otherwise>
                 <dc:source>Original print publication: <xsl:value-of
-                    select="normalize-space(marc:datafield[@tag = '260'])"
+                    select="normalize-space(marc:datafield[@tag = '260'][1])"
                 /></dc:source>
             </xsl:otherwise>
         </xsl:choose>

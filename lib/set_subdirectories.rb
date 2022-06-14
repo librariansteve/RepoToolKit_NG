@@ -2,7 +2,6 @@
 module CreateSubdirectories
   def excel_subfolders
     Dir.mkdir('xml')
-    Dir.mkdir('excel')
     unless Dir.glob('*.pdf').empty?
       Dir.mkdir('pdf')
     end

@@ -47,6 +47,7 @@
                                 <xsl:call-template name="provenance"/>
                                 <xsl:call-template name="binding"/>
                                 <xsl:call-template name="indexed_in"/>
+                                <xsl:call-template name="summary"/>
                                 <xsl:call-template name="isbn"/>
                                 <xsl:call-template name="oclc_number"/>
                                 <xsl:call-template name="language"/>
@@ -93,7 +94,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="alternative">
         <xsl:for-each
-            select="marc:datafield[@tag = '246']/marc:subfield[@code = 'a'] | marc:datafield[@tag = '240']">
+            select="marc:datafield[@tag = '246'][1]/marc:subfield[@code = 'a'] | marc:datafield[@tag = '240'][1]">
             <dc:alternative>
                 <xsl:value-of select="normalize-space(.)"/>.
             </dc:alternative>
@@ -170,6 +171,16 @@
             <xsl:when test="marc:datafield[@tag = '510'][text()]">
                 <xsl:for-each select="marc:datafield[@tag = '510']">
                     <dc11:description>Indexed in: <xsl:value-of select="normalize-space(.)"/>
+                    </dc11:description>
+                </xsl:for-each>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template match="@tag" name="summary">
+        <xsl:choose>
+            <xsl:when test="marc:datafield[@tag = '520'][text()]">
+                <xsl:for-each select="marc:datafield[@tag = '520']">
+                    <dc11:description>Summary: <xsl:value-of select="normalize-space(.)"/>
                     </dc11:description>
                 </xsl:for-each>
             </xsl:when>

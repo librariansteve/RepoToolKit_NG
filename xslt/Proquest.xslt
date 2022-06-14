@@ -36,7 +36,6 @@
                                 <model:hasModel>Pdf</model:hasModel>
                                 <tufts:visibility>open</tufts:visibility>
                                 <tufts:memberOf>4f16c2806</tufts:memberOf>
-                                <tufts:memberOf>nk322d32h</tufts:memberOf>
                                 <xsl:call-template name="title"/>
                                 <xsl:call-template name="creator"/>
                                 <xsl:call-template name="abstract"/>
@@ -46,8 +45,7 @@
                                 <xsl:call-template name="committee"/>
                                 <xsl:call-template name="keywords"/>
                                 <xsl:call-template name="institution"/>
-                                <dc:isPartOf>Tufts University electronic theses and
-                                    dissertations.</dc:isPartOf>
+                                <dc:isPartOf>Tufts University electronic theses and dissertations.</dc:isPartOf>
                                 <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
                                 <xsl:call-template name="date"/>
                                 <dc:created>
@@ -56,12 +54,13 @@
                                 <xsl:call-template name="dcaterms_department"/>
                                 <dc:type>Text</dc:type>
                                 <dc:format>application/pdf</dc:format>
+                                <mads:GenreForm>Tufts dissertations and theses.</mads:GenreForm>
+                                <mads:GenreForm>Academic theses.</mads:GenreForm>
                                 <terms:steward>dca</terms:steward>
                                 <tufts:qr_note>Metadata reviewed by: smcdon03 on <xsl:value-of
                                     select="current-dateTime()"/>.</tufts:qr_note>
                                 <tufts:internal_note>ProquestBatchTransform: <xsl:value-of
-                                        select="current-dateTime()"/>; Tisch and DCA allowed to
-                                    manage metadata and binary.</tufts:internal_note>
+                                    select="current-dateTime()"/>; Tisch and DCA allowed to manage metadata and binary.</tufts:internal_note>
                                 <xsl:call-template name="displays"/>
                                 <xsl:call-template name="embargo"/>
                             </mira_import>
@@ -150,6 +149,14 @@
                 </dc11:description>
             </xsl:otherwise>
         </xsl:choose>
+		<xsl:for-each
+		    select="/DISS_submission/DISS_description/DISS_advisor/DISS_name">
+		    <dc11:contributor>
+                <xsl:value-of select="normalize-space(DISS_surname)"/>
+                <xsl:text>, </xsl:text>
+                <xsl:value-of select="normalize-space(DISS_fname)"/>
+		    </dc11:contributor>
+        </xsl:for-each>
     </xsl:template>
     <xsl:template match="//DISS_cmte_member" name="committee">
         <xsl:choose>
@@ -224,36 +231,38 @@
         <xsl:choose>
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0930')]">
-                <dc:isPartOf>Tufts University. Fletcher School of Law and Diplomacy. Theses and
-                    Dissertations.</dc:isPartOf>
+                <dc:isPartOf>Tufts University. Fletcher School of Law and Diplomacy. Theses and Dissertations.</dc:isPartOf>
+                <tufts:memberOf>9g54xz56n</tufts:memberOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0234')] and //DISS_inst_contact[contains(text(), 'Engineering')]">
-                <dc:isPartOf>Tufts University. School of Engineering. Theses and
-                    Dissertations.</dc:isPartOf>
+                <dc:isPartOf>Tufts University. School of Engineering. Theses and Dissertations.</dc:isPartOf>
+                <tufts:memberOf>kw52jp30s</tufts:memberOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0234')] and //DISS_inst_contact[not(contains(text(), 'Engineering'))]">
-                <dc:isPartOf>Tufts University. Graduate School of Arts and Sciences. Theses and
-                    Dissertations.</dc:isPartOf>
+                <dc:isPartOf>Tufts University. Graduate School of Arts and Sciences. Theses and Dissertations.</dc:isPartOf>
+                <tufts:memberOf>6q183162k</tufts:memberOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0845')]">
-                <dc:isPartOf>Tufts University. Tufts Graduate School of Biomedical Sciences.
-                    Theses and Dissertations.</dc:isPartOf>
+                <dc:isPartOf>Tufts University. Tufts Graduate School of Biomedical Sciences. Theses and Dissertations.</dc:isPartOf>
+                <tufts:memberOf>t722hq69n</tufts:memberOf>
             </xsl:when>
+
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '1546')]">
-                <dc:isPartOf>Tufts University. Gerald J. &amp; Dorothy R. Friedman School of
-                    Nutrition Science and Policy. Theses and Dissertations.</dc:isPartOf>
+                <dc:isPartOf>Tufts University. Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science and Policy. Theses and Dissertations.</dc:isPartOf>
+                <tufts:memberOf>th83mc242</tufts:memberOf>
             </xsl:when>
+
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '1547')]">
-                <dc:isPartOf>Tufts University. School of Dental Medicine. Theses and
-                    Dissertations.</dc:isPartOf>
+                <dc:isPartOf>Tufts University. School of Dental Medicine. Theses and Dissertations.</dc:isPartOf>
+                <tufts:memberOf>fj236h191</tufts:memberOf>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -271,24 +280,23 @@
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Chemistry')]">
                 <tufts:creator_department>Tufts University. Department of Chemistry.</tufts:creator_department>
             </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Agriculture')]">
+                <tufts:creator_department>Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science and Policy.</tufts:creator_department>
+            </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Art')]">
-                <tufts:creator_department>Tufts University. Department of the History of Art and
-                    Architecture.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of the History of Art and Architecture.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Biology')]">
                 <tufts:creator_department>Tufts University. Department of Biology.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Biomedical Engineering')]">
-                <tufts:creator_department>Tufts University. Department of Biomedical
-                    Engineering.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Biomedical Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Biological')]">
-                <tufts:creator_department>Tufts University. Department of Chemical and Biological
-                    Engineering.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Chemical and Biological Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Civil')]">
-                <tufts:creator_department>Tufts University. Department of Civil and Environmental
-                    Engineering.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Civil and Environmental Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Classics')]">
                 <tufts:creator_department>Tufts University. Department of Classical Studies.</tufts:creator_department>
@@ -297,16 +305,13 @@
                 <tufts:creator_department>Tufts University. Department of Classical Studies.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Computer')]">
-                <tufts:creator_department>Tufts University. Department of Computer
-                    Science.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Computer Science.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Dance')]">
+                <tufts:creator_department>Tufts University. Department of Theatre, Dance and Performance Studies.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Drama')]">
-                <tufts:creator_department>Tufts University. Department of Theatre, Dance and
-                    Performance Studies.</tufts:creator_department>
-            </xsl:when>
-            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Drama')]">
-                <tufts:creator_department>Tufts University. Department of Theatre, Dance and
-                    Performance Studies.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Theatre, Dance and Performance Studies.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Economics')]">
                 <tufts:creator_department>Tufts University. Department of Economics.</tufts:creator_department>
@@ -315,113 +320,107 @@
                 <tufts:creator_department>Tufts University. Department of Education.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Electrical')]">
-                <tufts:creator_department>Tufts University. Department of Electrical and Computer
-                    Engineering.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Electrical and Computer Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'English')]">
                 <tufts:creator_department>Tufts University. Department of English.</tufts:creator_department>
             </xsl:when>
-            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Department of History')]">
+            <xsl:when test="//DISS_inst_contact[1][matches(text(), 'History')]">
                 <tufts:creator_department>Tufts University. Department of History.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Mathematics')]">
-                <tufts:creator_department>Tufts University. Department of
-                    Mathematics.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Mathematics.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Mechanical')]">
-                <tufts:creator_department>Tufts University. Department of Mechanical
-                    Engineering.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Mechanical Engineering.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Music')]">
                 <tufts:creator_department>Tufts University. Department of Music.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Physics')]">
-                <tufts:creator_department>Tufts University. Department of Physics and
-                    Astronomy.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Physics and Astronomy.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Romance')]">
+                <tufts:creator_department>Tufts University. Department of Romance Languages.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Psychology')]">
                 <tufts:creator_department>Tufts University. Department of Psychology.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Urban')]">
-                <tufts:creator_department>Tufts University. Department of Urban and Environmental Policy
-                    and Planning.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Department of Urban and Environmental Policy and Planning.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Child')]">
-                <tufts:creator_department>Tufts University. Eliot-Pearson Department of Child
-                    Study and Human Development.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Eliot-Pearson Department of Child Study and Human Development.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Nutrition')]">
-                <tufts:creator_department>Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science
-                    and Policy.</tufts:creator_department>
+                <tufts:creator_department>Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science and Policy.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Fletcher')]">
                 <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
             </xsl:when>
+			<xsl:when test="//DISS_inst_contact[1][contains(text(), 'Posthodontics')]">
+                <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
+            </xsl:when>
+			<xsl:when test="//DISS_inst_contact[1][contains(text(), 'Orthodontics')]">
+                <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
+            </xsl:when>
+			<xsl:when test="//DISS_inst_contact[1][contains(text(), 'Periodontology')]">
+                <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
+            </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Dental')]">
-                <tufts:creator_department>Tufts University. School of Dental
-                    Medicine.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Dentistry')]">
+                <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Endodontics')]">
+                <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Occupational')]">
-                <tufts:creator_department>Tufts University. Occupational Therapy
-                    Department.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Occupational Therapy Department.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Interdisciplinary')]">
-                <tufts:creator_department>Tufts University.Graduate School of Arts and
-                    Sciences.</tufts:creator_department>
-            </xsl:when>
-            <xsl:when test="//DISS_inst_name[1][contains(text(), 'Dental')]">
-                <tufts:creator_department>Tufts University. School of Dental
-                    Medicine.</tufts:creator_department>
+                <tufts:creator_department>Tufts University. Graduate School of Arts and Sciences.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Biochemistry')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Biochemistry.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Biochemistry.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Cell')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Cell, Molecular and Developmental Biology.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Cell, Molecular and Developmental Biology.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Cellular')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Cellular and Molecular Physiology.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Cellular and Molecular Physiology.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Translational')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Clinical and Translational Science.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Clinical and Translational Science.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Clinical Research')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Clinical Research.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Clinical Research.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Immunology')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Immunology.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Immunology.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Genetics')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Genetics.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Genetics.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Microbiology')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Molecular Microbiology.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Molecular Microbiology.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Neuroscience')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Neuroscience
-                    Program.</tufts:creator_department>
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Neuroscience Program.</tufts:creator_department>
             </xsl:when>
             <xsl:when
-                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Therapeutics')]">
-                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of
-                    Pharmacology and Experimental Therapeutics.</tufts:creator_department>
+                test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Pharmacology')]">
+                <tufts:creator_department>Tufts Graduate School of Biomedical Sciences. Department of Pharmacology and Drug Development.</tufts:creator_department>
             </xsl:when>
             <xsl:otherwise>
                 <tufts:creator_department>NONEFOUND</tufts:creator_department>

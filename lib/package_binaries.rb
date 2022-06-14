@@ -22,6 +22,7 @@ module PackageBinaries
     end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('**/*.xlsx').empty?
+	  Dir.mkdir('excel')
       FileUtils.mv Dir.glob('**/*.xlsx'), 'excel'
       Dir.chdir('excel')
       Dir.entries('.').each do |entry|

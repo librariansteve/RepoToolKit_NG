@@ -12,14 +12,16 @@ module Transforms
   end
 
   def transform_it_springer
-    `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:collection.xml -xsl:#{$xslt_path}/Springer.xslt -o:ingestThis.xml`
+    `java -cp  net.sf.saxon.Transform -t -s:collection.xml -xsl:#{$xslt_path}/Springer.xslt -o:ingestThis.xml`
     `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:ingestThis.xml -xsl:#{$xslt_path}/subject.xslt -o:subjects.txt`
     self
   end
 
   def transform_it_proquest
+  puts "Test 1"
     `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:collection.xml -xsl:#{$xslt_path}/Proquest.xslt -o:./ingestThis.xml`
     `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:ingestThis.xml -xsl:#{$xslt_path}/subject.xslt -o:./subjects.txt`
+  puts "test 2"
     self
   end
 

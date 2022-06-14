@@ -11,6 +11,7 @@ class TuftsScholarship
   include CleanUpXML
   include QA
 end
+
 # Excel ingest processes
 class ExcelBasedIngest < TuftsScholarship
   include ToRoo
@@ -109,7 +110,8 @@ end
 
 $is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 $prompt = '> '
-$saxon_path = ENV['SAXON_PATH']
+#$saxon_path = ENV['SAXON_PATH']
+$saxon_path = "C:/Users/manti/OneDrive/Documents/SaxonHE10-1J/saxon-he-10.1.jar"
 $xslt_path = File.expand_path('../xslt', File.dirname(__FILE__))
 
 if !$saxon_path then
@@ -148,12 +150,21 @@ puts '9. SMFA Artist Books.'
 puts '10. Licensed Streaming Video.'
 puts '11. Licensed PDF.'
 puts '12. Exit.'
+puts '13. Test XML.'
 puts
 
 print $prompt
 # Loop
 while input = gets.chomp.strip
   case input
+    when '13', '13.', 'test'
+    puts
+    puts 'Launching the Test XML script.'
+    a_test_xml = TestXML.new
+    a_test_xml.testit
+    break
+
+  
   when '1', '1.', 'Faculty'
     puts
     puts 'Launching the Faculty Scholarship script.'
