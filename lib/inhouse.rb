@@ -1,7 +1,18 @@
 # renames marcxml file for xslt to process
 module Rename
   def rename_mrc_xml
-    @filex = Dir.glob('*.xml').to_s.gsub(/\[\"|\"\]/, '')
+    files = Dir.glob('*.xml')
+    if files.count() > 1
+      puts 'Directory contains more than 1 XML file:'
+      puts files.to_s
+      puts
+      puts 'Which is the XML file containing the metadata for ingest?'
+      print $prompt
+      @filex = gets.chomp.strip
+    else
+      @filex = files.to_s.gsub(/\[\"|\"\]/, '')
+    end
+    
     File.rename @filex, 'inHouse.xml'
     self
   end

@@ -32,6 +32,7 @@ module CreateSubdirectories
     Dir.mkdir('xml')
     Dir.mkdir('pdf')
     Dir.mkdir('mrc')
+    Dir.mkdir('zip')
     self
   end
 end
