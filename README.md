@@ -42,7 +42,9 @@ For Mac Environment
     Download and install the latest version of Saxon-HE for Java from Saxonica
     Mac & Windows :  use a browser to install from http://www.saxonica.com
     Make note of the full path of the Saxon-HE jar file
+	
     Create a new personal environment variable, named SAXON_PATH, with a value equal to the full path of the Saxon-HE jar file
+	
     Install roo (a ruby gem)
     Mac & Windows :  $ gem install roo
 
@@ -62,6 +64,7 @@ For Mac Environment
     Run the launcher.rb
     Mac & Windows :  $ ruby launcher.rb
     OR click the icon for launcher.rb
+	
     You should now see a welcome screen with a list of options:
 
     Welcome to the Repository Toolkit for MIRA 2.0!

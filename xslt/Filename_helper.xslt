@@ -44,8 +44,8 @@ This stylesheet creates a template which is called in another stylsheet, and cre
     <xsl:template match="marc:datafield[@tag = '035']"/>
     <xsl:template name="archive_name">
         <xsl:param name="file"/>
-        <xsl:value-of select="replace(marc:datafield[@tag = '035']/marc:subfield[@code = 'a'], '\(OCoLC\)', '')"/>.pdf</xsl:template>
+        <xsl:value-of select="replace((marc:datafield[@tag = '035']/marc:subfield[@code = 'a'][starts-with(text(),'(OCoLC)')])[1], '\(OCoLC\)', '')"/>.pdf</xsl:template>
     <xsl:template name="marc_mp4">
         <xsl:param name="file"/>
-        <xsl:value-of select="replace(marc:datafield[@tag = '035']/marc:subfield[@code = 'a'], '\(OCoLC\)', '')"/>.mp4</xsl:template>
+        <xsl:value-of select="replace((marc:datafield[@tag = '035']/marc:subfield[@code = 'a'][starts-with(text(),'(OCoLC)')])[1], '\(OCoLC\)', '')"/>.mp4</xsl:template>
 </xsl:stylesheet>

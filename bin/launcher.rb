@@ -110,8 +110,7 @@ end
 
 $is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
 $prompt = '> '
-#$saxon_path = ENV['SAXON_PATH']
-$saxon_path = "C:/Users/manti/OneDrive/Documents/SaxonHE10-1J/saxon-he-10.1.jar"
+$saxon_path = ENV['SAXON_PATH']
 $xslt_path = File.expand_path('../xslt', File.dirname(__FILE__))
 
 if !$saxon_path then

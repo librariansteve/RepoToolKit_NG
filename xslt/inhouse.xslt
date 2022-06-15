@@ -236,8 +236,8 @@
                 </tufts:oclc>
             </xsl:when>
             <xsl:when test="marc:datafield[@tag = '035']/marc:subfield[@code = 'a'][starts-with(text(),'(OCoLC)')]">
-                <tufts:oclc><xsl:value-of select="replace(marc:datafield[@tag = '035']/marc:subfield[@code = 'a'][starts-with(text(),'(OCoLC)')], '\(OCoLC\)', '')"/>
-                    </tufts:oclc>[1]
+                <tufts:oclc><xsl:value-of select="replace((marc:datafield[@tag = '035']/marc:subfield[@code = 'a'][starts-with(text(),'(OCoLC)')])[1], '\(OCoLC\)', '')"/>
+                    </tufts:oclc>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
