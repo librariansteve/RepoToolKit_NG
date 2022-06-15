@@ -9,6 +9,13 @@ module Rename
       puts 'Which is the XML file containing the metadata for ingest?'
       print $prompt
       @filex = gets.chomp.strip
+	  while files.include?(@filex) == false
+        puts
+        puts @filex + ' is not one of the choices'
+        puts 'Which is the XML file containing the metadata for ingest?'
+        print $prompt
+        @filex = gets.chomp.strip
+      end
     else
       @filex = files.to_s.gsub(/\[\"|\"\]/, '')
     end
