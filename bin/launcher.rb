@@ -2,7 +2,7 @@
 Dir['../lib/*.rb'].each { |f| require_relative f }
 
 # Setting $debug to TRUE will cause additional debug lines to print, helping localize bugs
-$debug = TRUE
+$debug = FALSE
 if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
 
 # Superclass
