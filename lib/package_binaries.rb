@@ -4,6 +4,7 @@ module PackageBinaries
   include SetDirectories
 
   def package
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('*.xml').empty?
       FileUtils.mv Dir.glob('**/*.xml'), 'xml'
@@ -12,6 +13,7 @@ module PackageBinaries
         puts entry
       end
     end
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('*.txt').empty?
       FileUtils.mv Dir.glob('subjects.txt'), 'xml'
@@ -20,6 +22,7 @@ module PackageBinaries
         puts entry
       end
     end
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('**/*.xlsx').empty?
 	  Dir.mkdir('excel')
@@ -29,6 +32,7 @@ module PackageBinaries
         puts entry
       end
     end
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('**/*.pdf').empty?
       FileUtils.mv Dir.glob('**/*.pdf'), 'pdf'
@@ -37,6 +41,7 @@ module PackageBinaries
         puts entry
       end
     end
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('**/*.tif').empty?
       FileUtils.mv Dir.glob('**/*.tif'), 'tif'
@@ -45,6 +50,7 @@ module PackageBinaries
         puts entry
       end
     end
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('**/*.mrc').empty?
       FileUtils.mv Dir.glob('**/*.mrc'), 'mrc'
@@ -53,6 +59,7 @@ module PackageBinaries
         puts entry
       end
     end
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('**/*.Meta').empty?
       FileUtils.mv Dir.glob('**/*.Meta'), 'xml'
@@ -65,6 +72,7 @@ module PackageBinaries
         end
       end
     end
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir(@copy_of_directory)
     unless Dir.glob('**/*.zip').empty?
       FileUtils.mv Dir.glob('**/*.zip'), 'zip'
@@ -74,6 +82,7 @@ module PackageBinaries
       end
       Dir.chdir(@copy_of_directory)
     end
+    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     self
   end
 end

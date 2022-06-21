@@ -1,5 +1,10 @@
 # RepoToolKit last update 2018-10-13
 Dir['../lib/*.rb'].each { |f| require_relative f }
+
+# Setting $debug to TRUE will cause additional debug lines to print, helping localize bugs
+$debug = TRUE
+if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+
 # Superclass
 class TuftsScholarship
   include SetDirectories
@@ -128,11 +133,9 @@ else
   system ("clear")
 end
 
-# require 'colorized_string'
-
+if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
 puts '***************************************************'
 puts
-#puts ColorizedString['Welcome to the Repository Toolkit for MIRA 2.0!'].colorize(:cyan).underline
 puts 'Welcome to the Repository Toolkit for MIRA 2.0!'
 puts
 puts 'What would you like to process?'
@@ -155,6 +158,7 @@ puts
 print $prompt
 # Loop
 while input = gets.chomp.strip
+  if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
   case input
     when '13', '13.', 'test'
     puts
@@ -163,7 +167,6 @@ while input = gets.chomp.strip
     a_test_xml.testit
     break
 
-  
   when '1', '1.', 'Faculty'
     puts
     puts 'Launching the Faculty Scholarship script.'
