@@ -72,7 +72,7 @@ class InHouseIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_alma_xml.close_directories.qa_it
+    package.postprocess_marc_xml.close_directories.qa_it
   end
 end
 # Create a list of subjects used by catalogers
@@ -92,7 +92,7 @@ class LicensedVideoIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_alma_xml.close_directories.qa_it
+    package.postprocess_marc_xml.close_directories.qa_it
   end
 end
 # Specific ingest issues for MARC xml
@@ -108,7 +108,7 @@ class LicensedPDFIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_alma_xml.close_directories.qa_it
+    package.postprocess_marc_xml.close_directories.qa_it
   end
 end
 

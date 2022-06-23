@@ -12,10 +12,10 @@ module CleanUpXML
     self
   end
 
-  def postprocess_alma_xml
+  def postprocess_marc_xml
     if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir('xml')
-    @f = Time.now.strftime('%F-%H%M%S') + '_Alma'
+    @f = Time.now.strftime('%F-%H%M%S') + '_MARC'
     File.rename('ingestThis.xml', @f + '_Ingest.xml')
     if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     self
