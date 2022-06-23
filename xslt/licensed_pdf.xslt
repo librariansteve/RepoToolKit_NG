@@ -31,7 +31,8 @@
                         <metadata>
                             <mira_import>
                                 <xsl:call-template name="file"/>
-								<tufts:visibility>authenticated</tufts:visibility>
+                                <tufts:visibility>authenticated</tufts:visibility>
+                                <tufts:downloadable>no-link</tufts:downloadable>
                                 <model:hasModel>Pdf</model:hasModel>
                                 <tufts:memberOf>ks65hg19p</tufts:memberOf>
                                 <xsl:call-template name="title"/>
