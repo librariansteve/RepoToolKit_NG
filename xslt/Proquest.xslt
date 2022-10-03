@@ -9,7 +9,8 @@
     xmlns:marcrelators="http://id.loc.gov/vocabulary/relators/"
     xmlns:scholarsphere="http://scholarsphere.psu.edu/ns#"
     xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:foaf="http://xmlns.com/foaf/0.1/"
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:bf="http://bibframe.org/vocab/">
     <!--This calls the named templates found in the following xslt(s) for parsing specific fields into approprite data for ingest  -->
     <xsl:import href="SplitField_helper.xslt"/>
     <xsl:import href="Filename_helper.xslt"/>
@@ -103,15 +104,59 @@
             <xsl:value-of select="./DISS_submission/DISS_description/DISS_dates/DISS_comp_date"/>
             <xsl:text>.</xsl:text>
         </dc11:description>
+        <bf:dissertation>
+            <xsl:choose>
+                <xsl:when test="/DISS_submission/DISS_description/DISS_degree[contains(text(), 'Ph.D.')]">
+                    <xsl:text>Doctoral</xsl:text>
+                </xsl:when>
+                <xsl:when test="/DISS_submission/DISS_description/DISS_degree[contains(text(), 'D.V.M.')]">
+                    <xsl:text>Doctoral</xsl:text>
+                </xsl:when>
+                <xsl:when test="/DISS_submission/DISS_description/DISS_degree[contains(text(), 'D.M.D.')]">
+                    <xsl:text>Doctoral</xsl:text>
+                </xsl:when>
+                <xsl:when test="/DISS_submission/DISS_description/DISS_degree[contains(text(), 'D.P.T.')]">
+                    <xsl:text>Doctoral</xsl:text>
+                </xsl:when>
+                <xsl:when test="/DISS_submission/DISS_description/DISS_degree[contains(text(), 'M.D.')]">
+                    <xsl:text>Doctoral</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Master's</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </bf:dissertation>
     </xsl:template>
     <xsl:template match="//DISS_inst_contact[1]" name="department">
-        <dc11:description>
-            <xsl:text>Submitted to the Dept. of </xsl:text>
-            <xsl:value-of
-                select="DISS_submission/DISS_description[1]/DISS_institution[1]/DISS_inst_contact[1]"/>
-            <xsl:text>.</xsl:text>
-        </dc11:description>
-    </xsl:template>
+        <xsl:choose>
+            <xsl:when
+				test=".//DISS_inst_contact[contains(text(), 'Veterinary')]">
+				<dc11:description>
+					<xsl:text>Submitted to the </xsl:text>
+					<xsl:value-of
+						select="DISS_submission/DISS_description[1]/DISS_institution[1]/DISS_inst_contact[1]"/>
+					<xsl:text>.</xsl:text>
+				</dc11:description>
+            </xsl:when>
+            <xsl:when
+				test="//DISS_inst_contact[contains(text(), 'Other')]">
+				<dc11:description>
+					<xsl:text>Submitted to the </xsl:text>
+					<xsl:value-of
+						select="DISS_submission/DISS_description[1]/DISS_institution[1]/DISS_inst_name[1]"/>
+					<xsl:text>.</xsl:text>
+				</dc11:description>
+            </xsl:when>
+            <xsl:otherwise>
+				<dc11:description>
+					<xsl:text>Submitted to the Dept. of </xsl:text>
+					<xsl:value-of
+						select="DISS_submission/DISS_description[1]/DISS_institution[1]/DISS_inst_contact[1]"/>
+					<xsl:text>.</xsl:text>
+				</dc11:description>
+            </xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
     <xsl:template match="//DISS_advisor" name="advisors">
         <xsl:choose>
             <xsl:when
@@ -231,37 +276,37 @@
         <xsl:choose>
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0930')]">
-                <dc:isPartOf>Tufts University. Fletcher School of Law and Diplomacy. Theses and Dissertations.</dc:isPartOf>
                 <tufts:memberOf>9g54xz56n</tufts:memberOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0234')] and //DISS_inst_contact[contains(text(), 'Engineering')]">
-                <dc:isPartOf>Tufts University. School of Engineering. Theses and Dissertations.</dc:isPartOf>
                 <tufts:memberOf>kw52jp30s</tufts:memberOf>
             </xsl:when>
 
             <xsl:when
-                test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0234')] and //DISS_inst_contact[not(contains(text(), 'Engineering'))]">
-                <dc:isPartOf>Tufts University. Graduate School of Arts and Sciences. Theses and Dissertations.</dc:isPartOf>
-                <tufts:memberOf>6q183162k</tufts:memberOf>
+                test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0234')] and //DISS_inst_contact[contains(text(), 'Veterinary')]">
+                <tufts:memberOf>sj139f93n</tufts:memberOf>
             </xsl:when>
 
             <xsl:when
+                test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0234')] and //DISS_inst_contact[not(contains(text(), 'Engineering'))] and
+				//DISS_inst_contact[not(contains(text(), 'Veterinary'))]">
+                <tufts:memberOf>6q183162k</tufts:memberOf>
+            </xsl:when>
+			
+            <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '0845')]">
-                <dc:isPartOf>Tufts University. Tufts Graduate School of Biomedical Sciences. Theses and Dissertations.</dc:isPartOf>
                 <tufts:memberOf>t722hq69n</tufts:memberOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '1546')]">
-                <dc:isPartOf>Tufts University. Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science and Policy. Theses and Dissertations.</dc:isPartOf>
                 <tufts:memberOf>th83mc242</tufts:memberOf>
             </xsl:when>
 
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '1547')]">
-                <dc:isPartOf>Tufts University. School of Dental Medicine. Theses and Dissertations.</dc:isPartOf>
                 <tufts:memberOf>fj236h191</tufts:memberOf>
             </xsl:when>
         </xsl:choose>
@@ -376,11 +421,19 @@
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Endodontics')]">
                 <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
             </xsl:when>
+            <xsl:when
+				test="//DISS_inst_contact[contains(text(), 'Other')] and
+				./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '1547')]">
+                <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
+            </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Occupational')]">
                 <tufts:creator_department>Tufts University. Occupational Therapy Department.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Interdisciplinary')]">
                 <tufts:creator_department>Tufts University. Graduate School of Arts and Sciences.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Veterinary')]">
+                <tufts:creator_department>Cummings School of Veterinary Medicine.</tufts:creator_department>
             </xsl:when>
             <xsl:when
                 test="//DISS_inst_name[1][contains(text(), 'Graduate School of Biomedical Sciences')] and //DISS_inst_contact[1][contains(text(), 'Biochemistry')]">

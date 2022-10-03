@@ -40,7 +40,7 @@ This stylesheet creates a template which is called in another stylsheet, and par
             <xsl:for-each select="marc:subfield">
                 <xsl:if test="contains($codes, @code)">
                     <xsl:value-of select="text()"/>
-                    <xsl:value-of select="$delimeter"/>
+                    <xsl:value-of select="$delimiter"/>
                 </xsl:if>
             </xsl:for-each>
         </xsl:variable>

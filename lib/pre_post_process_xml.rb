@@ -38,7 +38,8 @@ module CleanUpXML
 
   def postprocess_springer_xml
     if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    FileUtils.mv Dir.glob('**/JOU*'), 'springer'
+    FileUtils.mv Dir.glob('**/JOU=*'), 'springer'
+	if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir('springer')
     Dir.entries('.').each do |entry|
       puts entry

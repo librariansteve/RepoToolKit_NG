@@ -105,7 +105,7 @@
             select="marc:datafield[@tag = '100'] | marc:datafield[@tag = '110'] | marc:datafield[@tag = '111'] | marc:datafield[@tag = '130']">
             <dc11:creator>
                 <xsl:call-template name="nameSelect">
-                    <xsl:with-param name="delimeter">
+                    <xsl:with-param name="delimiter">
                         <xsl:text> </xsl:text>
                     </xsl:with-param>
                 </xsl:call-template>
@@ -117,7 +117,7 @@
             select="marc:datafield[@tag = '700'] | marc:datafield[@tag = '710'] | marc:datafield[@tag = '711'] | marc:datafield[@tag = '720']">
             <dc11:contributor>
                 <xsl:call-template name="nameSelect">
-                    <xsl:with-param name="delimeter">
+                    <xsl:with-param name="delimiter">
                         <xsl:text> </xsl:text>
                     </xsl:with-param>
                 </xsl:call-template>
@@ -304,7 +304,7 @@
                 <xsl:for-each select="marc:datafield[@tag = 600]">
                     <mads:PersonalName>
                         <xsl:call-template name="nameSelect">
-                            <xsl:with-param name="delimeter">
+                            <xsl:with-param name="delimiter">
                                 <xsl:text> </xsl:text>
                             </xsl:with-param>
                         </xsl:call-template>
@@ -319,7 +319,7 @@
                 <xsl:for-each select="marc:datafield[@tag = 610] | marc:datafield[@tag = 611]">
                     <mads:CorporateName>
                         <xsl:call-template name="subfieldSelect">
-                            <xsl:with-param name="delimeter">--</xsl:with-param>
+                            <xsl:with-param name="delimiter">--</xsl:with-param>
                         </xsl:call-template>
                     </mads:CorporateName>
                 </xsl:for-each>
@@ -332,7 +332,7 @@
                 <xsl:for-each select="marc:datafield[@tag = 651]">
                     <dc:spatial>
                         <xsl:call-template name="subfieldSelect">
-                            <xsl:with-param name="delimeter">--</xsl:with-param>
+                            <xsl:with-param name="delimiter">--</xsl:with-param>
                         </xsl:call-template>
                     </dc:spatial>
                 </xsl:for-each>
@@ -345,7 +345,7 @@
                 <xsl:for-each select="marc:datafield[@tag = 650]">
                     <dc11:subject>
                         <xsl:call-template name="subfieldSelect">
-                            <xsl:with-param name="delimeter">--</xsl:with-param>
+                            <xsl:with-param name="delimiter">--</xsl:with-param>
                         </xsl:call-template>
                     </dc11:subject>
                 </xsl:for-each>
@@ -358,7 +358,7 @@
                 <xsl:for-each select="marc:datafield[@tag = '655']">
                     <mads:GenreForm>
                         <xsl:call-template name="subfieldSelect">
-                            <xsl:with-param name="delimeter">--</xsl:with-param>
+                            <xsl:with-param name="delimiter">--</xsl:with-param>
                         </xsl:call-template>
                     </mads:GenreForm>
                 </xsl:for-each>
