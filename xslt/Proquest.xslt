@@ -10,7 +10,7 @@
     xmlns:scholarsphere="http://scholarsphere.psu.edu/ns#"
     xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:foaf="http://xmlns.com/foaf/0.1/"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-    xmlns:bf="http://bibframe.org/vocab/">
+    xmlns:bf2="http://bibframe.org/vocab/">
     <!--This calls the named templates found in the following xslt(s) for parsing specific fields into approprite data for ingest  -->
     <xsl:import href="SplitField_helper.xslt"/>
     <xsl:import href="Filename_helper.xslt"/>
@@ -104,7 +104,7 @@
             <xsl:value-of select="./DISS_submission/DISS_description/DISS_dates/DISS_comp_date"/>
             <xsl:text>.</xsl:text>
         </dc11:description>
-        <bf:dissertation>
+        <bf2:dissertation>
             <xsl:choose>
                 <xsl:when test="/DISS_submission/DISS_description/DISS_degree[contains(text(), 'Ph.D.')]">
                     <xsl:text>Doctoral</xsl:text>
@@ -125,7 +125,7 @@
                     <xsl:text>Master's</xsl:text>
                 </xsl:otherwise>
             </xsl:choose>
-        </bf:dissertation>
+        </bf2:dissertation>
     </xsl:template>
     <xsl:template match="//DISS_inst_contact[1]" name="department">
         <xsl:choose>
@@ -308,6 +308,11 @@
             <xsl:when
                 test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '1547')]">
                 <tufts:memberOf>fj236h191</tufts:memberOf>
+            </xsl:when>
+			
+			<xsl:when
+                test="./DISS_submission/DISS_description[1]/DISS_institution[1][contains(DISS_inst_code, '2681')]">
+                <tufts:memberOf>m613nc59s</tufts:memberOf>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
