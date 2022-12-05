@@ -4,14 +4,14 @@ module QA
   include SetDirectories
 
   def qa_it
-    if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     puts 'Would you like to open the tranformed xml?'
     print @prompt
     while input = gets.chomp
-      if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+      if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
       case input
       when 'Y', 'y', 'Yes'
-        if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+        if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
         puts
         puts 'Launching applications.'
         puts
@@ -29,16 +29,16 @@ module QA
           system %(open '#{file_to_open}')
         end
 
-        if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+        if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
         sleep(3)
         break
       when 'N', 'No', 'n', 'Exit'
-        if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+        if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
         puts 'Goodbye.'
         sleep(3)
         break
       else
-        if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+        if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
         puts 'Please select Yes or No.'
         print @prompt
       end

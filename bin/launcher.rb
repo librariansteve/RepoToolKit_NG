@@ -1,9 +1,9 @@
 # RepoToolKit last update 2018-10-13
 Dir['../lib/*.rb'].each { |f| require_relative f }
 
-# Setting $debug to TRUE will cause additional debug lines to print, helping localize bugs
-$debug = FALSE
-if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+# Setting $debug to true will cause additional debug lines to print, helping localize bugs
+$debug = false
+if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
 
 # Superclass
 class TuftsScholarship
@@ -133,7 +133,7 @@ else
   system ("clear")
 end
 
-if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
 puts '***************************************************'
 puts
 puts 'Welcome to the Repository Toolkit for MIRA 2.0!'
@@ -158,7 +158,7 @@ puts
 print $prompt
 # Loop
 while input = gets.chomp.strip
-  if $debug == TRUE then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+  if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
   case input
     when '13', '13.', 'test'
     puts
