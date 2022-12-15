@@ -62,6 +62,15 @@ module CleanUpXML
     self
   end
 
+  def postprocess_acm_xml
+    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    Dir.chdir('xml')
+    @f = Time.now.strftime('%F-%H%M%S') + '_ACM'
+    File.rename('ingestThis.xml', @f + '_Ingest.xml')
+    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    self
+  end
+
   def postprocess_proquest_xml
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.chdir('xml')

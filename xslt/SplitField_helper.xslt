@@ -20,7 +20,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
     xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:foaf="http://xmlns.com/foaf/0.1/"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     
-    <!-- this portion of the XSLT creates a named template for altTitle, identifies delimeters from the input file and splits them into seperate dcterms:alternative elements, 
+    <!-- this portion of the XSLT creates a named template for altTitle, identifies delimiters from the input file and splits them into seperate dcterms:alternative elements, 
        it also strips out any full stops-->
     <xsl:template name="altTitleSplit" match="text()">
         <xsl:param name="altTitleText" select="."/>
@@ -36,7 +36,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT creates a named template for creators, identifies delimeters from the input file and splits them into seperate dc:creator elements, 
+    <!-- this portion of the XSLT creates a named template for creators, identifies delimiters from the input file and splits them into seperate dc:creator elements, 
        it also ensures that each creator ends with a full stop-->
     <xsl:template name="CreatorSplit" match="text()">
         <xsl:param name="creatorText" select="."/>
@@ -54,7 +54,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
         </xsl:if>
     </xsl:template>
 
-    <!-- this portion of the XSLT creates a named template for creators, identifies delimeters from the input file and splits them into seperate dc:creator elements, 
+    <!-- this portion of the XSLT creates a named template for creators, identifies delimiters from the input file and splits them into seperate dc:creator elements, 
        it also ensures that each creator ends with a full stop-->
     <xsl:template name="ContributorSplit" match="text()">
         <xsl:param name="contributorText" select="."/>
@@ -71,7 +71,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT creates a named template for dates, identifies delimeters from the input file and splits them into seperate dcterms date elements, 
+    <!-- this portion of the XSLT creates a named template for dates, identifies delimiters from the input file and splits them into seperate dcterms date elements, 
        it also ensures that each date ends with a full stop-->
     <xsl:template name="dateSplit" match="text()">
         <xsl:param name="dateText" select="."/>
@@ -105,7 +105,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT creates a named template for topic subjects, identifies delimeters from the input file and splits them into seperate dcadesc:subject elements, 
+    <!-- this portion of the XSLT creates a named template for topic subjects, identifies delimiters from the input file and splits them into seperate dcadesc:subject elements, 
         it also normalizes spacing between headings,and ensures each term ends with either a full-stop or closing parens-->
     <xsl:template name="SubjectSplit" match="text()">
         <xsl:param name="subjectText" select="."/>
@@ -121,7 +121,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT creates a named template for personal name subjects, identifies delimeters from the input file  and splits them into seperate dcadesc:persname elements, 
+    <!-- this portion of the XSLT creates a named template for personal name subjects, identifies delimiters from the input file  and splits them into seperate dcadesc:persname elements, 
         it normalizes spacing between headings,and ensures each term ends with either a full-stop or closing parens-->
     <xsl:template name="persNames" match="text()">
         <xsl:param name="persText" select="."/>
@@ -137,7 +137,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT creates a named template for corporate name subjects which identifies delimeters from the input file allows for their replacement-->
+    <!-- this portion of the XSLT creates a named template for corporate name subjects which identifies delimiters from the input file allows for their replacement-->
     <xsl:template name="corpNames" match="text()">
         <xsl:param name="corpText" select="."/>
         <xsl:if test="string-length($corpText)">
@@ -152,7 +152,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT creates a named template for geographic name subjects which identifies delimeters from the input file allows for their replacement-->
+    <!-- this portion of the XSLT creates a named template for geographic name subjects which identifies delimiters from the input file allows for their replacement-->
     <xsl:template name="geogNames" match="text()">
         <xsl:param name="geogText" select="."/>
         <xsl:if test="string-length($geogText)">
@@ -167,7 +167,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT identifies pipe delimeters from the input file at 'Genre' and splits it into small bits-->
+    <!-- this portion of the XSLT identifies pipe delimiters from the input file at 'Genre' and splits it into small bits-->
     <xsl:template name="GenreSplit" match="text()">
         <xsl:param name="genreText" select="."/>
         <xsl:if test="string-length($genreText)">
@@ -182,7 +182,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT identifies pipe delimeters from the input file at 'temporal' and splits it into small bits-->
+    <!-- this portion of the XSLT identifies pipe delimiters from the input file at 'temporal' and splits it into small bits-->
     <xsl:template name="TemporalSplit" match="text()">
         <xsl:param name="temporalText" select="."/>
         <xsl:if test="string-length($temporalText)">
@@ -197,7 +197,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!-- this portion of the XSLT identifies pipe delimeters from the input file at 'spatial' and splits it into small bits-->
+    <!-- this portion of the XSLT identifies pipe delimiters from the input file at 'spatial' and splits it into small bits-->
     <xsl:template name="SpatialSplit" match="text()">
         <xsl:param name="SpatialSplitText" select="."/>
         <xsl:if test="string-length($SpatialSplitText)">
@@ -213,7 +213,7 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-    <!--This portion of the XSLT identifies pipe delimeters from the input file at the 'AdministrativeNote' and splites it into small bits-->
+    <!--This portion of the XSLT identifies pipe delimiters from the input file at the 'AdministrativeNote' and splites it into small bits-->
     <xsl:template name="AdminNoteSplit" match="text()">
         <xsl:param name="adminText" select="."/>
         <xsl:if test="string-length($adminText)">

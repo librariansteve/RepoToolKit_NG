@@ -20,6 +20,13 @@ module Transforms
     self
   end
 
+  def transform_it_acm
+    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:mets.xml -xsl:#{$xslt_path}/ACM.xslt -o:ingestThis.xml`
+    `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:ingestThis.xml -xsl:#{$xslt_path}/subject.xslt -o:subjects.txt`
+    self
+  end
+
   def transform_it_proquest
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     `java -cp #{$saxon_path} net.sf.saxon.Transform -t -s:collection.xml -xsl:#{$xslt_path}/Proquest.xslt -o:./ingestThis.xml`

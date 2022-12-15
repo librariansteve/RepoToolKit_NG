@@ -2,7 +2,7 @@
 Dir['../lib/*.rb'].each { |f| require_relative f }
 
 # Setting $debug to true will cause additional debug lines to print, helping localize bugs
-$debug = false
+$debug = true
 if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
 
 # Superclass
@@ -26,6 +26,22 @@ class ExcelBasedIngest < TuftsScholarship
 
   def finish
     package.postprocess_excel_xml.close_directories.qa_it
+  end
+end
+# Specific ingest issues for ACM
+class ACMIngest < TuftsScholarship
+  include UnzipIt
+  
+  def extract
+    acm_subfolders.unzip
+  end
+
+  def transform_it
+    transform_it_acm
+  end
+
+  def finish
+    package.postprocess_acm_xml.close_directories.qa_it
   end
 end
 # Specific ingest issues for Springer
@@ -146,13 +162,14 @@ puts '3. Nutrition School.'
 puts '4. Art and Art History (Trove).'
 puts '5. Springer Open Access Articles.'
 puts '6. Proquest Electronic Disertations and Theses.'
-puts '7. In-House digitized books.'
-puts '8. Subject Analysis.'
-puts '9. SMFA Artist Books.'
-puts '10. Licensed Streaming Video.'
-puts '11. Licensed PDF.'
-puts '12. Exit.'
-puts '13. Test XML.'
+puts '7. ACM Open Access Articles'
+puts '8. In-House digitized books.'
+puts '9. Subject Analysis.'
+puts '10. SMFA Artist Books.'
+puts '11. Licensed Streaming Video.'
+puts '12. Licensed PDF.'
+puts '13. Exit.'
+puts '14. Test XML.'
 puts
 
 print $prompt
@@ -160,7 +177,7 @@ print $prompt
 while input = gets.chomp.strip
   if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
   case input
-    when '13', '13.', 'test'
+    when '14', '14.', 'test'
     puts
     puts 'Launching the Test XML script.'
     a_test_xml = TestXML.new
@@ -209,42 +226,49 @@ while input = gets.chomp.strip
     a_new_proquest_ingest.extract.transform_it.finish
     break
 
-  when '7', '7.', 'inHouse'
+  when '7', '7.', 'ACM'
+    puts
+    puts 'Launching the ACM script.'
+    a_new_acm_ingest = ACMIngest.new
+    a_new_acm_ingest.extract.transform_it.finish
+    break
+
+  when '8', '8.', 'inHouse'
     puts
     puts 'Launching the in-house script.'
     a_new_inhouse_ingest = InHouseIngest.new
     a_new_inhouse_ingest.extract.transform.finish
     break
 
-  when '8', '8.', 'Subject'
+  when '9', '9.', 'Subject'
     puts
     puts 'Launching the Subject Analysis script'
     a_new_analysis = SubjectAnalysis.new
     a_new_analysis.subject_only.close_directories.re_qa_subject
     break
 
-  when '9', '9.', 'SMFA'
+  when '10', '10.', 'SMFA'
     puts
     puts 'Launching the SMFA artist books script.'
     a_new_smfa_ingest = ExcelBasedIngest.new
     a_new_smfa_ingest.extract.smfa.excel.collection.transform.finish
     break
 
-  when '10', '10.', 'Video'
+  when '11', '11.', 'Video'
     puts
     puts 'Launching the Licensed Streaming Video script.'
     a_new_licensed_video_ingest = LicensedVideoIngest.new
     a_new_licensed_video_ingest.extract.transform.finish
     break
 
-  when '11', '11.', 'PDF'
+  when '12', '12.', 'PDF'
     puts
     puts 'Launching the Licensed PDF script.'
     a_new_licensed_pdf_ingest = LicensedPDFIngest.new
     a_new_licensed_pdf_ingest.extract.transform.finish
     break
 
-  when '12', '12.', '12. Exit', 'Exit', 'exit'
+  when '13', '13.', '13. Exit', 'Exit', 'exit'
     puts
     puts 'Goodbye.'
     break

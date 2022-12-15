@@ -25,6 +25,15 @@ module CreateSubdirectories
     self
   end
 
+  def acm_subfolders
+    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    Dir.mkdir('xml')
+    Dir.mkdir('pdf')
+    Dir.mkdir('zip')
+    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    self
+  end
+
   def proquest_subfolders
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     Dir.mkdir('xml')
