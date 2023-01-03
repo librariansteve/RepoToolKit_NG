@@ -5,8 +5,8 @@ module QA
 
   def qa_it
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    puts 'Would you like to open the tranformed xml?'
-    print @prompt
+    puts 'Would you like to open the transformed xml?'
+    print $prompt
     while input = gets.chomp
       if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
       case input
@@ -34,8 +34,6 @@ module QA
         break
       when 'N', 'No', 'n', 'Exit'
         if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-        puts 'Goodbye.'
-        sleep(3)
         break
       else
         if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end

@@ -44,8 +44,7 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                                 <xsl:call-template name="abstract"/>
                                 <xsl:call-template name="keywords"/>
                                 <dc11:description>Springer Open.</dc11:description>
-                                <dc:isPartOf>Tufts University faculty
-                                    scholarship.</dc:isPartOf>
+                                <dc:isPartOf>Tufts University faculty scholarship.</dc:isPartOf>
                                 <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
                                 <xsl:call-template name="rights"/>
                                 <xsl:call-template name="date"/>
@@ -57,8 +56,7 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                                 <tufts:steward>tisch</tufts:steward>
                                 <tufts:qr_note>smcdon03</tufts:qr_note>
                                 <tufts:internal_note>SpringerBatchTransform: <xsl:value-of
-                                    select="current-dateTime()"/>; Tisch manages metadata and
-                                    binary.</tufts:internal_note>
+                                    select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
                                 <tufts:displays_in>dl</tufts:displays_in>
                             </mira_import>
                         </metadata>
@@ -79,16 +77,29 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
         </dc:title>
     </xsl:template>
     <xsl:template match="//Author" name="creator">
-        <xsl:for-each select=".//Author">
-            <xsl:choose>
-                <xsl:when test=".//GivenName[2]">
-                    <dc11:creator><xsl:value-of select="normalize-space(.//FamilyName)"/>, <xsl:value-of select="normalize-space(.//GivenName[1])"/><xsl:text> </xsl:text><xsl:value-of select="normalize-space(replace(.//GivenName[2], '\.+$', ''))"/><xsl:text>.</xsl:text></dc11:creator>
-                </xsl:when>
-                <xsl:otherwise>
-                    <dc11:creator><xsl:value-of select="normalize-space(.//FamilyName)"/>, <xsl:value-of select="normalize-space(.//GivenName[1])"/><xsl:text>.</xsl:text></dc11:creator>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>
+        <xsl:choose>
+            <xsl:when test="count(.//Author) > 25">
+			    <tufts:internal_note>Article has more than 25 authors, too many to list</tufts:internal_note>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select=".//Author">
+                    <xsl:choose>
+                        <xsl:when test=".//GivenName[2]">
+                            <dc11:creator>
+							    <xsl:value-of select="normalize-space(.//FamilyName)"/>, <xsl:value-of select="normalize-space(.//GivenName[1])"/><xsl:text> </xsl:text><xsl:value-of select="normalize-space(replace(.//GivenName[2], '\.+$', ''))"/>
+							    <xsl:if test=".//GivenName[2][(not(ends-with(., '.'))"><xsl:text>.</xsl:text></xsl:if>
+							</dc11:creator>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <dc11:creator>
+							    <xsl:value-of select="normalize-space(.//FamilyName)"/>, <xsl:value-of select="normalize-space(.//GivenName[1])"/></dc11:creator>
+							    <xsl:if test=".//GivenName[1][(not(ends-with(., '.'))"><xsl:text>.</xsl:text></xsl:if>
+							</dc11:creator>
+                       </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>				
     </xsl:template>
     <xsl:template name="abstract">
         <xsl:choose>

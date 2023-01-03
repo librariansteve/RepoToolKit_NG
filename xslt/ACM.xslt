@@ -38,6 +38,7 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
                             <xsl:call-template name="creator"/>
                             <xsl:call-template name="abstract"/>
                             <xsl:call-template name="keywords"/>
+                            <xsl:call-template name="topic"/>
                             <dc11:description>ACM Open.</dc11:description>
                             <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
                             <xsl:call-template name="doi"/>
@@ -126,6 +127,14 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
             </xsl:if>
         </dc11:description>
     </xsl:template>
+    <xsl:template match="//subj-group" name="topic">
+        <xsl:for-each select=".//subj-group[@subj-group-type='ccs2012']/compound-subject/compound-subject-part[@content-type='text']">
+		    <dc11:description>
+                <xsl:text>Topic: </xsl:text>
+                <xsl:value-of select="normalize-space(.)"/>
+		    </dc11:description>
+        </xsl:for-each>
+    </xsl:template>
     <xsl:template name="doi">
         <xsl:choose>
             <xsl:when test="//book-part-id">
@@ -144,25 +153,30 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
     <xsl:template name="citation">
         <dc:bibliographicCitation>
             <xsl:choose>
-                <xsl:when test="count(//contrib) > 5">
+                <xsl:when test="count(.//contrib) > 5">
                     <xsl:value-of select="//contrib[1]/name/given-names"/>
                     <xsl:text> </xsl:text>
                     <xsl:value-of select="//contrib[1]/name/surname"/>
                     <xsl:text>, et. al</xsl:text>   
                 </xsl:when>
+				<xsl:when test="count(//contrib) = 1">
+                    <xsl:value-of select="//contrib/name/given-names"/>
+                    <xsl:text> </xsl:text>
+                    <xsl:value-of select="//contrib/name/surname"/>                    				    
+				</xsl:when>
                 <xsl:otherwise>
-                    <xsl:for-each select=".//contrib[not(position() = last())]">
+                    <xsl:for-each select="//contrib[not(position() = last())]">
                         <xsl:value-of select="./name/given-names"/>
                         <xsl:text> </xsl:text>
                         <xsl:value-of select="./name/surname"/>
                         <xsl:text>, </xsl:text>                        
                     </xsl:for-each>
-                    <xsl:if test=".//contrib[last()]">
-                        <xsl:text> and </xsl:text>
-                        <xsl:value-of select="./name/given-names"/>
+                    <xsl:if test="//contrib[last()]">
+                        <xsl:text>and </xsl:text>
+                        <xsl:value-of select="//contrib[last()]/name/given-names"/>
                         <xsl:text> </xsl:text>
-                        <xsl:value-of select="./name/surname"/>
-                    </xsl:if>               
+                        <xsl:value-of select="//contrib[last()]/name/surname"/>
+                    </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:text>. "</xsl:text>

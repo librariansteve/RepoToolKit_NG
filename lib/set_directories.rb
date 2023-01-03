@@ -5,6 +5,7 @@ module SetDirectories
     require 'fileutils'
     @toolkit_path = File.expand_path('..', File.dirname(__FILE__))
     @copy_of_directory = @toolkit_path + '/TempRepo'
+	if Dir.exist?(@copy_of_directory) then FileUtils.remove_dir(@copy_of_directory) end
     FileUtils.mkdir_p @copy_of_directory
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     puts 'What is the directory you are working with?'
