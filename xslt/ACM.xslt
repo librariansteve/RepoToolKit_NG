@@ -88,26 +88,47 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
             <xsl:when test="//book-part//title">
                 <dc:title>
                     <xsl:value-of select="//book-part//title"/>
-                    <xsl:text>.</xsl:text>
+                    <xsl:if test="not(ends-with(//book-part//title, '.'))">
+                        <xsl:if test="not(ends-with(//book-part//title, '?'))">
+                            <xsl:if test="not(ends-with(//book-part//title, '!'))">
+                                <xsl:text>.</xsl:text>
+                            </xsl:if>
+                        </xsl:if>
+                    </xsl:if>
                 </dc:title>
             </xsl:when>
             <xsl:when test="//article-meta//article-title">
                 <dc:title>
                     <xsl:value-of select="//article-meta//article-title"/>
-                    <xsl:text>.</xsl:text>
+                    <xsl:if test="not(ends-with(//article-meta//article-title, '.'))">
+                        <xsl:if test="not(ends-with(//article-meta//article-title, '?'))">
+                            <xsl:if test="not(ends-with(//article-meta//article-title, '!'))">
+                                <xsl:text>.</xsl:text>
+                            </xsl:if>
+                        </xsl:if>
+                    </xsl:if>
                 </dc:title>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
     <xsl:template match="//contrib-group" name="creator">
-        <xsl:for-each select=".//contrib[@contrib-type='author']">
-            <dc11:creator>
-                <xsl:value-of select="normalize-space(.//name/surname)"/>
-                <xsl:text>, </xsl:text>
-                <xsl:value-of select="normalize-space(.//name/given-names)"/>
-                <xsl:text>.</xsl:text>
-            </dc11:creator>
-        </xsl:for-each>
+        <xsl:choose>
+            <xsl:when test="count(.//contrib[@contrib-type='author']) > 25">
+			    <tufts:internal_note>Article has more than 25 authors, too many to list</tufts:internal_note>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select=".//contrib[@contrib-type='author']">
+                    <dc11:creator>
+                        <xsl:value-of select="normalize-space(.//name/surname)"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="normalize-space(.//name/given-names)"/>
+                        <xsl:if test="not(ends-with(.//name/given-names, '.'))">
+                            <xsl:text>.</xsl:text>
+                        </xsl:if>
+                    </dc11:creator>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>				
     </xsl:template>
     <xsl:template match="//abstract" name="abstract">
         <dc11:abstract>
@@ -118,7 +139,7 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
         <dc11:description>
             <xsl:text>Keywords: </xsl:text>
             <xsl:for-each select=".//kwd[not(position() = last())]">
-                <xsl:value-of select="normalize-space(.)"/>
+                <xsl:value-of select="replace(normalize-space(.), '~', '; ')"/>
                 <xsl:text>, </xsl:text>
             </xsl:for-each>
             <xsl:if test=".//kwd[last()]">
@@ -131,7 +152,7 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
         <xsl:for-each select=".//subj-group[@subj-group-type='ccs2012']/compound-subject/compound-subject-part[@content-type='text']">
 		    <dc11:description>
                 <xsl:text>Topic: </xsl:text>
-                <xsl:value-of select="normalize-space(.)"/>
+                <xsl:value-of select="replace(normalize-space(.), '~', ' / ')"/>
 		    </dc11:description>
         </xsl:for-each>
     </xsl:template>
@@ -157,12 +178,15 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
                     <xsl:value-of select="//contrib[1]/name/given-names"/>
                     <xsl:text> </xsl:text>
                     <xsl:value-of select="//contrib[1]/name/surname"/>
-                    <xsl:text>, et. al</xsl:text>   
+                    <xsl:text>, et. al.</xsl:text>   
                 </xsl:when>
 				<xsl:when test="count(//contrib) = 1">
                     <xsl:value-of select="//contrib/name/given-names"/>
                     <xsl:text> </xsl:text>
                     <xsl:value-of select="//contrib/name/surname"/>                    				    
+                    <xsl:if test="not(ends-with(//contrib/name/surname, '.'))">
+                        <xsl:text>.</xsl:text>
+                    </xsl:if>
 				</xsl:when>
                 <xsl:otherwise>
                     <xsl:for-each select="//contrib[not(position() = last())]">
@@ -176,19 +200,36 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
                         <xsl:value-of select="//contrib[last()]/name/given-names"/>
                         <xsl:text> </xsl:text>
                         <xsl:value-of select="//contrib[last()]/name/surname"/>
+                        <xsl:if test="not(ends-with(//contrib[last()]/name/surname, '.'))">
+                            <xsl:text>.</xsl:text>
+                        </xsl:if>
                     </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:text>. "</xsl:text>
+            <xsl:text> "</xsl:text>
             <xsl:choose>
                 <xsl:when test="//book-part//title">
                     <xsl:value-of select="//book-part//title"/>
+                    <xsl:if test="not(ends-with(//book-part//title, '.'))">
+                        <xsl:if test="not(ends-with(//book-part//title, '?'))">
+                            <xsl:if test="not(ends-with(//book-part//title, '!'))">
+                                <xsl:text>.</xsl:text>
+                            </xsl:if>
+                        </xsl:if>
+                    </xsl:if>
                 </xsl:when>
                 <xsl:when test="//article-meta//article-title">
                     <xsl:value-of select="//article-meta//article-title"/>
+                    <xsl:if test="not(ends-with(//article-meta//article-title, '.'))">
+                        <xsl:if test="not(ends-with(//article-meta//article-title, '?'))">
+                            <xsl:if test="not(ends-with(//article-meta//article-title, '!'))">
+                                <xsl:text>.</xsl:text>
+                            </xsl:if>
+                        </xsl:if>
+                    </xsl:if>
                 </xsl:when>
             </xsl:choose>
-            <xsl:text>." </xsl:text>
+            <xsl:text>" </xsl:text>
             <xsl:choose>
                 <xsl:when test="//book-title">
                     <xsl:value-of select="//book-title"/>
@@ -198,20 +239,20 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
                 </xsl:when>
             </xsl:choose>
             <xsl:text>, </xsl:text>
-            <xsl:if test="//publisher-name">
-                <xsl:value-of select="//publisher-name"/>
+            <xsl:if test="//publisher/publisher-name">
+                <xsl:value-of select="//publisher/publisher-name[1]"/>
                 <xsl:text>, </xsl:text>
             </xsl:if>
-            <xsl:if test="//publisher-loc">
-               <xsl:value-of select="//publisher-loc"/>
+            <xsl:if test="//publisher/publisher-loc">
+               <xsl:value-of select="//publisher/publisher-loc"/>
                 <xsl:text>, </xsl:text>
              </xsl:if>
-            <xsl:if test="//volume">
-                <xsl:value-of select="//volume"/>
+            <xsl:if test="//article-meta/volume">
+                <xsl:value-of select="//article-meta/volume"/>
                 <xsl:text>, </xsl:text>
             </xsl:if>
-            <xsl:if test="//issue">
-                <xsl:value-of select="//issue"/>
+            <xsl:if test="//article-meta/issue">
+                <xsl:value-of select="//article-meta/issue"/>
                 <xsl:text>, </xsl:text>
             </xsl:if>
             <xsl:value-of select="//pub-date/year"/>
@@ -225,19 +266,43 @@ This stylesheet converts ACM metadata to qualified Dublin Core based on the mapp
             <xsl:when test="//license[@license-type='acmcopyright']">
                 <edm:rights>http://rightsstatements.org/vocab/InC/1.0/</edm:rights>
             </xsl:when>
-            <xsl:when test="//license[@license-type='cc-by']">
-                <edm:rights>http://creativecommons.org/licenses/by/3.0/</edm:rights>
+            <xsl:when test="//license[@license-type='acmlicensed']">
+                <edm:rights>http://rightsstatements.org/vocab/InC/1.0/</edm:rights>
             </xsl:when>
-            <xsl:when test="//license[@license-type='cc-by-sa']">
+            <xsl:when test="//license[@license-type='rightsretained']">
+                <edm:rights>http://rightsstatements.org/vocab/InC/1.0/</edm:rights>
+            </xsl:when>
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc by']">
+                <edm:rights>http://creativecommons.org/licenses/by/4.0/</edm:rights>
+            </xsl:when>
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc by sa']">
                 <edm:rights>http://creativecommons.org/licenses/by-sa/4.0/</edm:rights>
             </xsl:when>
-            <xsl:when test="//license[@license-type='cc-by-nd']">
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc bysa']">
+                <edm:rights>http://creativecommons.org/licenses/by-sa/4.0/</edm:rights>
+            </xsl:when>
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc by nd']">
                 <edm:rights>http://creativecommons.org/licenses/by-nd/4.0/</edm:rights>
             </xsl:when>
-            <xsl:when test="//license[@license-type='cc-by-nc']">
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc bynd']">
+                <edm:rights>http://creativecommons.org/licenses/by-nd/4.0/</edm:rights>
+            </xsl:when>
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc by nc']">
                 <edm:rights>http://creativecommons.org/licenses/by-nc/4.0/</edm:rights>
             </xsl:when>
-            <xsl:when test="//license[@license-type='cc-by-nc-nd']">
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc bync']">
+                <edm:rights>http://creativecommons.org/licenses/by-nc/4.0/</edm:rights>
+            </xsl:when>
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc by nc sa']">
+                <edm:rights>http://creativecommons.org/licenses/by-nc-sa/4.0/</edm:rights>
+            </xsl:when>
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc byncsa']">
+                <edm:rights>http://creativecommons.org/licenses/by-nc-sa/4.0/</edm:rights>
+            </xsl:when>
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc by nc nd']">
+                <edm:rights>http://creativecommons.org/licenses/by-nc-nd/4.0/</edm:rights>
+            </xsl:when>
+            <xsl:when test="//license[replace(@license-type, '-', ' ')='cc byncnd']">
                 <edm:rights>http://creativecommons.org/licenses/by-nc-nd/4.0/</edm:rights>
             </xsl:when>
             <xsl:otherwise/>
