@@ -56,7 +56,7 @@ For Mac Environment
     Mac & Windows :  $ cd ~/Desktop
 
     Clone the ToolKit
-    Mac & Windows :  $ git clone https://blah
+    Mac & Windows :  $ git clone https://github.com/librariansteve/RepoToolKit_NG
 
     Change directory to RepoToolKit_NG/bin
     Mac & Windows :  $ cd RepoToolKit_NG/bin
