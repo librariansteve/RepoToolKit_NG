@@ -488,7 +488,7 @@
     <xsl:template match="//DISS_comp_date" name="displays">
         <xsl:choose>
             <xsl:when test="(//DISS_comp_date &lt; 2011)">
-                <terms:displays_in>nowhere</terms:displays_in>
+                <xsl:when test="(number(substring(//DISS_comp_date,1,4)) &lt; 2011)">
             </xsl:when>
             <xsl:otherwise>
                 <terms:displays_in>dl</terms:displays_in>
