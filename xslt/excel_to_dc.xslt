@@ -33,7 +33,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
         <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
             <ListRecords>
                 <xsl:for-each
-                    select="collection('../../RepoToolKit_NG/TempRepo/collection.xml')/root/row">
+                    select="document(.//doc/@href)/root/row">
                     <record>
                         <metadata>
                             <mira_import>

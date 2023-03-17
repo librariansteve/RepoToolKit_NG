@@ -2,8 +2,10 @@
 Dir['../lib/*.rb'].each { |f| require_relative f }
 
 # Setting $debug to true will cause additional debug lines to print, helping localize bugs
-$debug = true
+$debug = false
 if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+
+@toolkit_path = File.expand_path('..', File.dirname(__FILE__))
 
 # Superclass
 class TuftsScholarship
@@ -25,7 +27,7 @@ class ExcelBasedIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_excel_xml.close_directories.qa_it
+    package.postprocess_excel_xml.qa_it
   end
 end
 # Specific ingest issues for ACM
@@ -41,7 +43,7 @@ class ACMIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_acm_xml.close_directories.qa_it
+    package.postprocess_acm_xml.qa_it
   end
 end
 # Specific ingest issues for Springer
@@ -56,7 +58,7 @@ class SpringerIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_springer_xml.close_directories.qa_it
+    package.postprocess_springer_xml.qa_it
   end
 end
 # Specific ingest issues for Proquest
@@ -72,7 +74,7 @@ class ProquestIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_proquest_xml.close_directories.qa_it
+    package.postprocess_proquest_xml.qa_it
   end
 end
 # Specific ingest issues for MARC xml
@@ -88,7 +90,7 @@ class InHouseIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_marc_xml.close_directories.qa_it
+    package.postprocess_marc_xml.qa_it
   end
 end
 # Create a list of subjects used by catalogers
@@ -108,7 +110,7 @@ class LicensedVideoIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_marc_xml.close_directories.qa_it
+    package.postprocess_marc_xml.qa_it
   end
 end
 # Specific ingest issues for MARC xml
@@ -124,13 +126,13 @@ class LicensedPDFIngest < TuftsScholarship
   end
 
   def finish
-    package.postprocess_marc_xml.close_directories.qa_it
+    package.postprocess_marc_xml.qa_it
   end
 end
 
 
 $is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
-$prompt = '> '
+$prompt = '  ? > '
 $saxon_path = ENV['SAXON_PATH']
 $xslt_path = File.expand_path('../xslt', File.dirname(__FILE__))
 
@@ -143,139 +145,169 @@ if !$saxon_path then
   exit
 end
 
+version = File.readlines("version.txt", chomp: true)[0]
+
+if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
 if $is_windows then
   system ("cls")
 else
   system ("clear")
 end
-
-if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+puts
+puts
+puts
+puts
+puts
+puts
+puts
 puts '***************************************************'
 puts
-puts 'Welcome to the Repository Toolkit for MIRA 2.0!'
+puts 'Welcome to the Repository Toolkit ' + version
 puts
-puts 'What would you like to process?'
-puts
-puts '1. Faculty Scholarship.'
-puts '2. Student Scholarship.'
-puts '3. Nutrition School.'
-puts '4. Art and Art History (Trove).'
-puts '5. Springer Open Access Articles.'
-puts '6. Proquest Electronic Disertations and Theses.'
-puts '7. ACM Open Access Articles'
-puts '8. In-House digitized books.'
-puts '9. Subject Analysis.'
-puts '10. SMFA Artist Books.'
-puts '11. Licensed Streaming Video.'
-puts '12. Licensed PDF.'
-puts '13. Exit.'
-puts '14. Test XML.'
-puts
+puts '***************************************************'
+sleep(2)
 
-print $prompt
-# Loop
-while input = gets.chomp.strip
+choices = ['Quit',
+           'Faculty Scholarship',
+           'Student Scholarship',
+           'Trove (History of Art and Arcitecture slides)',
+           'Proquest Electronic Disertations and Theses',
+           'Springer Open Access Articles',
+           'ACM Open Access Articles',
+           'Digitized Book (In-House)',
+           'Video (Licensed)',
+           'PDF (Licensed)',
+           'SMFA Artist Books',
+           'Nutrition School',
+           'Subject Analysis',
+		   'Test ToolKit',
+		   'Debug Mode']
+
+
+while true
+  if $is_windows then
+    system ("cls")
+  else
+    system ("clear")
+  end
+  Dir.chdir(@toolkit_path)
+
+  puts "RepoToolKit " + version
+  puts 'What would you like to do?'
+  puts
+  choices.each {|c| puts "  *  " + c.to_s}
+  puts
+  puts 'Enter at least the first few letters of your choice:'
+  print $prompt
+  input = gets.chomp.strip
+  choicenum = nil
+
   if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-  case input
-    when '14', '14.', 'test'
-    puts
-    puts 'Launching the Test XML script.'
-    a_test_xml = TestXML.new
-    a_test_xml.testit
+  i = 0
+  while i < choices.length
+    if input.length > 0 and choices[i].to_s.downcase.start_with?(input.downcase)
+      choicenum = i
     break
+    end
+    i = i + 1
+  end
 
-  when '1', '1.', 'Faculty'
-    puts
+  puts
+  if choicenum == nil
+    puts 'Choice not recognized'
+    break
+  else
+    puts 'You chose:  ' + choices[choicenum]
+	puts 'Confirm? (y or n)'
+	print $prompt
+	input = gets.chomp.strip
+	if input != 'y' and input != 'Y'
+	  next
+	end
+  end
+
+  if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+  puts
+  case choicenum
+  when 0  # Quit
+    break
+  
+  when 1  # Faculty Scholarship
     puts 'Launching the Faculty Scholarship script.'
     a_new_faculty_ingest = ExcelBasedIngest.new
     a_new_faculty_ingest.extract.faculty.excel.collection.transform.finish
-    break
 
-  when '2', '2.', 'Student'
-    puts
+  when 2  # Student Scholarship
     puts 'Launching the Student Scholarship script.'
     a_new_student_ingest = ExcelBasedIngest.new
     a_new_student_ingest.extract.student.excel.collection.transform.finish
-    break
 
-  when '3', '3.', 'Nutrition'
-    puts
-    puts 'Launching the Nutrtion Scholarship script.'
-    a_new_nutrition_ingest = ExcelBasedIngest.new
-    a_new_nutrition_ingest.extract.nutrition.excel.collection.transform.finish
-    break
-
-  when '4', '4.', 'Trove'
-    puts
+  when 3  # Trove
     puts 'Launching the Trove script.'
     a_new_trove_ingest = ExcelBasedIngest.new
     a_new_trove_ingest.extract.trove.excel.collection.transform.finish
-    break
 
-  when '5', '5.', 'Springer'
-    puts
-    puts 'Launching the Springer script.'
-    a_new_springer_ingest = SpringerIngest.new
-    a_new_springer_ingest.extract.transform_it.finish
-    break
-
-  when '6', '6.', 'Proquest'
-    puts
+  when 4  # Proquest ETDs
     puts 'Launching the Proquest script.'
     a_new_proquest_ingest = ProquestIngest.new
     a_new_proquest_ingest.extract.transform_it.finish
-    break
 
-  when '7', '7.', 'ACM'
-    puts
+  when 5  # Springer Articles
+    puts 'Launching the Springer script.'
+    a_new_springer_ingest = SpringerIngest.new
+    a_new_springer_ingest.extract.transform_it.finish
+
+  when 6  # ACM Articles
     puts 'Launching the ACM script.'
     a_new_acm_ingest = ACMIngest.new
     a_new_acm_ingest.extract.transform_it.finish
-    break
 
-  when '8', '8.', 'inHouse'
-    puts
+  when 7  # Digitized Book (In-House)
     puts 'Launching the in-house script.'
     a_new_inhouse_ingest = InHouseIngest.new
     a_new_inhouse_ingest.extract.transform.finish
-    break
 
-  when '9', '9.', 'Subject'
-    puts
-    puts 'Launching the Subject Analysis script'
-    a_new_analysis = SubjectAnalysis.new
-    a_new_analysis.subject_only.close_directories.re_qa_subject
-    break
-
-  when '10', '10.', 'SMFA'
-    puts
-    puts 'Launching the SMFA artist books script.'
-    a_new_smfa_ingest = ExcelBasedIngest.new
-    a_new_smfa_ingest.extract.smfa.excel.collection.transform.finish
-    break
-
-  when '11', '11.', 'Video'
-    puts
+  when 8  # Video (Licensed)
     puts 'Launching the Licensed Streaming Video script.'
     a_new_licensed_video_ingest = LicensedVideoIngest.new
     a_new_licensed_video_ingest.extract.transform.finish
-    break
 
-  when '12', '12.', 'PDF'
-    puts
+  when 9  # PDF (Licensed)
     puts 'Launching the Licensed PDF script.'
     a_new_licensed_pdf_ingest = LicensedPDFIngest.new
     a_new_licensed_pdf_ingest.extract.transform.finish
-    break
 
-  when '13', '13.', '13. Exit', 'Exit', 'exit'
-    puts
-    puts 'Goodbye.'
-    break
+  when 10 # SMFA Artist Books
+    puts 'Launching the SMFA artist books script.'
+    a_new_smfa_ingest = ExcelBasedIngest.new
+    a_new_smfa_ingest.extract.smfa.excel.collection.transform.finish
 
-  else
-    puts 'Please select from the above options.'
-    print $prompt
+  when 11 # Nutrition School
+    puts 'Launching the Nutrtion Scholarship script.'
+    a_new_nutrition_ingest = ExcelBasedIngest.new
+    a_new_nutrition_ingest.extract.nutrition.excel.collection.transform.finish
+
+  when 12 # Subject Analysis
+    puts 'Launching the Subject Analysis script'
+    a_new_analysis = SubjectAnalysis.new
+    a_new_analysis.subject_only.re_qa_subject
+
+  when 13 # Test Toolkit 
+    puts 'Launching the Test XML script.'
+    a_test_xml = TestXML.new
+    a_test_xml.testit
+
+  when 14 # Debug Mode
+    puts 'Entering Debug Mode'
+    $debug = true
   end
 end
-sleep(3)
+
+if $is_windows then
+  system ("cls")
+else
+  system ("clear")
+end
+puts 'Goodbye'
+sleep(2)
+exit

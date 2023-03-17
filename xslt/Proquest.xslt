@@ -29,7 +29,7 @@
     <xsl:template match="/">
         <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
             <ListRecords>
-                <xsl:for-each select="collection('../../RepoToolKit_NG/TempRepo/collection.xml')">
+                <xsl:for-each select="document(.//doc/@href)">
                     <record>
                         <metadata>
                             <mira_import>

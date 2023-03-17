@@ -31,7 +31,7 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
     <xsl:template match="/">
         <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
             <ListRecords>
-                <xsl:for-each select="collection('../../RepoToolKit_NG/TempRepo/xml/collection.xml')">
+                <xsl:for-each select="document(.//doc/@href)">
                     <record>
                         <metadata>
                             <mira_import>
@@ -46,7 +46,9 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                                 <dc11:description>Springer Open.</dc11:description>
                                 <dc:isPartOf>Tufts University faculty scholarship.</dc:isPartOf>
                                 <dc11:publisher>Tufts University. Tisch Library.</dc11:publisher>
-                                <xsl:call-template name="rights"/>
+                                <xsl:call-template name="doi"/>
+                                <xsl:call-template name="citation"/>
+					    		<xsl:call-template name="rights"/>
                                 <xsl:call-template name="date"/>
                                 <dc:created>
                                     <xsl:value-of select="current-dateTime()"/>
@@ -55,8 +57,11 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                                 <dc:format>application/pdf</dc:format>
                                 <tufts:steward>tisch</tufts:steward>
                                 <tufts:qr_note>smcdon03</tufts:qr_note>
-                                <tufts:internal_note>SpringerBatchTransform: <xsl:value-of
-                                    select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
+                                <tufts:internal_note>
+								    <xsl:text>SpringerBatchTransform: </xsl:text>
+									<xsl:value-of select="current-dateTime()"/>
+                                    <xsl:text>; Tisch manages metadata and binary.</xsl:text>
+                                </tufts:internal_note>
                                 <tufts:displays_in>dl</tufts:displays_in>
                             </mira_import>
                         </metadata>
@@ -72,8 +77,14 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
     </xsl:template>
     <xsl:template match="//ArticleTitle" name="title">
         <dc:title>
-            <xsl:value-of select="replace(//ArticleTitle, '\.+$', '')"/>
-            <xsl:text>.</xsl:text>
+            <xsl:value-of select="//ArticleTitle"/>
+            <xsl:if test="not(ends-with(//ArticleTitle, '.'))">
+                <xsl:if test="not(ends-with(//ArticleTitle, '?'))">
+                    <xsl:if test="not(ends-with(//ArticleTitle, '!'))">
+                        <xsl:text>.</xsl:text>
+                    </xsl:if>
+                </xsl:if>
+            </xsl:if>
         </dc:title>
     </xsl:template>
     <xsl:template match="//Author" name="creator">
@@ -86,14 +97,24 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                     <xsl:choose>
                         <xsl:when test=".//GivenName[2]">
                             <dc11:creator>
-							    <xsl:value-of select="normalize-space(.//FamilyName)"/>, <xsl:value-of select="normalize-space(.//GivenName[1])"/><xsl:text> </xsl:text><xsl:value-of select="normalize-space(replace(.//GivenName[2], '\.+$', ''))"/>
-							    <xsl:if test=".//GivenName[2][(not(ends-with(., '.'))"><xsl:text>.</xsl:text></xsl:if>
+							    <xsl:value-of select="normalize-space(.//FamilyName)"/>
+								<xsl:text>, </xsl:text>
+								<xsl:value-of select="normalize-space(.//GivenName[1])"/>
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="normalize-space(replace(.//GivenName[2], '\.+$', ''))"/>
+							    <xsl:if test=".//GivenName[2][not(ends-with(., '.'))]">
+								    <xsl:text>.</xsl:text>
+								</xsl:if>
 							</dc11:creator>
                         </xsl:when>
                         <xsl:otherwise>
                             <dc11:creator>
-							    <xsl:value-of select="normalize-space(.//FamilyName)"/>, <xsl:value-of select="normalize-space(.//GivenName[1])"/></dc11:creator>
-							    <xsl:if test=".//GivenName[1][(not(ends-with(., '.'))"><xsl:text>.</xsl:text></xsl:if>
+							    <xsl:value-of select="normalize-space(.//FamilyName)"/>
+								<xsl:text>, </xsl:text>
+								<xsl:value-of select="normalize-space(.//GivenName[1])"/>
+							    <xsl:if test=".//GivenName[1][not(ends-with(., '.'))]">
+								    <xsl:text>.</xsl:text>
+							    </xsl:if>
 							</dc11:creator>
                        </xsl:otherwise>
                     </xsl:choose>
@@ -110,9 +131,9 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
                 </dc:abstract>
             </xsl:when>
             <xsl:when test="//Abstract/Heading">
-                <dc11:abstract>
+                <dc:abstract>
                     <xsl:value-of select=".//Abstract/Heading"/>: <xsl:value-of
-                        select="normalize-space(.//Abstract[1]/Para[1])"/></dc11:abstract>
+                        select="normalize-space(.//Abstract[1]/Para[1])"/></dc:abstract>
             </xsl:when>
             <xsl:otherwise/>
         </xsl:choose>
@@ -162,20 +183,140 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
             <xsl:otherwise/>
         </xsl:choose>
     </xsl:template>
+    <xsl:template name="doi">
+        <xsl:choose>
+            <xsl:when test="//ArticleDOI">
+                <bibframe:doi>
+                    <xsl:value-of select="//ArticleDOI"/>
+                </bibframe:doi>
+            </xsl:when>
+            <xsl:otherwise/>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="citation">
+        <dc:bibliographicCitation>
+            <xsl:choose>
+                <xsl:when test="count(.//Author) > 5">
+                    <xsl:choose>
+                        <xsl:when test=".//Author[1]//GivenName[2]">
+							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[1])"/>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[2])"/>
+							<xsl:text> </xsl:text>
+						    <xsl:value-of select="normalize-space(.//Author[1]//FamilyName)"/>
+                            <xsl:text>, et. al.</xsl:text>   
+                        </xsl:when>
+                        <xsl:otherwise>
+						    <xsl:value-of select="normalize-space(.//Author[1]//GivenName[1])"/>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="normalize-space(.//Author[1]//FamilyName)"/>
+                            <xsl:text>, et. al.</xsl:text>   
+                       </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+				<xsl:when test="count(//contrib) = 1">
+                    <xsl:choose>
+                        <xsl:when test=".//Author[1]//GivenName[2]">
+							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[1])"/>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[2])"/>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="normalize-space(.//Author[1]//FamilyName)"/>
+						</xsl:when>
+                        <xsl:otherwise>
+							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[1])"/>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="normalize-space(.//Author[1]//FamilyName)"/>
+                       </xsl:otherwise>
+                    </xsl:choose>					
+                    <xsl:if test="not(ends-with(.//Author[1]//FamilyName, '.'))">
+                        <xsl:text>.</xsl:text>
+                    </xsl:if>
+				</xsl:when>
+                <xsl:otherwise>			
+					<xsl:for-each select=".//Author[not(position() = last())]">
+						<xsl:choose>
+							<xsl:when test=".//GivenName[2]">
+								<xsl:value-of select="normalize-space(.//GivenName[1])"/>
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="normalize-space(replace(.//GivenName[2], '\.+$', ''))"/>
+								<xsl:text> </xsl:text>
+							    <xsl:value-of select="normalize-space(.//FamilyName)"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="normalize-space(.//GivenName[1])"/>
+								<xsl:text> </xsl:text>
+							    <xsl:value-of select="normalize-space(.//FamilyName)"/>
+							</xsl:otherwise>
+						</xsl:choose>
+			            <xsl:text>, </xsl:text>   
+					</xsl:for-each>
+                    <xsl:if test=".//Author[last()]">
+                        <xsl:text>and </xsl:text>
+						<xsl:choose>
+							<xsl:when test=".//Author[last()]//GivenName[2]">
+								<xsl:value-of select="normalize-space(.//Author[last()]//GivenName[1])"/>
+								<xsl:text> </xsl:text>
+								<xsl:value-of select="normalize-space(.//Author[last()]//GivenName[2])"/>
+								<xsl:text> </xsl:text>
+							    <xsl:value-of select="normalize-space(.//Author[last()]//FamilyName)"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="normalize-space(.//Author[last()]//GivenName[1])"/>
+								<xsl:text> </xsl:text>
+							    <xsl:value-of select="normalize-space(.//Author[last()]//FamilyName)"/>
+							</xsl:otherwise>
+						</xsl:choose>
+                        <xsl:if test="not(ends-with(//Author[last()]//FamilyName, '.'))">
+                            <xsl:text>.</xsl:text>
+                        </xsl:if>
+                    </xsl:if>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text> "</xsl:text>
+            <xsl:value-of select="//ArticleTitle"/>
+            <xsl:if test="not(ends-with(//ArticleTitle, '.'))">
+                <xsl:if test="not(ends-with(//ArticleTitle, '?'))">
+                    <xsl:if test="not(ends-with(//ArticleTitle, '!'))">
+                        <xsl:text>.</xsl:text>
+                    </xsl:if>
+                </xsl:if>
+            </xsl:if>
+            <xsl:text>" </xsl:text>
+            <xsl:value-of select="//JournalTitle"/>
+            <xsl:text>, </xsl:text>
+            <xsl:if test="//PublisherName">
+                <xsl:value-of select="//PublisherName"/>
+                <xsl:text>, </xsl:text>
+            </xsl:if>
+            <xsl:if test="//PublisherLocation">
+               <xsl:value-of select="//PublisherLocation"/>
+                <xsl:text>, </xsl:text>
+             </xsl:if>
+            <xsl:if test="//VolumeIDStart">
+                <xsl:text>v.</xsl:text>
+                <xsl:value-of select="//Article//VolumeIDStart"/>
+                <xsl:text>, </xsl:text>
+            </xsl:if>
+            <xsl:if test="//IssueIDStart">
+                <xsl:text>no.</xsl:text>
+                <xsl:value-of select="//Article//IssueIDStart"/>
+                <xsl:text>, </xsl:text>
+            </xsl:if>
+            <xsl:value-of select="//CoverDate/Year"/>
+        </dc:bibliographicCitation>
+    </xsl:template>
     <xsl:template name="rights">
         <xsl:choose>
-            <xsl:when
-                test=".//ArticleCopyright/CopyrightComment/SimplePara/ExternalRef[1]/RefTarget[1]/@Address">
+            <xsl:when test=".//ArticleCopyright/CopyrightComment/SimplePara/ExternalRef[1]/RefTarget[1]/@Address">
                 <dc:license>
-                    <xsl:value-of
-                        select=".//ArticleCopyright/CopyrightComment/SimplePara/ExternalRef[1]/RefTarget[1]/@Address"
-                    />
+                    <xsl:value-of select=".//ArticleCopyright/CopyrightComment/SimplePara/ExternalRef[1]/RefTarget[1]/@Address"/>
                 </dc:license>
             </xsl:when>
             <xsl:otherwise>
                 <dc:license>
-                    <xsl:value-of
-                        select=".//License/SimplePara/ExternalRef[1]/RefTarget[1]/@Address"/>
+                    <xsl:value-of select=".//License/SimplePara/ExternalRef[1]/RefTarget[1]/@Address"/>
                 </dc:license>
             </xsl:otherwise>
         </xsl:choose>

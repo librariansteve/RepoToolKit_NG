@@ -5,7 +5,8 @@ module QA
 
   def qa_it
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    puts 'Would you like to open the transformed xml?'
+    puts
+	puts 'Would you like to open the transformed xml?'
     print $prompt
     while input = gets.chomp
       if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
@@ -15,7 +16,7 @@ module QA
         puts
         puts 'Launching applications.'
         puts
-        Dir.chdir(@user_directory + '/xml')
+        Dir.chdir(@copy_of_directory + '/xml')
         
         if $is_windows then
           file_to_open = @f+'_Ingest.xml'
