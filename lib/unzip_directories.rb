@@ -19,6 +19,7 @@ module UnzipIt
 #      sleep 0.1
 #      bar.increment!
 #    end
+    puts
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     self
   end
