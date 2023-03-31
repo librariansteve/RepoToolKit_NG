@@ -110,6 +110,12 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
             <xsl:when test="Process[contains(text(), 'Nutrition')]">
                 <tufts:memberOf>p55484009</tufts:memberOf>
             </xsl:when>
+            <xsl:when test="Process[contains(text(), 'Jordan')]">
+                <tufts:memberOf>kd17d6985</tufts:memberOf>
+            </xsl:when>
+            <xsl:when test="Process[contains(text(), 'FoodSystems')]">
+                <tufts:memberOf>02871b02q</tufts:memberOf>
+            </xsl:when>
             <xsl:when test="Process[contains(text(), 'SMFA')]">
                 <tufts:memberOf>vq27zn406</tufts:memberOf>
             </xsl:when>
@@ -325,28 +331,32 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
     <xsl:template match="Process" name="admin_comment">
         <xsl:choose>
             <xsl:when test="Process[contains(text(), 'Trove')]">
-                <tufts:internal_note>ArtBatchIngest: <xsl:value-of select="current-dateTime()"/>;
-                    Tisch manages metadata and binary.</tufts:internal_note>
+                <tufts:internal_note>ArtBatchIngest: <xsl:value-of 
+				select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Faculty')]">
                 <tufts:internal_note>FacultyScholarshipIngest: <xsl:value-of
-                        select="current-dateTime()"/>; Tisch manages metadata and
-                    binary.</tufts:internal_note>
+                        select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Student')]">
                 <tufts:internal_note>StudentScholarshipIngest: <xsl:value-of
-                        select="current-dateTime()"/>; Tisch manages metadata and
-                    binary.</tufts:internal_note>
+                        select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Nutrition')]">
                 <tufts:internal_note>NutritionBatchTransform: <xsl:value-of
-                        select="current-dateTime()"/>; Tisch manages metadata and
-                    binary.</tufts:internal_note>
+                        select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
+            </xsl:when>
+            <xsl:when test="Process[contains(text(), 'Jordan')]">
+                <tufts:internal_note>JordanBatchTransform: <xsl:value-of
+                        select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
+            </xsl:when>
+            <xsl:when test="Process[contains(text(), 'FoodSystems')]">
+                <tufts:internal_note>FoodSystemsBatchTransform: <xsl:value-of
+                        select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'SMFA')]">
                 <tufts:internal_note>SMFA_ArtistBooksBatchIngest: <xsl:value-of
-                        select="current-dateTime()"/>; Tisch manages metadata and
-                    binary.</tufts:internal_note>
+                        select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
             </xsl:when>
             <xsl:otherwise>
                 <tufts:internal_note>NEW_CREATE_PROCESS_NEEDED</tufts:internal_note>

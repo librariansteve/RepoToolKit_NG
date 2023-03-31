@@ -1,4 +1,6 @@
-A toolkit for proto-SIP processing at Tisch Library using a Ruby front-end to launch a set of xslts, and repackage the content consistently for ingest into MIRA 2.0.  You can clone the toolkit here: https://github.com/Alexandermay/RepoToolKit_NG
+A toolkit for proto-SIP processing at Tisch Library using a Ruby front-end to launch a set of xslt's,
+and repackage the content consistently for ingest into MIRA 2.0.  You can find the toolkit
+on Github: https://github.com/Alexandermay/RepoToolKit_NG
 
 Before using please review Best Practices for Using the RepoToolKit
 
@@ -24,20 +26,13 @@ For Mac Environment
     Test whether you have Java
     Mac & Windows :  $ java --version
 
-    Test whether you have Git
-    Mac & Windows :  $ git --version
-
-    If you don’t have Ruby, install it
+    If you don't have Ruby, install it
     Mac :  $ brew install ruby
     Windows :  use a browser to install from rubyinstaller.org
 
-    If you don’t have Java, install it
+    If you don't have Java, install it
     Mac :  $ brew cask install java
     Windows :  use a browser to install from www.java.com
-
-    If you don’t have Git, install it
-    Mac :  $ brew install git
-    Windows :  use a browser to install from git-scm.com
 
     Download and install the latest version of Saxon-HE for Java from Saxonica
     Mac & Windows :  use a browser to install from http://www.saxonica.com
@@ -52,11 +47,11 @@ For Mac Environment
 
     Mac & Windows :  $ gem install nokogiri
 
-    Change your directory to your Desktop (or to some other folder of your choice)
-    Mac & Windows :  $ cd ~/Desktop
-
-    Clone the ToolKit
-    Mac & Windows :  $ git clone https://github.com/librariansteve/RepoToolKit_NG
+    Open a browser and go to https://github.com/librariansteve/RepoToolKit_NG
+	On the right-hand side of the page, click on the *Latest Release*
+	Review the ChangeLog
+	Click either the *Source Code (zip)* link to download the software
+	Unzip the software folder wherever you want to keep it
 
     Change directory to RepoToolKit_NG/bin
     Mac & Windows :  $ cd RepoToolKit_NG/bin
@@ -67,25 +62,22 @@ For Mac Environment
 	
     You should now see a welcome screen with a list of options:
 
-    Welcome to the Repository Toolkit for MIRA 2.0!
-
-    What would you like to process?
-
-    1. Faculty Scholarship.
-    2. Student Scholarship.
-    3. Nutrition School.
-    4. Art and Art History (Trove).
-    5. Springer Open Access Articles.
-    6. Proquest Electronic Disertations and Theses.
-    7. In-House digitized books.
-    8. Subject Analysis.
-    9. SMFA Artist Books.
-    10. Exit.
-    > |  
+    >RepoToolKit <version number>
+    >What would you like to do?
+    >
+    >Faculty Scholarship.
+    >Student Scholarship.
+    >...
+	>Test ToolKit
+	>Debug Mode
+	>Quit
+	>
+	>Enter at least the first few letters of your choice:
+    >  ? > |  
 
 
 
-    Test the install by typing "1" at the prompt. This will launch the Faculty script.
+    Test the install by typing "fac" at the prompt. This will launch the Faculty script.
     Launching the Faculty Scholarship script.
     What is the directory you are working with?
 

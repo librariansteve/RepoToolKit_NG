@@ -167,8 +167,7 @@ puts
 puts '***************************************************'
 sleep(2)
 
-choices = ['Quit',
-           'Faculty Scholarship',
+choices = ['Faculty Scholarship',
            'Student Scholarship',
            'Trove (History of Art and Arcitecture slides)',
            'Proquest Electronic Disertations and Theses',
@@ -178,10 +177,12 @@ choices = ['Quit',
            'Video (Licensed)',
            'PDF (Licensed)',
            'SMFA Artist Books',
-           'Nutrition School',
+           'Nutrition Innovation Lab',
+           'Jordan Nutrition Innovation Lab',
+           'Food Systems Innovation Lab',
            'Subject Analysis',
-		   'Test ToolKit',
-		   'Debug Mode']
+		   'Debug Mode',
+		   'Quit']
 
 
 while true
@@ -229,77 +230,82 @@ while true
   if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
   puts
   case choicenum
-  when 0  # Quit
-    break
-  
-  when 1  # Faculty Scholarship
+  when 0  # Faculty Scholarship
     puts 'Launching the Faculty Scholarship script.'
     a_new_faculty_ingest = ExcelBasedIngest.new
-    a_new_faculty_ingest.extract.faculty.excel.collection.transform.finish
+    a_new_faculty_ingest.extract.add_process('Faculty').excel.collection.transform.finish
 
-  when 2  # Student Scholarship
+  when 1  # Student Scholarship
     puts 'Launching the Student Scholarship script.'
     a_new_student_ingest = ExcelBasedIngest.new
-    a_new_student_ingest.extract.student.excel.collection.transform.finish
+    a_new_student_ingest.extract.add_process('Student').excel.collection.transform.finish
 
-  when 3  # Trove
+  when 2  # Trove
     puts 'Launching the Trove script.'
     a_new_trove_ingest = ExcelBasedIngest.new
-    a_new_trove_ingest.extract.trove.excel.collection.transform.finish
+    a_new_trove_ingest.extract.add_process('Trove').excel.collection.transform.finish
 
-  when 4  # Proquest ETDs
+  when 3  # Proquest ETDs
     puts 'Launching the Proquest script.'
     a_new_proquest_ingest = ProquestIngest.new
     a_new_proquest_ingest.extract.transform_it.finish
 
-  when 5  # Springer Articles
+  when 4  # Springer Articles
     puts 'Launching the Springer script.'
     a_new_springer_ingest = SpringerIngest.new
     a_new_springer_ingest.extract.transform_it.finish
 
-  when 6  # ACM Articles
+  when 5  # ACM Articles
     puts 'Launching the ACM script.'
     a_new_acm_ingest = ACMIngest.new
     a_new_acm_ingest.extract.transform_it.finish
 
-  when 7  # Digitized Book (In-House)
+  when 6  # Digitized Book (In-House)
     puts 'Launching the in-house script.'
     a_new_inhouse_ingest = InHouseIngest.new
     a_new_inhouse_ingest.extract.transform.finish
 
-  when 8  # Video (Licensed)
+  when 7  # Video (Licensed)
     puts 'Launching the Licensed Streaming Video script.'
     a_new_licensed_video_ingest = LicensedVideoIngest.new
     a_new_licensed_video_ingest.extract.transform.finish
 
-  when 9  # PDF (Licensed)
+  when 8  # PDF (Licensed)
     puts 'Launching the Licensed PDF script.'
     a_new_licensed_pdf_ingest = LicensedPDFIngest.new
     a_new_licensed_pdf_ingest.extract.transform.finish
 
-  when 10 # SMFA Artist Books
+  when 9 # SMFA Artist Books
     puts 'Launching the SMFA artist books script.'
     a_new_smfa_ingest = ExcelBasedIngest.new
-    a_new_smfa_ingest.extract.smfa.excel.collection.transform.finish
+    a_new_smfa_ingest.extract.add_process('SMFA').excel.collection.transform.finish
 
-  when 11 # Nutrition School
-    puts 'Launching the Nutrtion Scholarship script.'
+  when 10 # Nutrition Innovation Lab
+    puts 'Launching the Nutrition Innovation Lab script.'
     a_new_nutrition_ingest = ExcelBasedIngest.new
-    a_new_nutrition_ingest.extract.nutrition.excel.collection.transform.finish
+    a_new_nutrition_ingest.extract.add_process('Nutrition').excel.collection.transform.finish
 
-  when 12 # Subject Analysis
+  when 11 # Jordan Nutrition Innovation Lab
+    puts 'Launching the Jordan Nutrition Innovation Lab script.'
+    a_new_nutrition_ingest = ExcelBasedIngest.new
+    a_new_nutrition_ingest.extract.add_process('Jordan').excel.collection.transform.finish
+
+  when 12 # Food Systems Innovation Lab
+    puts 'Launching the Nutrition Innovation Lab script.'
+    a_new_nutrition_ingest = ExcelBasedIngest.new
+    a_new_nutrition_ingest.extract.add_process('FoodSystems').excel.collection.transform.finish
+
+  when 13 # Subject Analysis
     puts 'Launching the Subject Analysis script'
     a_new_analysis = SubjectAnalysis.new
     a_new_analysis.subject_only.re_qa_subject
 
-  when 13 # Test Toolkit 
-    puts 'Launching the Test XML script.'
-    a_test_xml = TestXML.new
-    a_test_xml.testit
-
   when 14 # Debug Mode
     puts 'Entering Debug Mode'
     $debug = true
+
+  when 15 # Quit
+    break
   end
 end
 

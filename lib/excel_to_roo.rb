@@ -12,7 +12,7 @@ module ToRoo
     self
   end
 
-  def trove
+  def add_process(process_name)
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     require 'nokogiri'
     f = File.open('firstTransform.xml')
@@ -20,83 +20,7 @@ module ToRoo
     f.close
     if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
     process = Nokogiri::XML::Node.new 'Process', @spreadsheet
-    process.content = 'Trove'
-    @spreadsheet.xpath('//spreadsheet//sheet/cell').each do |node|
-      node.add_next_sibling(process)
-    end
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    file = File.open('firstTransform.xml', 'w')
-    file.puts @spreadsheet.to_xml
-    file.close
-    self
-  end
-
-  def faculty
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    require 'nokogiri'
-    f = File.open('firstTransform.xml')
-    @spreadsheet = Nokogiri::XML(f)
-    f.close
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    process = Nokogiri::XML::Node.new 'Process', @spreadsheet
-    process.content = 'Faculty'
-    @spreadsheet.xpath('//spreadsheet//sheet/cell').each do |node|
-      node.add_next_sibling(process)
-    end
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    file = File.open('firstTransform.xml', 'w')
-    file.puts @spreadsheet.to_xml
-    file.close
-    self
-  end
-
-  def student
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    require 'nokogiri'
-    f = File.open('firstTransform.xml')
-    @spreadsheet = Nokogiri::XML(f)
-    f.close
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    process = Nokogiri::XML::Node.new 'Process', @spreadsheet
-    process.content = 'Student'
-    @spreadsheet.xpath('//spreadsheet//sheet/cell').each do |node|
-      node.add_next_sibling(process)
-    end
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    file = File.open('firstTransform.xml', 'w')
-    file.puts @spreadsheet.to_xml
-    file.close
-    self
-  end
-  
-  def smfa
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    require 'nokogiri'
-    f = File.open('firstTransform.xml')
-    @spreadsheet = Nokogiri::XML(f)
-    f.close
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    process = Nokogiri::XML::Node.new 'Process', @spreadsheet
-    process.content = 'SMFA'
-    @spreadsheet.xpath('//spreadsheet//sheet/cell').each do |node|
-      node.add_next_sibling(process)
-    end
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    file = File.open('firstTransform.xml', 'w')
-    file.puts @spreadsheet.to_xml
-    file.close
-    self
-  end
-
-  def nutrition
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    require 'nokogiri'
-    f = File.open('firstTransform.xml')
-    @spreadsheet = Nokogiri::XML(f)
-    f.close
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    process = Nokogiri::XML::Node.new 'Process', @spreadsheet
-    process.content = 'Nutrition'
+    process.content = process_name
     @spreadsheet.xpath('//spreadsheet//sheet/cell').each do |node|
       node.add_next_sibling(process)
     end
