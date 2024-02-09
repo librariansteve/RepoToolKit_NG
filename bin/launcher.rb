@@ -280,20 +280,20 @@ while true
     a_new_smfa_ingest = ExcelBasedIngest.new
     a_new_smfa_ingest.extract.add_process('SMFA').excel.collection.transform.finish
 
-  when 10 # Nutrition Innovation Lab
-    puts 'Launching the Nutrition Innovation Lab script.'
-    a_new_nutrition_ingest = ExcelBasedIngest.new
-    a_new_nutrition_ingest.extract.add_process('Nutrition').excel.collection.transform.finish
-
-  when 11 # Jordan Nutrition Innovation Lab
+  when 10 # Jordan Nutrition Innovation Lab
     puts 'Launching the Jordan Nutrition Innovation Lab script.'
     a_new_nutrition_ingest = ExcelBasedIngest.new
     a_new_nutrition_ingest.extract.add_process('Jordan').excel.collection.transform.finish
 
-  when 12 # Food Systems Innovation Lab
+  when 11 # Food Systems Innovation Lab
     puts 'Launching the Nutrition Innovation Lab script.'
     a_new_nutrition_ingest = ExcelBasedIngest.new
     a_new_nutrition_ingest.extract.add_process('FoodSystems').excel.collection.transform.finish
+
+  when 12 # Nutrition Innovation Lab (Original)
+    puts 'Launching the Nutrition Innovation Lab script.'
+    a_new_nutrition_ingest = ExcelBasedIngest.new
+    a_new_nutrition_ingest.extract.add_process('Nutrition').excel.collection.transform.finish
 
   when 13 # Subject Analysis
     puts 'Launching the Subject Analysis script'
