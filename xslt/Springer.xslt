@@ -310,14 +310,14 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
     <xsl:template name="rights">
         <xsl:choose>
             <xsl:when test=".//ArticleCopyright/CopyrightComment/SimplePara/ExternalRef[1]/RefTarget[1]/@Address">
-                <dc:license>
+                <edm:rights>
                     <xsl:value-of select=".//ArticleCopyright/CopyrightComment/SimplePara/ExternalRef[1]/RefTarget[1]/@Address"/>
-                </dc:license>
+                </edm:rights>
             </xsl:when>
             <xsl:otherwise>
-                <dc:license>
+                <edm:rights>
                     <xsl:value-of select=".//License/SimplePara/ExternalRef[1]/RefTarget[1]/@Address"/>
-                </dc:license>
+                </edm:rights>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

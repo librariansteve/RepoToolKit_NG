@@ -121,6 +121,9 @@
                 <xsl:when test="/DISS_submission/DISS_description/DISS_degree[contains(text(), 'M.D.')]">
                     <xsl:text>Doctoral</xsl:text>
                 </xsl:when>
+                <xsl:when test="/DISS_submission/DISS_description/DISS_degree[contains(text(), 'D.P.H.')]">
+                    <xsl:text>Doctoral</xsl:text>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:text>Master's</xsl:text>
                 </xsl:otherwise>
@@ -434,6 +437,9 @@
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Occupational')]">
                 <tufts:creator_department>Tufts University. Occupational Therapy Department.</tufts:creator_department>
             </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Public Health')]">
+                <tufts:creator_department>Tufts University. Public Health and Professional Degree Programs.</tufts:creator_department>
+            </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Interdisciplinary')]">
                 <tufts:creator_department>Tufts University. Graduate School of Arts and Sciences.</tufts:creator_department>
             </xsl:when>
@@ -487,8 +493,8 @@
     </xsl:template>
     <xsl:template match="//DISS_comp_date" name="displays">
         <xsl:choose>
-            <xsl:when test="(//DISS_comp_date &lt; 2011)">
-                <xsl:when test="(number(substring(//DISS_comp_date,1,4)) &lt; 2011)">
+            <xsl:when test="(number(substring(//DISS_comp_date,1,4)) &lt; 2011)">
+                <terms:displays_in>nowhere</terms:displays_in>
             </xsl:when>
             <xsl:otherwise>
                 <terms:displays_in>dl</terms:displays_in>
