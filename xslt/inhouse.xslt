@@ -147,7 +147,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="boundwith">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = '501'][text()]">
+            <xsl:when test="marc:datafield[@tag = '501']">
                 <dc11:description>Bound with: <xsl:value-of
                         select="normalize-space(marc:datafield[@tag = '501']/replace(., '(MMeT.)|(MMeT)|(MMet)', ''))"
                     />
@@ -157,7 +157,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="toc">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = '505'][text()]">
+            <xsl:when test="marc:datafield[@tag = '505']">
                 <xsl:for-each select="marc:datafield[@tag = '505']">
                     <dc:tableOfContents>Table of Contents: <xsl:value-of
                             select="normalize-space(.)"/>
@@ -168,7 +168,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="indexed_in">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = '510'][text()]">
+            <xsl:when test="marc:datafield[@tag = '510']">
                 <xsl:for-each select="marc:datafield[@tag = '510']">
                     <dc11:description>Indexed in: <xsl:value-of select="normalize-space(.)"/>
                     </dc11:description>
@@ -178,7 +178,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="summary">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = '520'][text()]">
+            <xsl:when test="marc:datafield[@tag = '520']">
                 <xsl:for-each select="marc:datafield[@tag = '520']">
                     <dc11:description>Summary: <xsl:value-of select="normalize-space(.)"/>
                     </dc11:description>
@@ -188,7 +188,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="repoduction_note">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = '533'][text()]">
+            <xsl:when test="marc:datafield[@tag = '533']">
                 <dc11:description>
                     <xsl:value-of
                         select="normalize-space(replace(marc:datafield[@tag = '533']/replace(., '(MMeT.)|(MMeT)|(MMet)', ''), '(:|;|,|\.)', '$1 '))"
@@ -199,7 +199,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="provenance">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = '561'][text()]">
+            <xsl:when test="marc:datafield[@tag = '561']">
                 <xsl:for-each select="marc:datafield[@tag = '561']">
                     <dc11:description>Provenance: <xsl:value-of
                             select="normalize-space(./replace(., '(MMeT.)|(MMeT)|(MMet)', ''))"/>
@@ -210,7 +210,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="binding">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = '563'][text()]">
+            <xsl:when test="marc:datafield[@tag = '563']">
                 <dc11:description>
                     <xsl:value-of
                         select="normalize-space(replace(./replace(marc:datafield[@tag = '563'], '(MMeT.)|(MMeT)|(MMet)', ''), '(:|;|,|\.)', '$1 '))"
@@ -300,7 +300,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="persname_subject">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = 600][text()]">
+            <xsl:when test="marc:datafield[@tag = 600]">
                 <xsl:for-each select="marc:datafield[@tag = 600]">
                     <mads:PersonalName>
                         <xsl:call-template name="nameSelect">
@@ -315,7 +315,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="corpname_subject">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = 610][text()] | marc:datafield[@tag = 611][text()]">
+            <xsl:when test="marc:datafield[@tag = 610] | marc:datafield[@tag = 611]">
                 <xsl:for-each select="marc:datafield[@tag = 610] | marc:datafield[@tag = 611]">
                     <mads:CorporateName>
                         <xsl:call-template name="subfieldSelect">
@@ -328,7 +328,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="geo_subject">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = 651][text()]">
+            <xsl:when test="marc:datafield[@tag = 651]">
                 <xsl:for-each select="marc:datafield[@tag = 651]">
                     <dc:spatial>
                         <xsl:call-template name="subfieldSelect">
@@ -354,7 +354,7 @@
     </xsl:template>
     <xsl:template match="@tag" name="genre">
         <xsl:choose>
-            <xsl:when test="marc:datafield[@tag = 655][text()]">
+            <xsl:when test="marc:datafield[@tag = 655]">
                 <xsl:for-each select="marc:datafield[@tag = '655']">
                     <mads:GenreForm>
                         <xsl:call-template name="subfieldSelect">
