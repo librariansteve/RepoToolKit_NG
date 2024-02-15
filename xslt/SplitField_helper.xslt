@@ -20,6 +20,32 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
     xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:foaf="http://xmlns.com/foaf/0.1/"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     
+    <!-- this portion of the XSLT creates a named template for Filename (or Accession), identifies delimiters from the input file and splits them into seperate dcterms:alternative elements, 
+       it also strips out any full stops-->
+    <xsl:template name="FilenameSplit" match="text()">
+        <xsl:param name="FilenameText" select="Accession"/>
+        <xsl:if test="string-length($FilenameText)">
+            <xsl:choose>
+            <xsl:when test="($FilenameText = Accession)">
+                <tufts:filename type="representative">
+                    <xsl:call-template name="filename">
+                        <xsl:with-param name="file" select="substring-before(concat($FilenameText, '|'), '|')"/>
+                    </xsl:call-template>
+                </tufts:filename>
+            </xsl:when>
+            <xsl:otherwise>
+                <tufts:filename>
+                    <xsl:call-template name="filename">
+                        <xsl:with-param name="file" select="substring-before(concat($FilenameText, '|'), '|')"/>
+                    </xsl:call-template>
+                </tufts:filename>
+            </xsl:otherwise>
+            </xsl:choose>
+            <xsl:call-template name="FilenameSplit">
+                <xsl:with-param name="FilenameText" select="substring-after($FilenameText, '|')"/>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
     <!-- this portion of the XSLT creates a named template for altTitle, identifies delimiters from the input file and splits them into seperate dcterms:alternative elements, 
        it also strips out any full stops-->
     <xsl:template name="altTitleSplit" match="text()">
