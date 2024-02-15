@@ -80,11 +80,11 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
         </OAI-PMH>
     </xsl:template>
     <xsl:template match="Accession" name="file">
-        <tufts:filename type="representative">
-            <xsl:call-template name="filename">
-                <xsl:with-param name="file"/>
-            </xsl:call-template>
-        </tufts:filename>
+        <xsl:call-template name="FilenameSplit">
+            <xsl:with-param name="FilenameText">
+                <xsl:value-of select="Accession"/>
+            </xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
     <xsl:template match="Process" name="visibility">
         <xsl:choose>

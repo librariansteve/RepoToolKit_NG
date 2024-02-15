@@ -30,8 +30,9 @@ This stylesheet creates a template which is called in another stylsheet, and cre
     <xsl:template name="filename">
         <xsl:param name="file"/>
         <xsl:value-of
-            select="replace(replace(Accession,'.pdf',''),'[^0-9A-Za-z]','_')"/>
+            select="replace(normalize-space($file),'[^0-9A-Za-z.]','_')"/>
             <xsl:choose>
+            <xsl:when test="contains($file, '.')"></xsl:when>
             <xsl:when test="Format|format='application/mp4'">.mp4</xsl:when>
             <xsl:when test="Format|format='application/mp3'">.mp3</xsl:when>
             <xsl:when test="Format|format='image/tiff'">.tif</xsl:when>
