@@ -3,7 +3,6 @@ Dir['../lib/*.rb'].each { |f| require_relative f }
 
 # Setting $debug to true will cause additional debug lines to print, helping localize bugs
 $debug = false
-if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
 
 @toolkit_path = File.expand_path('..', File.dirname(__FILE__))
 
@@ -130,190 +129,127 @@ class LicensedPDFIngest < TuftsScholarship
   end
 end
 
-
-$is_windows = (RbConfig::CONFIG['host_os'] =~ /mswin|mingw|cygwin/)
-$prompt = '  ? > '
+$version = File.readlines("version.txt", chomp: true)[0]
 $saxon_path = ENV['SAXON_PATH']
 $xslt_path = File.expand_path('../xslt', File.dirname(__FILE__))
+$ui = Interface.new_ui
 
 if !$saxon_path then
-  puts
-  puts 'The environment variable SAXON_PATH is missing or blank.'
-  puts 'SAXON_PATH must contain the full pathname to the saxon jar file.'
-  puts 'Goodbye.'
+  $ui.message('The environment variable SAXON_PATH is missing or blank.')
+  $ui.message('SAXON_PATH must contain the full pathname to the saxon jar file.')
+  $ui.message('Goodbye.')
   sleep(3)
   exit
 end
 
-version = File.readlines("version.txt", chomp: true)[0]
-
-if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-if $is_windows then
-  system ("cls")
-else
-  system ("clear")
-end
-puts
-puts
-puts
-puts
-puts
-puts
-puts
-puts '***************************************************'
-puts
-puts 'Welcome to the Repository Toolkit ' + version
-puts
-puts '***************************************************'
-sleep(2)
+$ui.debug()
 
 choices = ['Faculty Scholarship',
            'Student Scholarship',
-           'Trove (History of Art and Arcitecture slides)',
-           'Proquest Electronic Disertations and Theses',
+           'Trove',
+           'Proquest ETDs',
            'Springer Open Access Articles',
            'ACM Open Access Articles',
            'Digitized Book (In-House)',
            'Video (Licensed)',
            'PDF (Licensed)',
            'SMFA Artist Books',
-           'Nutrition Innovation Lab',
            'Jordan Nutrition Innovation Lab',
            'Food Systems Innovation Lab',
+           'Nutrition Innovation Lab (Original)',
            'Subject Analysis',
 		   'Debug Mode',
 		   'Quit']
 
 
 while true
-  if $is_windows then
-    system ("cls")
-  else
-    system ("clear")
-  end
   Dir.chdir(@toolkit_path)
 
-  puts "RepoToolKit " + version
-  puts 'What would you like to do?'
-  puts
-  choices.each {|c| puts "  *  " + c.to_s}
-  puts
-  puts 'Enter at least the first few letters of your choice:'
-  print $prompt
-  input = gets.chomp.strip
-  choicenum = nil
+  $ui.clearscreen
+  $ui.debug()
+  choicename = $ui.multiple_choice('What would you like to do?', choices)
 
-  if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-  i = 0
-  while i < choices.length
-    if input.length > 0 and choices[i].to_s.downcase.start_with?(input.downcase)
-      choicenum = i
-    break
-    end
-    i = i + 1
-  end
+  $ui.debug()
 
-  puts
-  if choicenum == nil
-    puts 'Choice not recognized'
-    break
-  else
-    puts 'You chose:  ' + choices[choicenum]
-	puts 'Confirm? (y or n)'
-	print $prompt
-	input = gets.chomp.strip
-	if input != 'y' and input != 'Y'
-	  next
-	end
-  end
-
-  if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-  puts
-  case choicenum
-  when 0  # Faculty Scholarship
-    puts 'Launching the Faculty Scholarship script.'
+  case choicename
+  when 'Faculty Scholarship'
+    $ui.message('Launching the Faculty Scholarship script.')
     a_new_faculty_ingest = ExcelBasedIngest.new
     a_new_faculty_ingest.extract.add_process('Faculty').excel.collection.transform.finish
 
-  when 1  # Student Scholarship
-    puts 'Launching the Student Scholarship script.'
+  when 'Student Scholarship'
+    $ui.message('Launching the Student Scholarship script.')
     a_new_student_ingest = ExcelBasedIngest.new
     a_new_student_ingest.extract.add_process('Student').excel.collection.transform.finish
 
-  when 2  # Trove
-    puts 'Launching the Trove script.'
+  when 'Trove'
+    $ui.message('Launching the Trove script.')
     a_new_trove_ingest = ExcelBasedIngest.new
     a_new_trove_ingest.extract.add_process('Trove').excel.collection.transform.finish
 
-  when 3  # Proquest ETDs
-    puts 'Launching the Proquest script.'
+  when 'Proquest ETDs'
+    $ui.message('Launching the Proquest script.')
     a_new_proquest_ingest = ProquestIngest.new
     a_new_proquest_ingest.extract.transform_it.finish
 
-  when 4  # Springer Articles
-    puts 'Launching the Springer script.'
+  when 'Springer Open Access Articles'
+    $ui.message('Launching the Springer script.')
     a_new_springer_ingest = SpringerIngest.new
     a_new_springer_ingest.extract.transform_it.finish
 
-  when 5  # ACM Articles
-    puts 'Launching the ACM script.'
+  when 'ACM Open Access Articles'
+    $ui.message('Launching the ACM script.')
     a_new_acm_ingest = ACMIngest.new
     a_new_acm_ingest.extract.transform_it.finish
 
-  when 6  # Digitized Book (In-House)
-    puts 'Launching the in-house script.'
+  when 'Digitized Book (In-House)'
+    $ui.message('Launching the in-house script.')
     a_new_inhouse_ingest = InHouseIngest.new
     a_new_inhouse_ingest.extract.transform.finish
 
-  when 7  # Video (Licensed)
-    puts 'Launching the Licensed Streaming Video script.'
+  when 'Video (Licensed)'
+    $ui.message('Launching the Licensed Streaming Video script.')
     a_new_licensed_video_ingest = LicensedVideoIngest.new
     a_new_licensed_video_ingest.extract.transform.finish
 
-  when 8  # PDF (Licensed)
-    puts 'Launching the Licensed PDF script.'
+  when 'PDF (Licensed)'
+    $ui.message('Launching the Licensed PDF script.')
     a_new_licensed_pdf_ingest = LicensedPDFIngest.new
     a_new_licensed_pdf_ingest.extract.transform.finish
 
-  when 9 # SMFA Artist Books
-    puts 'Launching the SMFA artist books script.'
+  when 'SMFA Artist Books'
+    $ui.message('Launching the SMFA artist books script.')
     a_new_smfa_ingest = ExcelBasedIngest.new
     a_new_smfa_ingest.extract.add_process('SMFA').excel.collection.transform.finish
 
-  when 10 # Jordan Nutrition Innovation Lab
-    puts 'Launching the Jordan Nutrition Innovation Lab script.'
+  when 'Jordan Nutrition Innovation Lab'
+    $ui.message('Launching the Jordan Nutrition Innovation Lab script.')
     a_new_nutrition_ingest = ExcelBasedIngest.new
     a_new_nutrition_ingest.extract.add_process('Jordan').excel.collection.transform.finish
 
-  when 11 # Food Systems Innovation Lab
-    puts 'Launching the Nutrition Innovation Lab script.'
+  when 'Food Systems Innovation Lab'
+    $ui.message('Launching the Food Systems Innovation Lab script.')
     a_new_nutrition_ingest = ExcelBasedIngest.new
     a_new_nutrition_ingest.extract.add_process('FoodSystems').excel.collection.transform.finish
 
-  when 12 # Nutrition Innovation Lab (Original)
-    puts 'Launching the Nutrition Innovation Lab script.'
+  when 'Nutrition Innovation Lab (Original)'
+    $ui.message('Launching the original Nutrition Innovation Lab script.')
     a_new_nutrition_ingest = ExcelBasedIngest.new
     a_new_nutrition_ingest.extract.add_process('Nutrition').excel.collection.transform.finish
 
-  when 13 # Subject Analysis
-    puts 'Launching the Subject Analysis script'
+  when 'Subject Analysis'
+    $ui.message('Launching the Subject Analysis script')
     a_new_analysis = SubjectAnalysis.new
     a_new_analysis.subject_only.re_qa_subject
 
-  when 14 # Debug Mode
-    puts 'Entering Debug Mode'
+  when 'Debug Mode'
+    $ui.message('Entering Debug Mode')
     $debug = true
 
-  when 15 # Quit
+  when 'Quit'
     break
   end
 end
 
-if $is_windows then
-  system ("cls")
-else
-  system ("clear")
-end
-puts 'Goodbye'
-sleep(2)
+$ui.close
 exit

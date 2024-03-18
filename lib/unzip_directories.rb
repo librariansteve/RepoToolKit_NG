@@ -1,17 +1,17 @@
 # Creates a progress bar for zipped directories
 module UnzipIt
   def unzip
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-    print 'Unzipping...please be patient as this may take a while.'
+    $ui.debug()
+    $ui.message('Unzipping...please be patient as this may take a while.')
 #    require 'progress_bar'
 #    bar = ProgressBar.new
 
     if $is_windows then
-      if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+      $ui.debug()
       files = Dir.glob("*.zip")
       files.each {|f| system ("powershell Expand-Archive #{f}")}
     else
-      if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+      $ui.debug()
       system ("unzip '*.zip'")
     end
 
@@ -19,8 +19,7 @@ module UnzipIt
 #      sleep 0.1
 #      bar.increment!
 #    end
-    puts
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    $ui.debug()
     self
   end
 end
