@@ -1,36 +1,25 @@
 # renames marcxml file for xslt to process
 module Rename
   def rename_mrc_xml
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    $ui.debug()
     files = Dir.glob('*.xml')
     if files.count() > 1
-      if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-      puts 'Directory contains more than 1 XML file:'
-      puts files.to_s
-      puts
-      puts 'Which is the XML file containing the metadata for ingest?'
-      print $prompt
-      @filex = gets.chomp.strip
-      if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-	  while files.include?(@filex) == false
-        puts
-        puts @filex + ' is not one of the choices'
-        puts 'Which is the XML file containing the metadata for ingest?'
-        print $prompt
-        @filex = gets.chomp.strip
-      end
+      $ui.debug()
+      $ui.message("\nDirectory contains more than 1 XML file")
+      @filex = $ui.multiple_choice('Which is the XML file containing the metadata for ingest?', files)
     else
-      if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
-      @filex = files.to_s.gsub(/\[\"|\"\]/, '')
+      $ui.debug()
+      @filex = files.to_s
     end
 
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    $ui.debug()
+	@filex = @file.gsub(/\[\"|\"\]/, '')
     File.rename @filex, 'inHouse.xml'
     self
   end
 
   def rename_xml_to_original
-    if $debug == true then puts "*** debug line: #{__FILE__}:#{__LINE__} ***" end
+    $ui.debug()
     File.rename 'inHouse.xml', @filex
     self
   end
