@@ -87,40 +87,47 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
             </xsl:if>
         </dc:title>
     </xsl:template>
-    <xsl:template match="//Author" name="creator">
+    <xsl:template match="//AuthorGroup" name="creator">
+        <xsl:variable name="authors" select=".//AuthorGroup/Author | .//AuthorGroup/InstitutionalAuthor"/>
         <xsl:choose>
-            <xsl:when test="count(.//Author) > 25">
+            <xsl:when test="count($authors) > 25">
 			    <tufts:internal_note>Article has more than 25 authors, too many to list</tufts:internal_note>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:for-each select=".//Author">
+                <xsl:for-each select="$authors">
                     <xsl:choose>
+                        <xsl:when test=".//InstitutionalAuthorName">
+                            <dc11:creator>
+                                <xsl:value-of select="normalize-space(.//InstitutionalAuthorName)"/>
+                            </dc11:creator>
+                        </xsl:when>
                         <xsl:when test=".//GivenName[2]">
                             <dc11:creator>
-							    <xsl:value-of select="normalize-space(.//FamilyName)"/>
-								<xsl:text>, </xsl:text>
-								<xsl:value-of select="normalize-space(.//GivenName[1])"/>
-								<xsl:text> </xsl:text>
-								<xsl:value-of select="normalize-space(replace(.//GivenName[2], '\.+$', ''))"/>
-							    <xsl:if test=".//GivenName[2][not(ends-with(., '.'))]">
-								    <xsl:text>.</xsl:text>
-								</xsl:if>
-							</dc11:creator>
+                                <xsl:value-of select="normalize-space(.//FamilyName)"/>
+                                <xsl:text>, </xsl:text>
+                                <xsl:value-of select="normalize-space(.//GivenName[1])"/>
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="normalize-space(replace(.//GivenName[2], '\.+$', ''))"/>
+                                <xsl:if test=".//GivenName[2][not(ends-with(., '.'))]">
+                                    <xsl:text>.</xsl:text>
+                                </xsl:if>
+                            </dc11:creator>
                         </xsl:when>
                         <xsl:otherwise>
                             <dc11:creator>
-							    <xsl:value-of select="normalize-space(.//FamilyName)"/>
-								<xsl:text>, </xsl:text>
-								<xsl:value-of select="normalize-space(.//GivenName[1])"/>
-							    <xsl:if test=".//GivenName[1][not(ends-with(., '.'))]">
-								    <xsl:text>.</xsl:text>
-							    </xsl:if>
-							</dc11:creator>
-                       </xsl:otherwise>
+                                <xsl:value-of select="normalize-space(.//FamilyName)"/>
+                                <xsl:text>, </xsl:text>
+                                <xsl:value-of select="normalize-space(.//GivenName[1])"/>
+                                <xsl:if test=".//GivenName[1][not(ends-with(., '.'))]">
+                                    <xsl:text>.</xsl:text>
+                                </xsl:if>
+                            </dc11:creator>
+                        </xsl:otherwise>
+
                     </xsl:choose>
                 </xsl:for-each>
             </xsl:otherwise>
-        </xsl:choose>				
+        </xsl:choose>
     </xsl:template>
     <xsl:template name="abstract">
         <xsl:choose>
@@ -194,86 +201,53 @@ This stylesheet converts Springer metadata to qualified Dublin Core based on the
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template name="citation">
+    <xsl:template match="//AuthorGroup" name="citation">
         <dc:bibliographicCitation>
-            <xsl:choose>
-                <xsl:when test="count(.//Author) > 5">
-                    <xsl:choose>
-                        <xsl:when test=".//Author[1]//GivenName[2]">
-							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[1])"/>
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[2])"/>
-							<xsl:text> </xsl:text>
-						    <xsl:value-of select="normalize-space(.//Author[1]//FamilyName)"/>
-                            <xsl:text>, et. al.</xsl:text>   
-                        </xsl:when>
-                        <xsl:otherwise>
-						    <xsl:value-of select="normalize-space(.//Author[1]//GivenName[1])"/>
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="normalize-space(.//Author[1]//FamilyName)"/>
-                            <xsl:text>, et. al.</xsl:text>   
-                       </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:when>
-				<xsl:when test="count(//contrib) = 1">
-                    <xsl:choose>
-                        <xsl:when test=".//Author[1]//GivenName[2]">
-							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[1])"/>
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[2])"/>
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="normalize-space(.//Author[1]//FamilyName)"/>
-						</xsl:when>
-                        <xsl:otherwise>
-							<xsl:value-of select="normalize-space(.//Author[1]//GivenName[1])"/>
-							<xsl:text> </xsl:text>
-							<xsl:value-of select="normalize-space(.//Author[1]//FamilyName)"/>
-                       </xsl:otherwise>
-                    </xsl:choose>					
-                    <xsl:if test="not(ends-with(.//Author[1]//FamilyName, '.'))">
-                        <xsl:text>.</xsl:text>
-                    </xsl:if>
-				</xsl:when>
-                <xsl:otherwise>			
-					<xsl:for-each select=".//Author[not(position() = last())]">
-						<xsl:choose>
-							<xsl:when test=".//GivenName[2]">
-								<xsl:value-of select="normalize-space(.//GivenName[1])"/>
-								<xsl:text> </xsl:text>
-								<xsl:value-of select="normalize-space(replace(.//GivenName[2], '\.+$', ''))"/>
-								<xsl:text> </xsl:text>
-							    <xsl:value-of select="normalize-space(.//FamilyName)"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="normalize-space(.//GivenName[1])"/>
-								<xsl:text> </xsl:text>
-							    <xsl:value-of select="normalize-space(.//FamilyName)"/>
-							</xsl:otherwise>
-						</xsl:choose>
-			            <xsl:text>, </xsl:text>   
-					</xsl:for-each>
-                    <xsl:if test=".//Author[last()]">
-                        <xsl:text>and </xsl:text>
-						<xsl:choose>
-							<xsl:when test=".//Author[last()]//GivenName[2]">
-								<xsl:value-of select="normalize-space(.//Author[last()]//GivenName[1])"/>
-								<xsl:text> </xsl:text>
-								<xsl:value-of select="normalize-space(.//Author[last()]//GivenName[2])"/>
-								<xsl:text> </xsl:text>
-							    <xsl:value-of select="normalize-space(.//Author[last()]//FamilyName)"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="normalize-space(.//Author[last()]//GivenName[1])"/>
-								<xsl:text> </xsl:text>
-							    <xsl:value-of select="normalize-space(.//Author[last()]//FamilyName)"/>
-							</xsl:otherwise>
-						</xsl:choose>
-                        <xsl:if test="not(ends-with(//Author[last()]//FamilyName, '.'))">
-                            <xsl:text>.</xsl:text>
-                        </xsl:if>
-                    </xsl:if>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:variable name="authors" select=".//AuthorGroup/Author | .//AuthorGroup/InstitutionalAuthor"/>
+            <xsl:for-each select="$authors">
+                <xsl:choose>
+                    <xsl:when test="((count($authors) >5) and (position() = last()))">
+                        <xsl:text>et. al.</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="((count($authors) >5) and (position() >1))">
+                    </xsl:when>
+                    <xsl:when test=".//InstitutionalAuthorName">
+                        <xsl:value-of select="normalize-space(.//InstitutionalAuthorName)"/>
+                        <xsl:choose>
+                            <xsl:when test="(position() = last()) and (not(ends-with(.//InstitutionalAuthorName, '.')))">
+                                <xsl:text>.</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="not(position() = last())">
+                                <xsl:text>, </xsl:text>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:choose>
+                            <xsl:when test=".//GivenName[2]">
+                                <xsl:value-of select="normalize-space(.//GivenName[1])"/>
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="normalize-space(.//GivenName[2])"/>
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="normalize-space(.//FamilyName)"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="normalize-space(.//GivenName[1])"/>
+                                <xsl:text> </xsl:text>
+                                <xsl:value-of select="normalize-space(.//FamilyName)"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="(position() = last()) and (not(ends-with(.//FamilyName, '.')))">
+                                <xsl:text>.</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="not(position() = last())">
+                                <xsl:text>, </xsl:text>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:otherwise>
+                </xsl:choose>	
+            </xsl:for-each>			
             <xsl:text> "</xsl:text>
             <xsl:value-of select="//ArticleTitle"/>
             <xsl:if test="not(ends-with(//ArticleTitle, '.'))">
