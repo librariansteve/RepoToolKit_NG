@@ -57,7 +57,7 @@
                                 <dc:format>application/pdf</dc:format>
                                 <mads:GenreForm>Tufts dissertations and theses.</mads:GenreForm>
                                 <mads:GenreForm>Academic theses.</mads:GenreForm>
-                                <terms:steward>dca</terms:steward>
+                                <terms:steward>tarc</terms:steward>
                                 <tufts:qr_note>Metadata reviewed by: smcdon03 on <xsl:value-of
                                     select="current-dateTime()"/>.</tufts:qr_note>
                                 <tufts:internal_note>ProquestBatchTransform: <xsl:value-of
