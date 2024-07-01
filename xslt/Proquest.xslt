@@ -326,8 +326,20 @@
     </xsl:template>
     <xsl:template match="//DISS_inst_contact[1]" name="dcaterms_department">
         <xsl:choose>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Fletcher')]">
+                <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
+            </xsl:when>
             <xsl:when
                 test="//DISS_inst_contact[1][contains(text(), 'Diplomacy, History, and Politics')]">
+                <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'International Law and Organization')]">
+                <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Economics and International Business')]">
+                <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
+            </xsl:when>
+            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Global Master of Arts Program')]">
                 <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Chemistry')]">
@@ -407,9 +419,6 @@
             </xsl:when>
             <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Nutrition')]">
                 <tufts:creator_department>Gerald J. &amp; Dorothy R. Friedman School of Nutrition Science and Policy.</tufts:creator_department>
-            </xsl:when>
-            <xsl:when test="//DISS_inst_contact[1][contains(text(), 'Fletcher')]">
-                <tufts:creator_department>Fletcher School of Law and Diplomacy.</tufts:creator_department>
             </xsl:when>
 			<xsl:when test="//DISS_inst_contact[1][contains(text(), 'Posthodontics')]">
                 <tufts:creator_department>Tufts University. School of Dental Medicine.</tufts:creator_department>
