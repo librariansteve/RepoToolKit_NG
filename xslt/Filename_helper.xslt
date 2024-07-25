@@ -21,6 +21,7 @@ This stylesheet creates a template which is called in another stylsheet, and cre
             <xsl:when test="Format|format='application/mp3'">.mp3</xsl:when>
             <xsl:when test="Format|format='image/tiff'">.tif</xsl:when>
             <xsl:when test="Format|format='image/jpg'">.jpg</xsl:when>
+            <xsl:when test="Format|format='image/gif'">.gif</xsl:when>
             <xsl:when test="Format|format='video/quicktime'">.mov</xsl:when>
             <xsl:when test="Format|format='audio/wav'">.wav</xsl:when>
             <xsl:otherwise>.archival.pdf</xsl:otherwise>
@@ -37,6 +38,7 @@ This stylesheet creates a template which is called in another stylsheet, and cre
             <xsl:when test="Format|format='application/mp3'">.mp3</xsl:when>
             <xsl:when test="Format|format='image/tiff'">.tif</xsl:when>
             <xsl:when test="Format|format='image/jpg'">.jpg</xsl:when>
+            <xsl:when test="Format|format='image/gif'">.gif</xsl:when>
             <xsl:when test="Format|format='video/quicktime'">.mov</xsl:when>
             <xsl:when test="Format|format='audio/wav'">.wav</xsl:when>
             <xsl:otherwise>.pdf</xsl:otherwise>
