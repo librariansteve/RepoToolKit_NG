@@ -138,7 +138,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
             <xsl:when test="Format = 'image/jpg'">
                 <model:hasModel>Image</model:hasModel>
             </xsl:when>
-			<xsl:when test="Format = 'image/gif'">
+                <xsl:when test="Format = 'image/gif'">
                 <model:hasModel>Image</model:hasModel>
             </xsl:when>
             <xsl:when test="Format = 'video/quicktime'">
@@ -256,7 +256,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
             <xsl:when test="Format = 'image/jpg'">
                 <dc:type>http://purl.org/dc/dcmitype/Image</dc:type>
             </xsl:when>
-			<xsl:when test="Format = 'image/gif'">
+                <xsl:when test="Format = 'image/gif'">
                 <dc:type>http://purl.org/dc/dcmitype/Image</dc:type>
             </xsl:when>
             <xsl:when test="Format = 'video/quicktime'">
