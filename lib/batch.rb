@@ -93,7 +93,7 @@ class Batch
 
   def qa_it(xml_file)
     $ui.debug
-    if $ui.yesno("\nWould you like to open the transformed xml?")
+    if $ui.yesno("\nWould you like to open the transformed xml?", 'y')
       $ui.debug()
       Dir.chdir(@copy_of_directory + '/xml')
 

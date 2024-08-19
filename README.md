@@ -8,9 +8,11 @@ Requirements
 
     Java
     Saxon
-    Ruby 2.0.0
+    Ruby 2.0.0+
     Roo
     Nokogiri
+	Marc
+	Exifr
 
 The Toolkit Runs on both Mac and Windows
 For Mac Environment
@@ -40,12 +42,12 @@ For Mac Environment
 	
     Create a new personal environment variable, named SAXON_PATH, with a value equal to the full path of the Saxon-HE jar file
 	
-    Install roo (a ruby gem)
+    Install ruby gems
     Mac & Windows :  $ gem install roo
-
-    Install nokogiri (a ruby gem)
-
     Mac & Windows :  $ gem install nokogiri
+	Mac & Windows :  $ gem install exifr
+	Mac & Windows :  $ gem install marc
+	Mac & Windows :  $ gem install exifr
 
     Open a browser and go to https://github.com/librariansteve/RepoToolKit_NG
 	On the right-hand side of the page, click on the *Latest Release*

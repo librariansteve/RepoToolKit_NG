@@ -31,7 +31,7 @@ class Interface
     puts "RepoToolKit " + $version
   end
 
-  def splash(text, duration=2)
+  def splash(text, duration=5)
     puts
     puts text
     sleep(duration)
@@ -49,8 +49,12 @@ class Interface
     STDIN.gets.chomp.strip
   end
 
-  def yesno(text)
-    input = question(text, '(y or n)? ').chomp.strip.downcase
+  def yesno(text, default=nil)
+    if default == 'y' or default == 'n'
+      prompt = '(y or n, blank=' + default + '?): '
+    else prompt = '(y or n?): '
+    end
+    input = question(text, prompt).chomp.strip.downcase
     while true
       if input == 'y' or input == 'yes'
         return true
@@ -58,7 +62,14 @@ class Interface
       if input == 'n' or input == 'no'
         return false
       end
-      input = question('', '(y or n)? ').chomp.strip.downcase
+      if input == ''
+        if default == 'y'
+          return true
+        elsif default == 'n'
+          return false
+        end
+      end
+      input = question('', prompt).chomp.strip.downcase
     end
   end
 
@@ -84,7 +95,7 @@ class Interface
       if choicenum == nil
         puts 'Choice not recognized'
       else
-        if yesno('You chose:  ' + choices[choicenum] + ': Confirm?')
+        if yesno('You chose:  ' + choices[choicenum] + ': Confirm?', 'y')
           return choices[choicenum]
         end
       end
@@ -99,6 +110,6 @@ class Interface
 
   # Send a closing message
   def close
-    splash('Goodbye')
+    splash('Goodbye', 2)
   end
 end

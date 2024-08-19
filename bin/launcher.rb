@@ -28,8 +28,10 @@ choices = ['Excel Metadata',
            'Digitized Book (In-House)',
            'Video (Licensed)',
            'PDF (Licensed)',
+           'HathiTrust Package',
     	   'Debug Mode',
     	   'Quit']
+
 
 while true
   Dir.chdir(@toolkit_path)
@@ -67,6 +69,10 @@ while true
   when 'PDF (Licensed)'
     $ui.message('Launching the Licensed PDF script.')
 	BatchLicensedPDF.new.batch_it
+
+  when 'HathiTrust Package'
+    $ui.message('Launching the HathiTrust Package script.')
+	BatchHathiTrust.new.batch_it
 
   when 'Debug Mode'
     $ui.message('Entering Debug Mode')
