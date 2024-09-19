@@ -166,11 +166,11 @@ class BatchHathiTrust < Batch
     yml = File.open("meta.yml", "w+")
     yml.puts "scanner_user: Tufts University, Tisch Library Digital Initiatives Dept."
     if exif.date_time
-      yml.puts "capture_date: " + exif.date_time.strftime("%Y-%m-%dT%H:%M:%S%z")
+      yml.puts "capture_date: " + exif.date_time.strftime("%Y-%m-%dT%H:%M:%S%:z")
     elsif
       digidate = $ui.question("What day was this item digitized (mm/dd/yyyy)?")
       datetime = Time.strptime(digidate, "%m/%d/%Y")
-	  yml.puts "capture_date: " + datetime.strftime("%Y-%m-%dT%H:%M:%S%z")
+	  yml.puts "capture_date: " + datetime.strftime("%Y-%m-%dT%H:%M:%S%:z")
     end
     if exif.make
       yml.puts "scanner_make: " + exif.make
@@ -193,7 +193,7 @@ class BatchHathiTrust < Batch
     # Create MD5 checksum file
     $ui.message("\nGenerating MD5 checksums")
     File.open("checksum.md5", "w+") { |c|
-      Dir.glob(['*.tif', '*.txt', '*.xml', 'meta.yml']).each { |f|
+      Dir.glob(['*.tif', '*.txt', '*.html', 'meta.yml']).each { |f|
         hex = Digest::MD5.file(f).hexdigest
         c.puts(sprintf("%s %s\n", hex, f))
       }
