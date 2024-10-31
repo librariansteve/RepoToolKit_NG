@@ -65,6 +65,7 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                                 <xsl:call-template name="spatial"/>
                                 <xsl:call-template name="rights"/>
                                 <xsl:call-template name="license"/>
+                                <xsl:call-template name="tableofcontents"/>
                                 <tufts:steward>tisch</tufts:steward>
                                 <tufts:qr_note>Metadata reviewed by: smcdon03 on <xsl:value-of
                                         select="current-dateTime()"/>.</tufts:qr_note>
@@ -106,6 +107,9 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Student')]">
                 <tufts:memberOf>nk322d32h</tufts:memberOf>
+            </xsl:when>
+            <xsl:when test="Process[contains(text(), 'Concert')]">
+                <tufts:memberOf>pv63gf62j</tufts:memberOf>
             </xsl:when>
             <xsl:when test="Process[contains(text(), 'Nutrition')]">
                 <tufts:memberOf>p55484009</tufts:memberOf>
@@ -348,6 +352,10 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                 <tufts:internal_note>StudentScholarshipIngest: <xsl:value-of
                         select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
             </xsl:when>
+            <xsl:when test="Process[contains(text(), 'Concert')]">
+                <tufts:internal_note>MusicConcertBatchTransform: <xsl:value-of
+                        select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
+            </xsl:when>
             <xsl:when test="Process[contains(text(), 'Nutrition')]">
                 <tufts:internal_note>NutritionBatchTransform: <xsl:value-of
                         select="current-dateTime()"/>; Tisch manages metadata and binary.</tufts:internal_note>
@@ -392,5 +400,10 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
                 <edm:rights><xsl:value-of select="normalize-space(License)"/></edm:rights>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    <xsl:template match="Process" name="tableofcontents">
+        <dc:tableOfContents>
+            <xsl:value-of select="normalize-space(TableOfContents)"/>
+        </dc:tableOfContents>
     </xsl:template>
 </xsl:stylesheet>

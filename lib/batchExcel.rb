@@ -10,6 +10,7 @@ class BatchExcel < Batch
 	choices['Faculty Scholarship'] = 'Faculty'
     choices['Student Scholarship'] = 'Student'
     choices['Trove'] = 'Trove'
+    choices['Music Concert Programs'] = 'Concert'
     choices['SMFA Artist Books'] = 'SMFA'
     choices['Jordan Nutrition Innovation Lab'] = 'Jordan'
     choices['Food Systems Innovation Lab'] = 'FoodSystems'

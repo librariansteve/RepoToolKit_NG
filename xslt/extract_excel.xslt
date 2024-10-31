@@ -29,6 +29,7 @@
                 <Rights><xsl:value-of select="current-group()[@column = '18']"/></Rights>
                 <Embargo><xsl:value-of select="current-group()[@column = '19']"/></Embargo>
                 <License><xsl:value-of select="current-group()[@column = '20']"/></License>
+                <TableOfContents><xsl:value-of select="current-group()[@column = '21']"/></TableOfContents>
                 <Process><xsl:value-of select="//Process"/></Process>
             </row>  
         </xsl:for-each-group>
