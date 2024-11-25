@@ -387,9 +387,9 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
         </dc11:rights>
     </xsl:template>
     <xsl:template match="Embargo" name="embargo">
-        <tufts:embargo>
+        <tufts:embargo_release_date>
             <xsl:value-of select="normalize-space(Embargo)"/>
-        </tufts:embargo>
+        </tufts:embargo_release_date>
     </xsl:template>
     <xsl:template match="Process" name="license">
         <xsl:choose>
