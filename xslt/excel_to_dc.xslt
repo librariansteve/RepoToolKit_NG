@@ -402,8 +402,10 @@ This stylesheet converts Excel metadata to qualified Dublin Core based on the ma
         </xsl:choose>
     </xsl:template>
     <xsl:template match="Process" name="tableofcontents">
-        <dc:tableOfContents>
-            <xsl:value-of select="normalize-space(TableOfContents)"/>
-        </dc:tableOfContents>
+        <xsl:call-template name="tocSplit">
+            <xsl:with-param name="tocText">
+                <xsl:value-of select="normalize-space(TableOfContents)"/>
+            </xsl:with-param>
+        </xsl:call-template>
     </xsl:template>
 </xsl:stylesheet>
