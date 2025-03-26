@@ -255,4 +255,21 @@ This stylesheet creates a group of templates for normalizing data entry errors, 
         </xsl:if>
     </xsl:template>
 
+    <!-- this portion of the XSLT creates a named template for Table of Contents, identifies delimiters from the input file and splits them into seperate dc:tableOfContents elements -->
+    <xsl:template name="tocSplit" match="text()">
+        <xsl:param name="tocText" select="."/>
+        <xsl:if test="string-length($tocText)">
+            <xsl:if test="not($tocText = .)"> </xsl:if>
+            <dc:tableOfContents>
+                <xsl:value-of
+                    select="normalize-space(replace(substring-before(concat($tocText, '|'), '|'), '(\w)$', '$1.'))"
+                />
+            </dc:tableOfContents>
+            <xsl:call-template name="tocSplit">
+                <xsl:with-param name="tocText"
+                    select="replace(substring-after($tocText, '|'), '([\..]$)', '')"/>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+
 </xsl:stylesheet>

@@ -70,7 +70,7 @@ class BatchHathiTrust < Batch
     rectype = record.leader[6,1]
     if rectype != 'a' and rectype != 'c' and rectype != 'd' and rectype != 'e' and rectype != 'f' and rectype != 't'
       $ui.splash('MARC record is not for a language, notated music, or cartographic resource; exiting')
-    return
+      return
     end
     recform = record['008'].value[29]
     if rectype == 'e' or rectype == 'f'
@@ -100,6 +100,7 @@ class BatchHathiTrust < Batch
     response = Net::HTTP.get(uri)
     if JSON[response]["records"].count != 0
       $ui.splash('This OCLC number is already in HathiTrust; exiting')
+      return
     else
       $ui.splash('This is NOT in HathiTrust -- creating package directory')
     end
@@ -165,7 +166,8 @@ class BatchHathiTrust < Batch
     exif = EXIFR::TIFF.new('00000001.tif')
     yml = File.open("meta.yml", "w+")
     yml.puts "scanner_user: Tufts University, Tisch Library Digital Initiatives Dept."
-    if exif.date_time
+    if exif.date_time and exif.date_time != ""
+	  $ui.message "EXIF date_time: " + exif.date_time.to_s
       yml.puts "capture_date: " + exif.date_time.strftime("%Y-%m-%dT%H:%M:%S%:z")
     elsif
       digidate = $ui.question("What day was this item digitized (mm/dd/yyyy)?")

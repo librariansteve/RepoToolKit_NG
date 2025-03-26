@@ -33,7 +33,14 @@ This stylesheet creates a template which is called in another stylsheet, and cre
         <xsl:value-of
             select="replace(normalize-space($file),'[^0-9A-Za-z.-]','_')"/>
             <xsl:choose>
-            <xsl:when test="contains($file, '.')"></xsl:when>
+            <xsl:when test="contains($file, '.mp4')"></xsl:when>
+            <xsl:when test="contains($file, '.mp3')"></xsl:when>
+            <xsl:when test="contains($file, '.tif')"></xsl:when>
+            <xsl:when test="contains($file, '.jpg')"></xsl:when>
+            <xsl:when test="contains($file, '.gif')"></xsl:when>
+            <xsl:when test="contains($file, '.mov')"></xsl:when>
+            <xsl:when test="contains($file, '.wav')"></xsl:when>
+            <xsl:when test="contains($file, '.pdf')"></xsl:when>
             <xsl:when test="Format|format='application/mp4'">.mp4</xsl:when>
             <xsl:when test="Format|format='application/mp3'">.mp3</xsl:when>
             <xsl:when test="Format|format='image/tiff'">.tif</xsl:when>
