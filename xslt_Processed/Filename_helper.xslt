@@ -30,35 +30,26 @@ This stylesheet creates a template which is called in another stylsheet, and cre
     <xsl:template match="Accession"/>
     <xsl:template name="filename">
         <xsl:param name="file"/>
-        <xsl:variable name="FilenameTokens" select="tokenize(replace(normalize-space($file),'[^0-9A-Za-z.]','_'), '\.')"/>
-        <xsl:variable name="format" select="Format|format"/>
-        <xsl:for-each select="$FilenameTokens">
+        <xsl:value-of
+            select="replace(normalize-space($file),'[^0-9A-Za-z.-]','_')"/>
             <xsl:choose>
-                <xsl:when test="position() = last()">
-                    <xsl:choose>
-                        <xsl:when test="matches(., '(^mp4$|^mp3$|^tif$|^jpg$|^gif$|^mov$|^wav$|^pdf$)')">
-                            <xsl:text>.</xsl:text><xsl:value-of select="." />
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:if test="position() != 1"><xsl:text>_</xsl:text></xsl:if>
-                            <xsl:value-of select="." />
-                            <xsl:choose>
-                                <xsl:when test="$format='application/mp4'">.mp4</xsl:when>
-                                <xsl:when test="$format='application/mp3'">.mp3</xsl:when>
-                                <xsl:when test="$format='image/tiff'">.tif</xsl:when>
-                                <xsl:when test="$format='image/jpg'">.jpg</xsl:when>
-                                <xsl:when test="$format='image/gif'">.gif</xsl:when>
-                                <xsl:when test="$format='video/quicktime'">.mov</xsl:when>
-                                <xsl:when test="$format='audio/wav'">.wav</xsl:when>
-                                <xsl:otherwise>.pdf</xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:when>
-                <xsl:when test="position() = 1"><xsl:value-of select="."/></xsl:when>
-                <xsl:otherwise><xsl:text>_</xsl:text><xsl:value-of select="." /></xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>
+            <xsl:when test="contains($file, '.mp4')"></xsl:when>
+            <xsl:when test="contains($file, '.mp3')"></xsl:when>
+            <xsl:when test="contains($file, '.tif')"></xsl:when>
+            <xsl:when test="contains($file, '.jpg')"></xsl:when>
+            <xsl:when test="contains($file, '.gif')"></xsl:when>
+            <xsl:when test="contains($file, '.mov')"></xsl:when>
+            <xsl:when test="contains($file, '.wav')"></xsl:when>
+            <xsl:when test="contains($file, '.pdf')"></xsl:when>
+            <xsl:when test="Format|format='application/mp4'">.mp4</xsl:when>
+            <xsl:when test="Format|format='application/mp3'">.mp3</xsl:when>
+            <xsl:when test="Format|format='image/tiff'">.tif</xsl:when>
+            <xsl:when test="Format|format='image/jpg'">.jpg</xsl:when>
+            <xsl:when test="Format|format='image/gif'">.gif</xsl:when>
+            <xsl:when test="Format|format='video/quicktime'">.mov</xsl:when>
+            <xsl:when test="Format|format='audio/wav'">.wav</xsl:when>
+            <xsl:otherwise>.pdf</xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <xsl:template match="marc:datafield[@tag = '035']"/>
     <xsl:template name="archive_name">
